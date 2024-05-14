@@ -1,0 +1,40 @@
+- everyone implement/read through software results and then ask any questions if we have
+
+-Organization:
+Milestone 2 presenters: Yessmine, Robert
+- hear from the groups
+- Prototype:
+agreed to continue the skiing robot
+include sensors and pi into design -> Task
+try and test color sensor (data, position) -> task for next week
+gradient idea: discrete vs continuous
+Check API for sensor capability, consider time to implemet
+Chack and understand API to control motors and collect sensor data -> Task for next week
+Diagram -> second milestone
+Find RL algorithm and key aspects (advantages, disadvantages) -> Task for next week 
+presentation for RL Algorithm and Presentation for API usage
+PC from TEL: overwrite old OS on old PC tomget started -> FIx  it , Task for next week
+stable  base line 3 library -> well known for RL Algs
+Task priorisation:
+1. API/Sensor- Group: Vera, Robert, Kevin
+Install Sensors
+Test sensor Callbacks
+
+Time plan:
+Check API (Sensors) - Vera
+Sensor Prototype 
+Check RPI HAT API
+2. RL/Backend-Group: Zied, Yessmine, 
+research Algorithms
+prepare presentation
+setup Backend PC - Zied
+3
+- how is everyones manager role going?
+Project: Fine
+Technical: Fine
+dev, main, each feature branch
+Integration: UML- Diagram
+Quality: Coding Style cpp, lower priority test plan
+
+- Assign moderator and note-taker for next week
+mod: Robert, Note: Kevin
