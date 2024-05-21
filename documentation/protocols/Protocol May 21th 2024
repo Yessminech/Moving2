@@ -1,0 +1,16 @@
+Moderator today: Robert
+Minute-taker: Kevin (maybe someone different today bcs he is only joining via zoom
+Agenda, possible points:
+
+- hear from the groups: hardware(test of sensors, consider given library, develop prototype further); software(setup of computer w/ architecture, choice of algorithms)
+- how is everyones manager role going?
+- plan for next week, assign responsibilities
+(according to last week and gantt chart, the following tasks need to be completed in the following weeks/week:
+- choose algorithm to implement first, get on it
+- hardcode movement in robot to practice and have better understanding
+- write missing functions for the distance sensor
+- build our testing infrastructure
+- specify our reward function
+
+- idea: collect all our specifications in one document (action space, observation space, algorithms, reward function, etc...)
+- Assign moderator and note-taker for next week
