@@ -1,6 +1,6 @@
 **in progress**
 
-#Address motors and sensors directly in terminal (with python)
+# Address motors and sensors directly in terminal (with python)
 - Run setup file
 - Run putty in the terminal, choose Standard_Test in pop-up window, double click
 - type list to see all ports and corresponding modi
@@ -16,14 +16,14 @@
 - check p. 11 of Build HAT Serial Protocol (ISIS) for examples of how to move the motors
                                                                                        
 
-#Run C++ executables on pi
+# Run C++ executables on pi
 Some examples are already in the library and you can run their executables (in buildhat++/bin).
 - configure motors and sensors in config file (i.e. which port corresponds to which sensor/motor)
 - navigate into the directory, to run executable type ./<executable name>
 - **note on the examples: the examples contain a main that call a setup function that can be found in buildhat.cpp**
 
                                                                                            
-#Create executables on pi (we'll add some more concrete info)
+# Create executables on pi (we'll add some more concrete info)
 - compile
 - add executable in CMakeLists.txt
                                                                                            
