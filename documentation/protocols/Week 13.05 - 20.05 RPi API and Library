@@ -7,16 +7,22 @@ We also checked the comments on the sensors in the HAT protocol and apparently t
 
 
 To Do's: 
-- build cases for the RPi and for the batteries and build them on the RPi
-- place the sensors on the RPi
+- build cases for the RPi and for the batteries and build them on the RPi --done
+- place the sensors on the RPi --not completey done
 - Understand the libraries classes
-- Understand the properties of the color sensor output
-- Understand the properties of the distance sensor output
-- Test sensor callbacks with API if possible and otherwise with python or better C++ (for the distance sensor)
+- Understand the properties of the color sensor output --done
+- Understand the properties of the distance sensor output --done
+- Test sensor callbacks with API if possible and otherwise with python or better C++ (for the distance sensor) --not yet
 
-Next Meeting: maybe Friday morning Kevin and Vera
-
+Next Meeting: maybe Friday morning Kevin and Vera 
 Final Besprechung before tuesday: 18:30 Monday evening
+Didn't happen, Robert and Vera met on 21th before the meeting
+
+To be Done:
+- place the color sensor closer to the floor
+- place distance sensor securely
+- test API with sensor callbacks 
+- write missing functions for API
 
 
 Ressources:
