@@ -1,6 +1,7 @@
 1. Code Layout
 Explanation: Imports should be on separate lines; function definition should have the colon followed by a new line.
 Good Example:
+
 ```
 import os
 import sys
