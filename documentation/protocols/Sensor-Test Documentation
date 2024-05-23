@@ -2,7 +2,7 @@ Tests performed, by reading out serial interface communication with Putty
 
 Distance sensor:
 select modes returning valuable data:
-- 0: according to manual distance in mm, range: 40 mm - 740 mm
+- 0: according to manual distance in mm, range: 40 mm - 740 mm, note: it goes further, but it will need a 90 degree angle and widely free view
 - 1: according to manual distance in mm, range: 40 mm - 320 mm
 - 4: assuming it's raw time of sonic, not tested unit
 
