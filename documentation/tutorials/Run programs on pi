@@ -4,6 +4,7 @@
 - Run setup file
 - Run putty in the terminal, choose Standard_Test in pop-up window, double click
 - type list to see all ports and corresponding modi
+- for any device/port to use, turn it on by typing 'set -1'
 
 - Sensor: 
 - choose port by typing port <port number>
