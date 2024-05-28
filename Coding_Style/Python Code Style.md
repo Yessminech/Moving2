@@ -37,6 +37,8 @@ print(x)
 
 3. Maximum Line Length
 Explanation: Limit all lines to a maximum of 79 characters.
+
+
 Good Example:
 
 ```
@@ -53,6 +55,7 @@ def long_function_name(var_one, var_two, var_three, var_four): print(var_one)
 
 4. Blank Lines
 Explanation: Surround top-level function and class definitions with two blank lines.
+
 Good Example:
 
 ```
@@ -76,6 +79,7 @@ def my_function():
 
 5. Source File Encoding
 Explanation: Specify UTF-8 encoding.
+
 Good Example:
 ```
 # -*- coding: utf-8 -*-
@@ -83,6 +87,7 @@ Good Example:
 
 6. Imports
 Explanation: Each import should be on a separate line.
+
 Good Example:
 ```
 import os
@@ -98,6 +103,7 @@ from subprocess import *
 
 7. Module Level Dunder Names
 Explanation: Use dunder names for module-level “magic” objects and attributes.
+
 Good Example:
 
 ```
@@ -111,6 +117,7 @@ all = ['a', 'b', 'c']
 
 8. String Quotes
 Explanation: Use consistent string quote style.
+
 Good Example:
 
 ```
@@ -124,6 +131,7 @@ my_string = 'Hello, world!'
 
 9. Whitespace in Expressions and Statements
 Explanation: Avoid extraneous whitespace.
+
 Good Example:
 ```
 a = b + c
@@ -136,6 +144,7 @@ a=b+c
 
 10. Naming Conventions
 Explanation: Use CapWords for class names and lower_case_with_underscores for functions.
+
 Good Example:
 ```
 class MyClass:
@@ -156,6 +165,7 @@ def MyFunction():
 
 11. Comments
 Explanation: Use complete sentences for comments.
+
 Good Example:
 ```
 def my_function():
@@ -172,6 +182,7 @@ def my_function():
 
 12. Docstrings
 Explanation: Functions and classes should include docstrings.
+
 Good Example:
 ```
 def my_function():
@@ -198,6 +209,7 @@ if foo != None:
 
 14. Blank Lines Between Functions and Classes
 Explanation: Two blank lines between top-level functions and class definitions.
+
 Good Example:
 ```
 def function_one():
@@ -218,6 +230,7 @@ def function_two():
 
 15. Line Breaks with Parentheses
 Explanation: Use parentheses for line continuation.
+
 Good Example:
 ```
 foo = long_function_name(var_one, var_two,
@@ -231,6 +244,7 @@ foo = long_function_name(var_one, var_two, \
 
 16. Break Before Binary Operator
 Explanation: Break after a binary operator.
+
 Good Example:
 ```
 total = (first_variable
@@ -246,6 +260,7 @@ total = (first_variable +
 
 17. Avoid Unnecessary Parentheses
 Explanation: Avoid redundant parentheses.
+
 Good Example:
 ```
 a = 1 + 2
@@ -258,6 +273,7 @@ a = (1 + 2)
 
 18. Trailing Commas
 Explanation: Include trailing commas in multi-line constructs.
+
 Good Example:
 ```
 my_list = [
@@ -277,6 +293,7 @@ my_list = [
 
 19. Conditional Statements
 Explanation: Place constants on the left in comparisons to prevent assignment errors.
+
 Good Example:
 ```
 if 42 == value:
@@ -290,6 +307,7 @@ if value == 42:
 
 20. Exception Handling
 Explanation: Use specific exceptions.
+
 Good Example:
 ```
 try:
