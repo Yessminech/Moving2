@@ -20,6 +20,7 @@ def my_function(): pass
 
 2. Indentation
 Explanation: Use four spaces per indentation level.
+
 Good Example:
 
 ```
