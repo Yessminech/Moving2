@@ -19,12 +19,17 @@
 
 # Run C++ executables on pi
 Some examples are already in the library and you can run their executables (in buildhat++/bin).
+- first: so far you have to run the python setup file before running any of the executables
 - configure motors and sensors in config file (i.e. which port corresponds to which sensor/motor)
 - navigate into the directory, to run executable type ./<executable name>
-- **note on the examples: the examples contain a main that call a setup function that can be found in buildhat.cpp**
+
 
                                                                                            
-# Create executables on pi (we'll add some more concrete info)
-- compile
-- add executable in CMakeLists.txt
+# Create executables on pi 
+- if you run into problems: delete CMakeCache.txt, run cmake . 
+
+normallly:
+- configure CMakeLists.txt
+- compile with cmake --build .
+
                                                                                            
