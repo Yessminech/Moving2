@@ -1,0 +1,3 @@
+[submodule "catch_example/rl-agent-playing-catch"]
+	path = catch_example/rl-agent-playing-catch
+	url = https://github.com/teamdatatonic/rl-agent-playing-catch/tree/main
