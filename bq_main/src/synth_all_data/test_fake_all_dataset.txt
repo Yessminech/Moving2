@@ -1,0 +1,5 @@
+1: (('white', 'dis_0'), 'forward', ('white', 'dis_0'), 91.54311287351767, True)
+2: (('white', 'dis_0'), 'backward', ('white', 'dis_0'), 108.67747313093024, True)
+3: (('white', 'dis_0'), 'right', ('white', 'dis_0'), 92.01240399522595, True)
+4: (('white', 'dis_0'), 'left', ('white', 'dis_0'), 0.7425511413379269, False)
+5: (('white', 'dis_0'), 'stop', ('white', 'dis_0'), 103.73690943403932, True)

@@ -1,6 +1,5 @@
 import numpy as np
 from typing import Tuple, List, Dict
-
 # Define motor speed constants
 FULL_REVERSE = -1
 STOP = 0
@@ -120,6 +119,7 @@ class Walk:
         
 # Example dataset (replace with actual data)
 # (state, action, next_state, reward, done)
+## Todo: use generate_fake_dataset
 example_dataset = [
     (('white', 'dis_0'), 'left', ('white', 'dis_1'), 1, False),
     (('white', 'dis_1'), 'forward', ('yellow', 'dis_2'), 10, False),
@@ -130,4 +130,22 @@ example_dataset = [
 ACTION_INDICES = {action: idx for idx, action in enumerate(ACTIONS.keys())}
 # Initialize Walk environment and Q-learning agent
 walk = Walk(example_dataset)
+
+
+
 #agent = QLearningAgent(actions=ACTION_INDICES)
+# Initialize Q-table
+# state_size = 
+# action_size =  
+# q_table = np.zeros((state_size, action_size))
+# Hyperparameters
+# learning_rate = 0.8
+# discount_rate = 0.95
+# Batch Q-Learning
+# for state, action, reward, next_state in dataset:
+#     best_next_action = np.argmax(q_table[next_state, :])
+#     td_target = reward + discount_rate * q_table[next_state, best_next_action]
+#     q_table[state, action] = q_table[state, action] * (1 - learning_rate) + learning_rate * td_target
+# Print updated Q-table
+# print("\n\nQ-table\n")
+# print(q_table)
