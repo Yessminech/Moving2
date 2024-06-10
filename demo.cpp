@@ -5,7 +5,7 @@
 
 
 int main() {
-    // 获取Drive的实例
+   
     auto& drive = Drive::getInstance();
 
     std::string input;    
