@@ -65,7 +65,6 @@ class QLearningAgent:
         except Exception as e:
             logging.error(f"Failed to save Q_table at {Q_table_path}. Error: {e}")
 
-##TODO - Transfer this to test.py 
 ##TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
