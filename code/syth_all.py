@@ -1,37 +1,32 @@
 import random
 import os
-from env import calculate_reward, determine_color_transition
+from env import calculate_reward, determine_color_transition, determine_distance_transition, get_colors, get_distances, get_actions, goal_achieved
 
-# Define weights for the reward function
-kd = 1.0
-kc = 10.0
-kg = 100.0
-
-colors = ['white', 'yellow', 'blue', 'red', 'black', 'brown']
-distances = ['dis_0', 'dis_1', 'dis_2', 'dis_3', 'dis_4']
-actions = ['forward', 'backward', 'right', 'left', 'stop']
+colors = get_colors()
+distances = get_distances()
+actions =  get_actions()
 
 # Function to generate a synthetic dataset
-## (('yellow', 'dis_3'), 'right', ('blue', 'dis_0'), 13.0, False)
+## Fromat: (('yellow', 'dis_3'), 'right', ('blue', 'dis_0'), 13.0, False)
 def generate_fake_dataset():
     dataset = []
-    for start_color in colors:
-        for start_distance in distances:
+    for current_color in colors:
+        for current_distance in distances:
             for action in actions:
-                for end_color in colors:
-                    for end_distance in distances:
-                        goal_achieved = random.choice([True, False])
-                        distance_change = random.uniform(-10.0, 10.0)
-                        color_transition = determine_color_transition(start_color, end_color)
-                        reward = calculate_reward(distance_change, color_transition, goal_achieved, kd, kc, kg)
-                        sample = ((start_color, start_distance), action, (end_color, end_distance), reward, goal_achieved)
-                        dataset.append(sample)
+                for next_color in colors:
+                    for next_distance in distances:
+                        done = goal_achieved((next_color, next_distance))
+                        distance_change = determine_distance_transition(current_distance, next_distance)
+                        color_transition = determine_color_transition(current_color, next_color)
+                        reward = calculate_reward(current_color, current_distance, next_color, next_distance, done)
+                        experience = ((current_color, current_distance), action, (next_color, next_distance), reward, done)
+                        dataset.append(experience)
     return dataset
 
 # Export the dataset as text files
 fake_dataset = generate_fake_dataset()
-new_dir = 'synth_all_data'
+new_dir = 'generated_dataset'
 os.makedirs(new_dir, exist_ok=True)
-with open(os.path.join(new_dir, 'fake_all_dataset.txt'), 'w') as f:
-    for i, sample in enumerate(fake_dataset, start=1):
-        f.write(f"{i}: {sample}\n")
+with open(os.path.join(new_dir, 'fake_dataset.txt'), 'w') as f:
+    for i, experience in enumerate(fake_dataset, start=1):
+        f.write(f"{i}: {experience}\n")

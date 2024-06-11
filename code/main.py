@@ -4,8 +4,13 @@ import os
 import ast
 import logging
 from collections import deque
-from env import get_actions_length, get_colors_length, get_distances_length
+from env import get_colors, get_distances, get_actions
+from tqdm import tqdm
 
+color_mapping = {color: i for i, color in enumerate(get_colors())}
+distance_mapping = {distance: i for i, distance in enumerate(get_distances())}
+action_mapping = {action: i for i, action in enumerate(get_actions())}
+    
 class QLearningAgent:
     def __init__(self, color_mapping, distance_mapping, action_mapping, learning_rate=0.1, discount_factor=0.99, num_episodes=1000, batch_size=32):
         self.color_mapping = color_mapping
@@ -22,7 +27,7 @@ class QLearningAgent:
         num_colors = len(self.color_mapping)
         num_distances = len(self.distance_mapping)
         num_actions = len(self.action_mapping)
-        Q_table = np.zeros((num_colors, num_distances, num_colors, num_distances, num_actions))
+        Q_table = np.zeros((num_colors, num_distances, num_actions))
         return Q_table
 
     def populate_replay_buffer(self, dataset):
@@ -41,13 +46,13 @@ class QLearningAgent:
             curr_col, curr_dist = self.color_mapping[state[0]], self.distance_mapping[state[1]]
             next_col, next_dist = self.color_mapping[next_state[0]], self.distance_mapping[next_state[1]]
             action = self.action_mapping[action]
-            best_next_action = np.argmax(self.Q_table[curr_col, curr_dist , next_col , next_dist])
-            td_target = reward + self.discount_factor * self.Q_table[curr_col, curr_dist , next_col , next_dist, best_next_action]
-            td_error = td_target - self.Q_table[curr_col , curr_dist , next_col, next_dist, action]
-            self.Q_table[curr_col, curr_dist , next_col , next_dist, action] += self.learning_rate * td_error
+            best_next_action = np.argmax(self.Q_table[next_col , next_dist])
+            td_target = reward + self.discount_factor * self.Q_table[curr_col, curr_dist, best_next_action]
+            td_error = td_target - self.Q_table[next_col , next_dist, action]
+            self.Q_table[curr_col, curr_dist, action] += self.learning_rate * td_error
 
     def train(self):
-        for episode in range(self.num_episodes):
+        for episode in tqdm(range(self.num_episodes), desc="Training progress", bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt}'):
             batch = self.sample_batch()
             self.update_Q_table(batch)
 
@@ -60,19 +65,13 @@ class QLearningAgent:
         except Exception as e:
             logging.error(f"Failed to save Q_table at {Q_table_path}. Error: {e}")
 
-    def test(self, sample_state, sample_action):
-        q_value = self.Q_table[sample_state + (sample_action,)]
-        logging.info(f"Q-value for state {sample_state} and action {sample_action}: {q_value}")
-
+##TODO - Transfer this to test.py 
+##TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    color_mapping = {'white': 0, 'yellow': 1, 'blue': 2, 'red'  : 3, 'black': 4, 'brown': 5}
-    distance_mapping = {'dis_0' : 0,'dis_1': 1, 'dis_2': 2, 'dis_3': 3, 'dis_4': 4}
-    action_mapping = {'forward': 0, 'backward': 1, 'left': 2, 'right': 3, 'stop': 4, 'undefined_1': 5, 'undefined_2': 6, 'undefined_3': 7, 'undefined_4': 8}
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
-    agent.populate_replay_buffer('/home/yessmine/Studies/6Semester/Project/Moving2/code/synth_data/fake_dataset_1.txt')
+    agent.batch_size = 4500 
+    agent.learning_rate = 0.7
+    agent.populate_replay_buffer('generated_dataset/fake_dataset.txt')
     agent.train()
     agent.export_Q_table()
-    sample_state = (color_mapping['red'], distance_mapping['dis_0'])
-    sample_action = action_mapping['forward']
-    agent.test(sample_state, sample_action)
