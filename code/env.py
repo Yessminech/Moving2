@@ -1,5 +1,10 @@
 import numpy as np
 from typing import Tuple, List, Dict
+
+Distances = ['dis_0', 'dis_1', 'dis_2', 'dis_3', 'dis_4']
+def get_distances_length() -> int:
+    return len(Distances)
+
 # Define motor speed constants
 FULL_REVERSE = -1
 STOP = 0
@@ -21,6 +26,9 @@ ACTIONS = {
 def get_action(action_name: str) -> Tuple[int, int]:
     return ACTIONS.get(action_name, (STOP, STOP))
 
+def get_actions_length() -> int:
+    return len(ACTIONS)
+
 # Define weights for the reward function
 kd = 1.0
 kc = 10.0
@@ -38,9 +46,6 @@ def get_color_value(color: str) -> int:
         'brown': -10
     }
     return color_map.get(color, 0)  # default to 0 if color not found
-
-def get_actions_length() -> int:
-    return len(ACTIONS)
 
 def get_colors_length() -> int:
     return len(COLORS)

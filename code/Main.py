@@ -1,21 +1,21 @@
 import numpy as np
 import random
 import os
-from env import get_color_value, determine_color_transition
+from env import get_actions_length, get_colors_length, get_distances_length
 
 ##############################################################
 #Defining Sizes of Components of Observation and Action spaces
 ##TODO align these with environment
-observation_space_colors_n = 7
-observation_space_distances_n = 10
-action_space_n = 3
+observation_space_colors_n = get_colors_length()
+observation_space_distances_n = get_distances_length()
+action_space_n = get_actions_length()
 
 
 #Initializing Q-Table
 #Q_table has as its 1st Variable : current Color , 2nd : previous color
 #3rd : current distance , 4th : previous distance, 5th : action
 def initialize_Q_table():
-    Q_table = np.zeros((observation_space_colors_n , observation_space_colors_n , observation_space_distances_n , observation_space_distances_n, action_space_n))
+    Q_table = np.zeros((observation_space_colors_n , observation_space_colors_n, observation_space_distances_n , observation_space_distances_n, action_space_n))
     return Q_table
 
 # Define hyperparameters
@@ -29,7 +29,13 @@ batch_size = 32
 def populate_replay_buffer(dataset):
     replay_buffer = []
     for experience in dataset:
-        replay_buffer.append(experience)
+        # Unpack the experience
+        state, action, next_state, reward, goal = experience
+        # Convert state and next_state to tuples
+        state = tuple(state)
+        next_state = tuple(next_state)
+        # Append the modified experience to the replay buffer
+        replay_buffer.append((state, action, next_state, reward, goal))
     return replay_buffer
 
 def sample_batch(buffer, batch_size):
@@ -37,15 +43,15 @@ def sample_batch(buffer, batch_size):
 
 #Function to update Q-table using a batch of experiences
 def update_Q_table(Q_table, batch, learning_rate, discount_factor):
-    for state, action, reward, next_state in batch:
-        curr_col, prev_col , curr_dist , prev_dist  = state
-        next_curr_col, next_prev_col , next_curr_dist , next_prev_dist = next_state
+    for state, action, next_state, reward, goal in batch:
+        curr_col, curr_dist = state
+        next_col , next_dist = next_state
 
         # Q-learning update rule
-        best_next_action = np.argmax(Q_table[next_curr_col, next_prev_col , next_curr_dist , next_prev_dist])
-        td_target = reward + discount_factor * Q_table[next_curr_col, next_prev_col , next_curr_dist , next_prev_dist, best_next_action]
-        td_error = td_target - Q_table[curr_col, prev_col , curr_dist , prev_dist, action]
-        Q_table[curr_col, prev_col , curr_dist , prev_dist, action] += learning_rate * td_error
+        best_next_action = np.argmax(Q_table[curr_col, curr_dist , next_col , next_dist])
+        td_target = reward + discount_factor * Q_table[curr_col, curr_dist , next_col , next_dist, best_next_action]
+        td_error = td_target - Q_table[curr_col , curr_dist , next_col, next_dist, action]
+        Q_table[curr_col, curr_dist , next_col , next_dist, action] += learning_rate * td_error
     return Q_table
 
 #Training Loop
@@ -77,9 +83,9 @@ def export_Q_table(trained_Q_table):
 ## Testing 
 # Simulate a fake dataset for testing
 fake_dataset = [
-    ((1, 2, 3, 4), 0, 1, (2, 3, 4, 5)),
-    ((2, 3, 4, 5), 1, 2, (3, 4, 5, 6)),
-    ((3, 4, 5, 6), 2, 3, (4, 5, 6, 6))  
+    (('white', 'dis_0'), 'left', ('white', 'dis_1'), 1, False),
+    (('white', 'dis_1'), 'forward', ('yellow', 'dis_2'), 10, False),
+    (('yellow', 'dis_2'), 'forward', ('red', 'dis_2'), 20, True)
 ]
 # Initialize the Q_table
 Q_table = initialize_Q_table()
