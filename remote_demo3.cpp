@@ -6,9 +6,9 @@
 #include <fstream>
 #include <string>
 #include <ctime>
-#include "Drive.hpp"
-#include "ColorTypes.hpp"
-#include "ColorSensor.hpp"
+#include "functions/Drive.hpp"
+#include "modules/sensors/ColorTypes.hpp"
+#include "modules/sensors/ColorSensor.hpp"
 
 std::mutex mtx;
 std::condition_variable cv;
