@@ -1,0 +1,7 @@
+Command,Angle,Color
+8,10,{hue: 180, sat: 2, val: 77}
+6,0,{hue: 183, sat: 1, val: 75}
+4,0,{hue: 181, sat: 2, val: 77}
+2,0,{hue: 180, sat: 2, val: 78}
+8,50,{hue: 184, sat: 2, val: 77}
+8,100,{hue: 184, sat: 2, val: 77}
