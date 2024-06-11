@@ -26,6 +26,8 @@ kd = 1.0
 kc = 10.0
 kg = 100.0
 
+COLORS = ['white', 'yellow', 'blue', 'red', 'black', 'brown']
+
 def get_color_value(color: str) -> int:
     color_map = {
         'white': 1,
@@ -36,6 +38,12 @@ def get_color_value(color: str) -> int:
         'brown': -10
     }
     return color_map.get(color, 0)  # default to 0 if color not found
+
+def get_actions_length() -> int:
+    return len(ACTIONS)
+
+def get_colors_length() -> int:
+    return len(COLORS)
 
 def determine_color_transition(previous_color: str, current_color: str) -> str:
     """Determine if the color transition is better, worse, or the same."""
