@@ -1,5 +1,16 @@
 import numpy as np
 
+
+def random_slice(array, slice_size):
+    # Ensure the slice size is not larger than the array
+    if slice_size > len(array):
+        raise ValueError("Slice size cannot be larger than the array length.")
+
+    # Calculate a random starting index
+    start_index = np.random.randint(0, len(array) - slice_size + 1)
+
+    # Obtain the slice
+    return array[start_index:start_index + slice_size]
 def read_text_file(file_path):
     with open(file_path, 'r') as file:
         return file.read()

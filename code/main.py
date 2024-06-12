@@ -4,6 +4,8 @@ import os
 import ast
 import logging
 from collections import deque
+
+import data_processing
 from env import get_colors, get_distances, get_actions
 from tqdm import tqdm
 
@@ -27,7 +29,7 @@ class QLearningAgent:
         num_colors = len(self.color_mapping)
         num_distances = len(self.distance_mapping)
         num_actions = len(self.action_mapping)
-        Q_table = np.zeros((num_colors, num_distances, num_actions))
+        Q_table = np.zeros((num_colors, num_distances, num_actions, num_colors, num_distances))   #observation state contains preivous and current states
         return Q_table
 
     def populate_replay_buffer(self, dataset):
@@ -39,17 +41,20 @@ class QLearningAgent:
                 self.replay_buffer.append(data_tuple)
 
     def sample_batch(self):
-        return random.sample(self.replay_buffer, min(len(self.replay_buffer), self.batch_size))
+        return data_processing.random_slice(self.replay_buffer, min(len(self.replay_buffer), self.batch_size))
 
     def update_Q_table(self, batch):
+        prev_state = batch[0][0]                                 #takes initial state as previous state
         for state, action, next_state, reward, goal in batch:
+            prev_col , prev_dist = self.color_mapping[prev_state[0]], self.distance_mapping[prev_state[1]]
             curr_col, curr_dist = self.color_mapping[state[0]], self.distance_mapping[state[1]]
             next_col, next_dist = self.color_mapping[next_state[0]], self.distance_mapping[next_state[1]]
             action = self.action_mapping[action]
             best_next_action = np.argmax(self.Q_table[next_col , next_dist])
-            td_target = reward + self.discount_factor * self.Q_table[curr_col, curr_dist, best_next_action]
-            td_error = td_target - self.Q_table[next_col , next_dist, action]
-            self.Q_table[curr_col, curr_dist, action] += self.learning_rate * td_error
+            td_target = reward + self.discount_factor * self.Q_table[curr_col, curr_dist, best_next_action , prev_col , prev_dist]
+            td_error = td_target - self.Q_table[next_col , next_dist, action , curr_col , curr_dist]
+            self.Q_table[curr_col, curr_dist, action , prev_col , prev_dist] += self.learning_rate * td_error
+            prev_state = state
 
     def train(self):
         for episode in tqdm(range(self.num_episodes), desc="Training progress", bar_format='{l_bar}{bar}| {n_fmt}/{total_fmt}'):
