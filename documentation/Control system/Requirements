@@ -1,7 +1,7 @@
-Data extension : 
+File extension : 
 
 Data Format : 
-      [index] : (('[current_color]', [current_distance]), '[action]', ('[next_color]', [next_distance]), termination state )
+      [index] : (('[current_color]', [current_distance]), '[action]', ('[next_color]', [next_distance]), [termination state] )
 
 Data Format example:  
         1: (('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False)
