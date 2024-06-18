@@ -23,16 +23,17 @@ void sig_handler(int signo) {
     if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM) {
         outputFile.close();
         STATUS_RUNNING = false;
+        sensing.join();
         std::cout << "Received signal " << signo << ". Exiting..." << std::endl;
         exit(0);
     }
 }
 
 void execute_command(int command, double angle, Drive& drive) {
-    {
-        std::lock_guard<std::mutex> lock(mtx);
-        command_running = true;
-    }
+    //{
+    //    std::lock_guard<std::mutex> lock(mtx);
+    //    command_running = true;
+    //}
 
     switch (command) {
     case 8:
@@ -51,10 +52,28 @@ void execute_command(int command, double angle, Drive& drive) {
         drive.set_speed(0.5);
         drive.move_backward();
         break;
+    case 5:
+        drive.coast();
+        break;
     default:
         std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
         return;
     }
+    
+    //{
+    //    std::lock_guard<std::mutex> lock(mtx);
+    //    command_running = false;
+    //}
+
+
+    //cv.notify_one();
+}
+
+void getSensorreading() {
+
+    while (STATUS_RUNNING)
+    { 
+    
     
     // Distance sensor initialization
     DistanceSensor distanceSensor;
@@ -147,13 +166,9 @@ void execute_command(int command, double angle, Drive& drive) {
     //outputFile << command << "," << angle << "," << colorName << "," << distanceRange << std::endl;
 
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
-    drive.coast();
+    //drive.coast();
     
-    {
-        std::lock_guard<std::mutex> lock(mtx);
-        command_running = false;
     }
-    cv.notify_one();
 }
 
 int main() {
@@ -177,11 +192,12 @@ int main() {
     double angle = 0;
 
     std::cout << "Control the car with keyboard input.\n";
-    std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward.\n";
-
+    std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
+    std::cout << "CTRL + C and CTRL + Z close the program.\n";
+    
     while (STATUS_RUNNING) {
-        std::unique_lock<std::mutex> lock(mtx);
-        cv.wait(lock, [] { return !command_running; });
+        //std::unique_lock<std::mutex> lock(mtx);
+        //cv.wait(lock, [] { return !command_running; });
 
         std::cout << "Enter command (e.g., '8,10' or '4'): ";
         std::getline(std::cin, input);
@@ -198,10 +214,12 @@ int main() {
             }
         }
 
-        lock.unlock();
+        //lock.unlock();
         std::thread execute(execute_command, command, angle, std::ref(drive));
+        std::thread sensing(getSensorreading);
         execute.join();
     }
+    sensing.join();
 
     outputFile.close();
     return 0;
