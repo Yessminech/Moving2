@@ -17,13 +17,13 @@ std::ofstream outputFile;
 std::string get_action_name(int command) {
     switch (command) {
     case 8:
-        return "Forward";
+        return "forward";
     case 4:
-        return "Left";
+        return "left";
     case 6:
-        return "Right";
+        return "right";
     case 2:
-        return "Backward";
+        return "rackward";
     default:
         return "Invalid";
     }
