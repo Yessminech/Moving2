@@ -166,16 +166,22 @@ void execute_command(int command, double angle, Drive& drive) {
         std::cout << std::endl;
 
         std::this_thread::sleep_for(std::chrono::milliseconds{1000});
-    }
 
 
-    
-    std::string prevstate =   "(" lastcolor << "," << lastdistance << ")" << std::endl;
-    outputFile << "(" << prevstate << "," << actionName << ", (" << colorName << "," << distanceRange << "),"  << std::endl;
+
+    std::string prevstate =   "(" + lastcolor + ", " + lastdistance + ")" ;
+    outputFile << "(" << prevstate << ", " << actionName << ", (" << colorName << ", " << distanceRange << "),++" << ")" << std::endl;
 
 
         lastdistance = distanceRange; 
         lastcolor = colorName;
+
+
+
+    }
+
+
+    
 //1: (('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False)
 
 
@@ -197,7 +203,7 @@ int main() {
         std::cerr << "Failed to open file at " << filePath << std::endl;
         return 1;
     }
-    outputFile << "Command,Angle,Color,Distance\n";
+    ///outputFile << "Command,Angle,Color,Distance\n";
 
     std::string input;
     int command;
