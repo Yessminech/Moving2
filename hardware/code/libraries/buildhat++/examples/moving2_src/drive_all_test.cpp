@@ -65,6 +65,7 @@ void execute_command(int command, double angle, Drive& drive) {
 
 
     //cv.notify_one();
+    outputFile << command << "," << angle << std::endl;
 }
 
 void getSensorreading() {
@@ -83,7 +84,7 @@ void getSensorreading() {
     auto measuredColor = colorSensor.get_color();
     std::string colorName;
 
-    for (int i = 0; i < 10; i++) {
+
         measuredColor = colorSensor.get_color();
 
         float r = measuredColor.hue;  // These should be the RGB values
@@ -157,13 +158,13 @@ void getSensorreading() {
         std::this_thread::sleep_for(std::chrono::milliseconds{1000});
 
         std::cout << colorName << std::endl;
-    outputFile << command << "," << angle << "," << colorName << "," << distanceRange << std::endl;
-    }
+    outputFile << colorName << "," << distanceRange << std::endl;
+
 
     //std::cout << colorName << std::endl;
     //outputFile << command << "," << angle << "," << colorName << "," << distanceRange << std::endl;
 
-    std::this_thread::sleep_for(std::chrono::milliseconds{1000});
+    std::this_thread::sleep_for(std::chrono::milliseconds{2000});
     //drive.coast();
     
     }
@@ -192,6 +193,7 @@ int main() {
     std::cout << "Control the car with keyboard input.\n";
     std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
     std::cout << "CTRL + C and CTRL + Z close the program.\n";
+    std::thread sensing(getSensorreading);
     
     while (STATUS_RUNNING) {
         //std::unique_lock<std::mutex> lock(mtx);
@@ -214,7 +216,7 @@ int main() {
 
         //lock.unlock();
         std::thread execute(execute_command, command, angle, std::ref(drive));
-        std::thread sensing(getSensorreading);
+        
         execute.join();
     }
     sensing.join();
