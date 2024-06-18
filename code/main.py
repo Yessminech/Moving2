@@ -51,8 +51,8 @@ class QLearningAgent:
             next_col, next_dist = self.color_mapping[next_state[0]], self.distance_mapping[next_state[1]]
             action = self.action_mapping[action]
             best_next_action = np.argmax(self.Q_table[next_col , next_dist])
-            td_target = reward + self.discount_factor * self.Q_table[curr_col, curr_dist, best_next_action , prev_col , prev_dist]
-            td_error = td_target - self.Q_table[next_col , next_dist, action , curr_col , curr_dist]
+            td_target = reward + self.discount_factor * self.Q_table[next_col , next_dist, best_next_action , curr_col , curr_dist]
+            td_error = td_target - self.Q_table[curr_col, curr_dist, action , prev_col , prev_dist]
             self.Q_table[curr_col, curr_dist, action , prev_col , prev_dist] += self.learning_rate * td_error
             prev_state = state
 
