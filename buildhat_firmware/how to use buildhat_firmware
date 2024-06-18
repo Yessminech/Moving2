@@ -1,7 +1,0 @@
-I have upload buildhat_firmwre in github(Branch develpe)
-
-
-we add a file in "/home/moving2/test"(raspberry pi) and name is "buildhat_firmware".
-
-  
-if you wanna use library of C++ and you should install the path of "FIRMWARE_BASE_PATH[]". The initial path is "home/pi/BuildHat/firmwar/" and you just adjust the path to "/home/moving2/test/buildhat_firmwar/" the location of "buildhat_fireware"

@@ -1,0 +1,2 @@
+/usr/bin/ar qc lib/libBuildHAT++.a CMakeFiles/BuildHAT++.dir/src/BuildHat.cpp.o CMakeFiles/BuildHAT++.dir/src/functions/Drive.cpp.o CMakeFiles/BuildHAT++.dir/src/modules/actuators/Motor.cpp.o CMakeFiles/BuildHAT++.dir/src/modules/sensors/ColorSensor.cpp.o CMakeFiles/BuildHAT++.dir/src/modules/sensors/ColorTypes.cpp.o CMakeFiles/BuildHAT++.dir/src/modules/sensors/DistanceSensor.cpp.o CMakeFiles/BuildHAT++.dir/src/utils/Utilities.cpp.o
+/usr/bin/ranlib lib/libBuildHAT++.a

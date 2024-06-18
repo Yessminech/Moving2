@@ -1,0 +1,1 @@
+/usr/bin/c++ -pthread CMakeFiles/color_test_2.dir/examples/color_test_2.cpp.o -o bin/color_test_2  lib/libBuildHAT++.a /usr/lib/aarch64-linux-gnu/libserial.so 

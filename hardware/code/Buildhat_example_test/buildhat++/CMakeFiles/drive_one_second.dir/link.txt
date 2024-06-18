@@ -1,0 +1,1 @@
+/usr/bin/c++ -pthread CMakeFiles/drive_one_second.dir/examples/drive_one_second.cpp.o -o bin/drive_one_second  lib/libBuildHAT++.a /usr/lib/aarch64-linux-gnu/libserial.so 

@@ -1,0 +1,87 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 54,
+				"parent" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "calibrate_colors::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "drive_one_second::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "drive_and_color::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "drive_and_distance::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "color_test_2::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "drive_all_test::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "BUILD_ALL::@6890427a1f51a3e7e1df",
+	"name" : "BUILD_ALL",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/BUILD_ALL",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/BUILD_ALL.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}
