@@ -20,7 +20,7 @@ bool STATUS_RUNNING = true;
 
 
 void sig_handler(int signo) {
-    if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM) {
+    if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM || signo == SIGTSTP) {
         outputFile.close();
         STATUS_RUNNING = false;
         std::cout << "Received signal " << signo << ". Exiting..." << std::endl;
@@ -176,6 +176,7 @@ int main() {
     signal(SIGQUIT, sig_handler);
     signal(SIGABRT, sig_handler);
     signal(SIGTERM, sig_handler);
+    signal(SIGTSTP, sig_handler);
 
     auto& drive = Drive::getInstance();
     std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv";
