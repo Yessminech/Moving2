@@ -23,9 +23,7 @@ void sig_handler(int signo) {
     if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM) {
         outputFile.close();
         STATUS_RUNNING = false;
-        sensing.join();
         std::cout << "Received signal " << signo << ". Exiting..." << std::endl;
-        exit(0);
     }
 }
 
