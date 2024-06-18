@@ -34,6 +34,15 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 # Link libserial
 target_link_libraries(${PROJECT_NAME} ${LIBSERIAL_LIBRARY})
 
+# Find Python3
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+
+# Include Python3 headers
+target_include_directories(drive_all_test PRIVATE ${Python3_INCLUDE_DIRS})
+
+# Link Python3 libraries
+target_link_libraries(drive_all_test PRIVATE ${Python3_LIBRARIES})
+
 # Add example executables
 add_executable(calibrate_colors examples/calibrate_colors.cpp)
 add_executable(drive_one_second examples/drive_one_second.cpp)
@@ -58,4 +67,12 @@ add_custom_target(BUILD_ALL ALL DEPENDS
     drive_and_distance
     color_test_2
     drive_all_test
+)
+
+# Copy the Python script to the build directory
+add_custom_command(
+    TARGET drive_all_test POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_SOURCE_DIR}/../../../rl/code/env.py
+            $<TARGET_FILE_DIR:drive_all_test>
 )
