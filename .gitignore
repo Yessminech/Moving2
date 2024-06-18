@@ -9,3 +9,5 @@ cmake_install.cmake
 libBuildHAT++.a
 build
 CMakeFiles
+Makefile
+*.csv
