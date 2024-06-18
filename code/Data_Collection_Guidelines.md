@@ -7,7 +7,7 @@ This document outlines the required format for the data collected by the Raspber
 Observations should be a tuple of two elements: color and distance.
 
 - `color`: This should be a string representing the color of the object. The possible values are: 'white', 'yellow', 'blue', 'red', 'black', 'brown'.
-- `distance`: This should be a string representing the distance to the object. The possible values are: 'dis_0', 'dis_1', 'dis_2', 'dis_3', 'dis_4'. Note that 'dis_4' represents a better(the smallest) distance than 'dis_0'.
+- `distance`: This should be a string representing the distance to the object. The possible values are: 'dis_out','dis_0', 'dis_1', 'dis_2', 'dis_3', 'dis_4'. Note that 'dis_4' represents a better(the smallest) distance than 'dis_0'. 'dis_0' is the biggest distance, covering out paths distances.
 
 Example of an observation: `('red', 'dis_4')`
 
