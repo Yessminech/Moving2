@@ -23,7 +23,7 @@ std::string get_action_name(int command) {
     case 6:
         return "right";
     case 2:
-        return "rackward";
+        return "backward";
     default:
         return "Invalid";
     }
