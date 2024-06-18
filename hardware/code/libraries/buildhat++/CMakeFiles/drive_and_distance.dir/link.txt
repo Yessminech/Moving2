@@ -1,1 +1,0 @@
-/usr/bin/c++ -pthread CMakeFiles/drive_and_distance.dir/examples/drive_and_distance_example.cpp.o -o bin/drive_and_distance  lib/libBuildHAT++.a /usr/lib/aarch64-linux-gnu/libserial.so 
