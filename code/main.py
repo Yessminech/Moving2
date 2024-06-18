@@ -14,7 +14,7 @@ distance_mapping = {distance: i for i, distance in enumerate(get_distances())}
 action_mapping = {action: i for i, action in enumerate(get_actions())}
     
 class QLearningAgent:
-    def __init__(self, color_mapping, distance_mapping, action_mapping, learning_rate=0.1, discount_factor=0.99, num_episodes=1000, batch_size=32):
+    def __init__(self, color_mapping, distance_mapping, action_mapping, learning_rate=0.1, discount_factor=0.99, num_episodes=2000, batch_size=32):
         self.color_mapping = color_mapping
         self.distance_mapping = distance_mapping
         self.action_mapping = action_mapping

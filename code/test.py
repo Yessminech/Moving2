@@ -6,9 +6,17 @@ import os
 import numpy as np
 logging.basicConfig(level=logging.INFO)
 
-def test(Q_table, sample_state, sample_action):
-    q_value = Q_table[sample_state + (sample_action,)]
+def get_best_action(Q_table, current_state, previous_state):
+    curr_col, curr_dist = current_state
+    prev_col, prev_dist = previous_state
+    best_action = np.argmax(Q_table[curr_col , curr_dist, : , prev_col , prev_dist])
+    logging.info(f"Best action for state {sample_state} and previous state {sample_prev_state} is: {best_action}")
+    #return best_action
+
+def test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state):
+    q_value = Q_table[sample_state + (sample_action,) + sample_prev_state]
     logging.info(f"Q-value for state {sample_state} and action {sample_action}: {q_value}")
+    
 
 def import_Q_table():
     current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -22,12 +30,16 @@ def import_Q_table():
         return None
     
 ## Example test
-test_color = 'red'
-test_distance = 'dis_4'
+test_curr_color = 'red'
+test_curr_distance = 'dis_4'
 test_action = 'forward'
+test_prev_color = 'white'
+test_prev_distance = 'dis_3'
 
 ## Compute the Q-value for the sample state and action
 Q_table = import_Q_table()
-sample_state = (color_mapping[test_color], distance_mapping[test_distance])
+sample_state = (color_mapping[test_curr_color], distance_mapping[test_curr_distance])
+sample_prev_state = (color_mapping[test_prev_color], distance_mapping[test_curr_distance])
 sample_action = action_mapping[test_action]
-test(Q_table,sample_state, sample_action)
+test_Qvalue(Q_table,sample_state, sample_action, sample_prev_state)
+get_best_action(Q_table,sample_state, sample_prev_state)
