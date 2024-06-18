@@ -26,7 +26,7 @@ find_library(LIBSERIAL_LIBRARY NAMES serial REQUIRED)
 include_directories(${LIBSERIAL_INCLUDE_DIRS})
 
 # Add library targets
-add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${LOCAL_LIBRARY_SOURCES} ${LOCAL_LIBRARY_HEADERS})
+add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Export library include directories
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
@@ -34,14 +34,12 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
 # Link libserial
 target_link_libraries(${PROJECT_NAME} ${LIBSERIAL_LIBRARY})
 
-# Find Python3
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+# Find and include Python libraries
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+include_directories(${Python3_INCLUDE_DIRS})
 
-# Include Python3 headers
-target_include_directories(drive_all_test PRIVATE ${Python3_INCLUDE_DIRS})
-
-# Link Python3 libraries
-target_link_libraries(drive_all_test PRIVATE ${Python3_LIBRARIES})
+# Link Python libraries
+target_link_libraries(${PROJECT_NAME} ${Python3_LIBRARIES})
 
 # Add example executables
 add_executable(calibrate_colors examples/calibrate_colors.cpp)
@@ -59,6 +57,13 @@ target_link_libraries(drive_and_distance ${PROJECT_NAME})
 target_link_libraries(color_test_2 ${PROJECT_NAME})
 target_link_libraries(drive_all_test ${PROJECT_NAME})
 
+# Copy Python script to the binary directory
+add_custom_command(TARGET drive_all_test POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "/home/moving2/Moving2/rl/code/env.py"
+    $<TARGET_FILE_DIR:drive_all_test>/env.py
+)
+
 # Add custom "build all" target
 add_custom_target(BUILD_ALL ALL DEPENDS
     drive_one_second
@@ -67,12 +72,4 @@ add_custom_target(BUILD_ALL ALL DEPENDS
     drive_and_distance
     color_test_2
     drive_all_test
-)
-
-# Copy the Python script to the build directory
-add_custom_command(
-    TARGET drive_all_test POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_SOURCE_DIR}/../../../rl/code/env.py
-            $<TARGET_FILE_DIR:drive_all_test>
 )

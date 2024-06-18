@@ -36,7 +36,7 @@ bool call_goal_achieved(const std::string& color, const std::string& distance) {
     Py_Initialize();
 
     // Set the Python script file name
-    const char* script_name = "env";
+    const char* script_name = "env.py";
     
     // Convert the file name to a Python string
     PyObject* pName = PyUnicode_DecodeFSDefault(script_name);
@@ -90,7 +90,7 @@ double call_calculate_reward(const std::string& current_color, const std::string
     Py_Initialize();
 
     // Set the Python script file name
-    const char* script_name = "env";
+    const char* script_name = "env.py";
     
     // Convert the file name to a Python string
     PyObject* pName = PyUnicode_DecodeFSDefault(script_name);
@@ -319,7 +319,13 @@ void execute_command(int command, double angle, Drive& drive) {
 //////
 
     std::string prevstate =   "(" + lastcolor + ", " + lastdistance + ")" ;
-    outputFile << "(" << prevstate << ", " << actionName << ", (" << colorName << ", " << distanceRange << ")," << reward << "," << achieved ? "True" : "False"<< ")" << std::endl;
+    outputFile << "(" 
+           << prevstate 
+           << ", " << actionName 
+           << ", (" << colorName << ", " << distanceRange 
+           << "), " << reward 
+           << ", " << (achieved ? "True" : "False") 
+           << ")" << std::endl;
 
 
         lastdistance = distanceRange; 
