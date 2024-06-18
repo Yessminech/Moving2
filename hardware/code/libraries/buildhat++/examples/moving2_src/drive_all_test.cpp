@@ -8,6 +8,7 @@
 #include "functions/Drive.hpp"
 #include "modules/sensors/ColorSensor.hpp"
 #include "modules/sensors/DistanceSensor.hpp"
+#include <signal.h>
 
 /// demo5 Yin
 
@@ -15,6 +16,17 @@ std::mutex mtx;
 std::condition_variable cv;
 bool command_running = false;
 std::ofstream outputFile;
+bool STATUS_RUNNING = true;
+
+
+void sig_handler(int signo) {
+    if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM) {
+        outputFile.close();
+        STATUS_RUNNING = false;
+        std::cout << "Received signal " << signo << ". Exiting..." << std::endl;
+        exit(0);
+    }
+}
 
 void execute_command(int command, double angle, Drive& drive) {
     {
@@ -145,6 +157,12 @@ void execute_command(int command, double angle, Drive& drive) {
 }
 
 int main() {
+    // register signal Ctrl+C and Ctrl+Z and some other signals
+    signal(SIGINT, sig_handler);
+    signal(SIGQUIT, sig_handler);
+    signal(SIGABRT, sig_handler);
+    signal(SIGTERM, sig_handler);
+
     auto& drive = Drive::getInstance();
     std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv";
     outputFile.open(filePath, std::ios::out | std::ios::app); 
@@ -161,7 +179,7 @@ int main() {
     std::cout << "Control the car with keyboard input.\n";
     std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward.\n";
 
-    while (true) {
+    while (STATUS_RUNNING) {
         std::unique_lock<std::mutex> lock(mtx);
         cv.wait(lock, [] { return !command_running; });
 
