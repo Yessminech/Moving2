@@ -1,16 +1,17 @@
 import numpy as np
+from collections import deque
+import random
 
-
-def random_slice(array, slice_size):
-    # Ensure the slice size is not larger than the array
-    if slice_size > len(array):
-        raise ValueError("Slice size cannot be larger than the array length.")
+def random_slice(deque_obj, slice_size: int):
+    # Ensure the slice size is not larger than the deque
+    if slice_size > len(deque_obj):
+        raise ValueError("Slice size cannot be larger than the deque length.")
 
     # Calculate a random starting index
-    start_index = np.random.randint(0, len(array) - slice_size + 1)
+    start_index = random.randint(0, len(deque_obj) - slice_size)
 
     # Obtain the slice
-    return array[start_index:start_index + slice_size]
+    return [deque_obj[i] for i in range(start_index, start_index + slice_size)]
 def read_text_file(file_path):
     with open(file_path, 'r') as file:
         return file.read()
