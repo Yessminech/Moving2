@@ -14,6 +14,17 @@ std::condition_variable cv;
 bool command_running = false;
 std::ofstream outputFile;
 
+
+
+
+
+
+    std::string lastcolor = "white";
+    std::string lastdistance = "dist_0";
+
+
+
+
 std::string get_action_name(int command) {
     switch (command) {
     case 8:
@@ -157,10 +168,15 @@ void execute_command(int command, double angle, Drive& drive) {
         std::this_thread::sleep_for(std::chrono::milliseconds{1000});
     }
 
-    //std::string prevstate =   "(" ++ colorName << "," << distanceRange << std::endl;
-    outputFile << "(" << "(" << colorName << "," << distanceRange << "), " << actionName << ")" << std::endl;
 
-// (('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False)
+    
+    std::string prevstate =   "(" lastcolor << "," << lastdistance << ")" << std::endl;
+    outputFile << "(" << prevstate << "," << actionName << ", (" << colorName << "," << distanceRange << "),"  << std::endl;
+
+
+        lastdistance = distanceRange; 
+        lastcolor = colorName;
+//1: (('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False)
 
 
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
