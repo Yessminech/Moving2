@@ -1,1 +1,0 @@
-/usr/bin/c++ -pthread CMakeFiles/calibrate_colors.dir/examples/calibrate_colors.cpp.o -o bin/calibrate_colors  lib/libBuildHAT++.a /usr/lib/aarch64-linux-gnu/libserial.so 
