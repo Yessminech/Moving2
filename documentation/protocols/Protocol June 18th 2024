@@ -1,0 +1,35 @@
+Protocol June 18th 2024
+Moderator: Willie
+Note-Taker: Vera
+
+- only have two weeks left to meet requirements (we might have to adjust requirements)
+- updates from last week:
+Robert (research possibilities to save and send data):
+- csv or something else → csv is what is implemented now, so we might as well use it
+- scp secure copy protocol to send the files from the computer to the raspberry pi
+Yin and Kevin (continuing work on the remote control from the week before (Yin and Vera)):
+- remote control works, some refactoring done
+Yessmine and Zied (BC Algorithm):
+- ready to actually receive real data
+
+need:
+sanity check (do the actions we receive from the backend algorithm follow some kind of trend? Do they make sense? Or might they be completely random?)
+convert data from csv into txt and send it over (scp)
+reformat data in remote control code
+Agent on the rpi (collect data in c++, use argmax function (take max from table), return action, that action will be taken up by agent code (needs to be changed))
+change filename convention
+
+really collect data!!!
+
+How is everyones manager role going?
+Yessmine: work on CI/CD pipeline this week
+Robert: conversion csv/text and scp
+Kevin/Yin: need to write tests (3-5 unit tests per code segment (bc algorithm, protocol, control..) , do code reviews, 
+Zied/Vera: distribute issues, please independently move issues into done or inform someone to review; what needs to be done towards the end? → be more consistent with issues + update Gantt chart + add/reduce project goals
+
+goal for today: get the robot to collect real data and receive it to the backend code so the bc algorithm can be tested
+who: all that are here
+wrap up for today: make issues about what remains to be done; go over issues that exist and move into done when done
+
+Note-Taker: Robert
+Moderator: Kevin
