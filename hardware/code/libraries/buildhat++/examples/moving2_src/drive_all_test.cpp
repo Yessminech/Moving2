@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <sstream>
 #include <thread>
@@ -9,19 +10,36 @@
 #include "functions/Drive.hpp"
 #include "modules/sensors/ColorSensor.hpp"
 #include "modules/sensors/DistanceSensor.hpp"
+#include <signal.h>
 
-std::mutex mtx;
-std::condition_variable cv;
-bool command_running = false;
+/// demo5 Yin
+
+//std::mutex mtx;
+//std::condition_variable cv;
+//bool command_running = false;
 std::ofstream outputFile;
+bool STATUS_RUNNING = true;
 
-
-
-
-
-
-    std::string lastcolor = "white";
+std::string lastcolor = "white";
     std::string lastdistance = "dist_0";
+
+
+void sig_handler(int signo) {
+    if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM || signo == SIGTSTP) {
+        outputFile.close();
+        STATUS_RUNNING = false;
+        std::cout << "Received signal " << signo << ". Exiting..." << std::endl;
+    }
+}
+
+
+
+
+
+
+
+
+    
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -178,12 +196,12 @@ std::string get_action_name(int command) {
 }
 
 void execute_command(int command, double angle, Drive& drive) {
-    {
-        std::lock_guard<std::mutex> lock(mtx);
-        command_running = true;
-    }
-
-    std::string actionName = get_action_name(command);
+    //{
+    //    std::lock_guard<std::mutex> lock(mtx);
+    //    command_running = true;
+    //}
+  
+  std::string actionName = get_action_name(command);
 
     if (actionName == "Invalid") {
         std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
@@ -214,19 +232,41 @@ void execute_command(int command, double angle, Drive& drive) {
         drive.set_speed(0.5);
         drive.move_backward();
         break;
+    case 5:
+        drive.coast();
+        break;
+    default:
+        std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
+        return;
     }
+    
+    //{
+    //    std::lock_guard<std::mutex> lock(mtx);
+    //    command_running = false;
+    //}
 
+
+    //cv.notify_one();
+    outputFile << command << "," << angle << std::endl;
+}
+
+void getSensorreading() {
+
+    while (STATUS_RUNNING)
+    { 
+    
+    
     // Distance sensor initialization
     DistanceSensor distanceSensor;
-    int measuredDistance = distanceSensor.get_distance();
-    std::string distanceRange;
+    int measuredDistance = distanceSensor.get_distance();    
+    std::string distanceRange; 
 
     // Color sensor initialization
     ColorSensor colorSensor;
     auto measuredColor = colorSensor.get_color();
     std::string colorName;
 
-    for (int i = 0; i < 10; i++) {
+
         measuredColor = colorSensor.get_color();
 
         float r = measuredColor.hue;  // These should be the RGB values
@@ -254,10 +294,6 @@ void execute_command(int command, double angle, Drive& drive) {
         const float yellow_min_g = 200.0, yellow_max_g = 255.0;
         const float yellow_min_b = 0.0, yellow_max_b = 100.0;
 
-        const float brown_min_r = 80.0, brown_max_r = 160.0;
-        const float brown_min_g = 50.0, brown_max_g = 120.0;
-        const float brown_min_b = 0.0, brown_max_b = 80.0;
-
         // Determine the color based on RGB values
         std::cerr << ">>> Measurement Color (r|g|b) : " << measuredColor.hue << " | " << measuredColor.sat << " | " << measuredColor.val << std::endl;
 
@@ -271,8 +307,6 @@ void execute_command(int command, double angle, Drive& drive) {
             colorName = "yellow";
         } else if (r >= blue_min_r && r <= blue_max_r && g >= blue_min_g && g <= blue_max_g && b >= blue_min_b && b <= blue_max_b) {
             colorName = "blue";
-        } else if (r >= brown_min_r && r <= brown_max_r && g >= brown_min_g && g <= brown_max_g && b >= brown_min_b && b <= brown_max_b) {
-            colorName = "brown";
         } else {
             colorName = "Unknown";
         }
@@ -284,6 +318,7 @@ void execute_command(int command, double angle, Drive& drive) {
         std::cerr << ">>> Measurement Distance : " << measuredDistance << std::endl;
 
         // Determine distance range
+       
         if (measuredDistance <= 240) {
             distanceRange = "dist_4";
         } else if (measuredDistance <= 480) {
@@ -292,7 +327,7 @@ void execute_command(int command, double angle, Drive& drive) {
             distanceRange = "dist_2";
         } else if (measuredDistance <= 960) {
             distanceRange = "dist_1";
-        } else if (measuredDistance <= 1200) {
+        } else if (measuredDistance <= 1200){
             distanceRange = "dist_0";
         } else {
             distanceRange = "dist_out";
@@ -304,8 +339,8 @@ void execute_command(int command, double angle, Drive& drive) {
 
         std::this_thread::sleep_for(std::chrono::milliseconds{1000});
 
-
-///////////// use python code
+        std::cout << colorName << std::endl;
+      ///////////// use python code
 ///////
     std::string current_color = lastcolor;
     std::string current_distance = lastdistance;
@@ -331,45 +366,47 @@ void execute_command(int command, double angle, Drive& drive) {
         lastdistance = distanceRange; 
         lastcolor = colorName;
 
+    outputFile << colorName << "," << distanceRange << std::endl;
 
 
-    }
+    //std::cout << colorName << std::endl;
+    //outputFile << command << "," << angle << "," << colorName << "," << distanceRange << std::endl;
 
-
+    std::this_thread::sleep_for(std::chrono::milliseconds{2000});
+    //drive.coast();
     
-//1: (('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False)
-
-
-    std::this_thread::sleep_for(std::chrono::milliseconds{1000});
-    drive.coast();
-
-    {
-        std::lock_guard<std::mutex> lock(mtx);
-        command_running = false;
     }
-    cv.notify_one();
 }
 
 int main() {
+    // register signal Ctrl+C and Ctrl+Z and some other signals
+    signal(SIGINT, sig_handler);
+    signal(SIGQUIT, sig_handler);
+    signal(SIGABRT, sig_handler);
+    signal(SIGTERM, sig_handler);
+    signal(SIGTSTP, sig_handler);
+
     auto& drive = Drive::getInstance();
     std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv";
-    outputFile.open(filePath, std::ios::out | std::ios::app);
+    outputFile.open(filePath, std::ios::out | std::ios::app); 
     if (!outputFile.is_open()) {
         std::cerr << "Failed to open file at " << filePath << std::endl;
         return 1;
     }
-    ///outputFile << "Command,Angle,Color,Distance\n";
+    outputFile << "Command,Angle,Color,Distance\n";
 
     std::string input;
     int command;
     double angle = 0;
 
     std::cout << "Control the car with keyboard input.\n";
-    std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward.\n";
-
-    while (true) {
-        std::unique_lock<std::mutex> lock(mtx);
-        cv.wait(lock, [] { return !command_running; });
+    std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
+    std::cout << "CTRL + C and CTRL + Z close the program.\n";
+    std::thread sensing(getSensorreading);
+    
+    while (STATUS_RUNNING) {
+        //std::unique_lock<std::mutex> lock(mtx);
+        //cv.wait(lock, [] { return !command_running; });
 
         std::cout << "Enter command (e.g., '8,10' or '4'): ";
         std::getline(std::cin, input);
@@ -386,10 +423,12 @@ int main() {
             }
         }
 
-        lock.unlock();
+        //lock.unlock();
         std::thread execute(execute_command, command, angle, std::ref(drive));
+        
         execute.join();
     }
+    sensing.join();
 
     outputFile.close();
     return 0;

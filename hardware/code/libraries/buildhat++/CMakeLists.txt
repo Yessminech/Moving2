@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 3.10)
 
 project(BuildHAT++)
@@ -73,3 +74,4 @@ add_custom_target(BUILD_ALL ALL DEPENDS
     color_test_2
     drive_all_test
 )
+
