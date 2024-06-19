@@ -1,2 +1,7 @@
 black
 pytest
+tqdm
+logging
+collections
+os
+numpy
