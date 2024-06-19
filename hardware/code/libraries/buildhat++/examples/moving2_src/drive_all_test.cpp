@@ -171,7 +171,7 @@ void execute_command(int command, double angle, Drive& drive) {
 
     switch (command) {
     case 2:
-        drive.set_speed(0.5);
+        drive.set_speed(1);
         drive.move_forward(angle);
         break;
     case 4:
@@ -183,7 +183,7 @@ void execute_command(int command, double angle, Drive& drive) {
         drive.turn_right();
         break;
     case 8:
-        drive.set_speed(0.5);
+        drive.set_speed(1);
         drive.move_backward();
         break;
     case 5: 
@@ -227,29 +227,33 @@ void execute_command(int command, double angle, Drive& drive) {
         float b = measuredColor.val;  // These should be the RGB values
 
         // Define ranges for each color
-        const float blue_min_r = 0.0, blue_max_r = 100.0;
-        const float blue_min_g = 0.0, blue_max_g = 150.0;
-        const float blue_min_b = 150.0, blue_max_b = 255.0;
+        const float blue_min_r = 0.0, blue_max_r = 250.0;
+        const float blue_min_g = 0.0, blue_max_g = 255.0;
+        const float blue_min_b = 150.0, blue_max_b = 300.0;
 
         const float black_min_r = 0.0, black_max_r = 80.0;
         const float black_min_g = 0.0, black_max_g = 80.0;
         const float black_min_b = 0.0, black_max_b = 80.0;
 
-        const float red_min_r = 200.0, red_max_r = 255.0;
+        const float red_min_r = 200.0, red_max_r = 300.0;
         const float red_min_g = 0.0, red_max_g = 100.0;
-        const float red_min_b = 0.0, red_max_b = 100.0;
+        const float red_min_b = 100.0, red_max_b = 150.0;
 
-        const float white_min_r = 200.0, white_max_r = 1023.0;
-        const float white_min_g = 200.0, white_max_g = 1023.0;
-        const float white_min_b = 200.0, white_max_b = 1023.0;
+        const float white_min_r = 500.0, white_max_r = 550.0;
+        const float white_min_g = 500.0, white_max_g = 550.0;
+        const float white_min_b = 450.0, white_max_b = 550.0;
 
-        const float yellow_min_r = 200.0, yellow_max_r = 255.0;
-        const float yellow_min_g = 200.0, yellow_max_g = 255.0;
-        const float yellow_min_b = 0.0, yellow_max_b = 100.0;
+        //const float yellow_min_r = 200.0, yellow_max_r = 450.0;
+        //const float yellow_min_g = 200.0, yellow_max_g = 450.0;
+        //const float yellow_min_b = 0.0, yellow_max_b = 255.0;
 
-        const float brown_min_r = 80.0, brown_max_r = 160.0;
-        const float brown_min_g = 50.0, brown_max_g = 120.0;
-        const float brown_min_b = 0.0, brown_max_b = 80.0;
+        const float yellow_min_r = 400.0, yellow_max_r = 500.0;
+        const float yellow_min_g = 300.0, yellow_max_g = 400.0;
+        const float yellow_min_b = 200.0, yellow_max_b = 300.0;
+
+        const float brown_min_r = 200.0, brown_max_r = 300.0;
+        const float brown_min_g = 200.0, brown_max_g = 255.0;
+        const float brown_min_b = 150.0, brown_max_b = 200.0;
 
         // Determine the color based on RGB values
         std::cerr << ">>> Measurement Color (r|g|b) : " << measuredColor.hue << " | " << measuredColor.sat << " | " << measuredColor.val << std::endl;
