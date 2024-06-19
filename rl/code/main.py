@@ -22,7 +22,7 @@ class QLearningAgent:
         action_mapping,
         learning_rate=0.1,
         discount_factor=0.99,
-        num_episodes=2000,
+        num_episodes=100,
         batch_size=32,
     ):
         self.color_mapping = color_mapping
