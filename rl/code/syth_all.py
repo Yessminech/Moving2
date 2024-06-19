@@ -14,6 +14,7 @@ colors = get_colors()
 distances = get_distances()
 actions = get_actions()
 
+
 # Function to generate a synthetic dataset
 ## Fromat: (('yellow', 'dis_3'), 'right', ('blue', 'dis_0'), 13.0, False)
 def generate_fake_dataset():

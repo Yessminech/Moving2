@@ -31,6 +31,7 @@ kd = 1.0
 kc = 10.0
 kg = 100.0
 
+
 # Define the helper functions
 def get_distance_value(distance: str) -> int:
     distance_map = {

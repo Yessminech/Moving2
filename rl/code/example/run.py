@@ -6,6 +6,7 @@ Executed using 'poetry run python run.py'.
 
 Authors: Sofie Verrewaere, Hiru Ranasinghe & Daniel Miskell @ Datatonic
 """
+
 import imageio.v2 as imageio
 import json
 import keras
@@ -19,6 +20,7 @@ from os import walk
 from keras.models import model_from_json
 
 from env import Catch
+
 
 # ToDo: Inference File (run.py) - This file will be used to run the trained model and visualize the game.
 # Do we need this if we don't have neural networks?
