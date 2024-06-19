@@ -31,24 +31,27 @@ jobs:
         pip install black
         black .
 
-    # - name: Run tests
-    #   run: |
-    #     pip install pytest
-    #     pytest
+    - name: Run tests
+      run: |
+        pip install pytest
+        pytest
 
-  # merge:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/develop'
+  merge:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Fetch all history for all branches
 
-  #   - name: Merge develop into main
-  #     run: |
-  #       git config --global user.name 'github-actions'
-  #       git config --global user.email 'github-actions@github.com'
-  #       git checkout main
-  #       git merge develop
-  #       git push origin main
+    - name: Merge develop into main
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git fetch --all 
+        git checkout main  
+        git merge develop
+        git push origin main

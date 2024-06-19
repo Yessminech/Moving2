@@ -15,6 +15,7 @@ import numpy as np
 import keras
 from typing import Tuple, Type
 
+
 # experience replay buffer
 # experience = previous state, the action taken, the next state transitioned to, the reward received, and the signal that it is done.
 # list with max size. If nex experiences -> override

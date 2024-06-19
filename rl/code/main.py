@@ -22,7 +22,7 @@ class QLearningAgent:
         action_mapping,
         learning_rate=0.1,
         discount_factor=0.99,
-        num_episodes=2000,
+        num_episodes=100,
         batch_size=32,
     ):
         self.color_mapping = color_mapping
@@ -110,6 +110,9 @@ class QLearningAgent:
         except Exception as e:
             logging.error(f"Failed to save Q_table at {Q_table_path}. Error: {e}")
 
+    def get_Q_table(self):
+        return self.Q_table
+
 
 ##TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
@@ -117,6 +120,6 @@ if __name__ == "__main__":
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    agent.populate_replay_buffer("generated_dataset/fake_dataset.txt")
+    agent.populate_replay_buffer("rl/code/generated_dataset/fake_dataset.txt")
     agent.train()
     agent.export_Q_table()
