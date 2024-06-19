@@ -62,28 +62,39 @@ def import_Q_table():
         logging.error(f"Q_table not found at {Q_table_path}")
         return None
 
+import pytest
 
-# Example test
-test_curr_color = "red"
-test_curr_distance = "dis_4"
-test_action = "forward"
-test_prev_color = "blue"
-test_prev_distance = "dis_3"
+@pytest.fixture
+def Q_table():
+    # Initialize or load your Q_table here
+    return  test_agent_training_and_export()
 
-# Compute the Q-value for the sample state and action
-# Q_table = import_Q_table()
-Q_table = test_agent_training_and_export()
-if Q_table is not None:
-    sample_state = (
-        color_mapping[test_curr_color],
-        distance_mapping[test_curr_distance],
-    )
-    sample_prev_state = (
-        color_mapping[test_prev_color],
-        distance_mapping[test_prev_distance],
-    )
-    sample_action = action_mapping[test_action]
-    test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state)
-    get_best_action(Q_table, sample_state, sample_prev_state)
-else:
-    logging.error("Failed to load Q_table for testing.")
+
+
+def example_test():
+        # Example test
+    test_curr_color = "red"
+    test_curr_distance = "dis_4"
+    test_action = "forward"
+    test_prev_color = "blue"
+    test_prev_distance = "dis_3"
+
+    # Compute the Q-value for the sample state and action
+    # Q_table = import_Q_table()
+    Q_table = test_agent_training_and_export()
+    if Q_table is not None:
+        sample_state = (
+            color_mapping[test_curr_color],
+            distance_mapping[test_curr_distance],
+        )
+        sample_prev_state = (
+            color_mapping[test_prev_color],
+            distance_mapping[test_prev_distance],
+        )
+        sample_action = action_mapping[test_action]
+        test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state)
+        result = get_best_action(Q_table, sample_state, sample_prev_state)
+    else:
+        logging.error("Failed to load Q_table for testing.")
+        
+    assert result != 0
