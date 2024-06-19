@@ -9,8 +9,9 @@
 #include "modules/sensors/ColorSensor.hpp"
 #include "modules/sensors/DistanceSensor.hpp"
 #include <string>
+#include <signal.h>
 
-
+// inspired with demo5 Yin and color Robert
 
 std::mutex mtx;
 std::condition_variable cv;
@@ -19,9 +20,17 @@ std::ofstream outputFile;
 
 std::string lastcolor = "white";
 std::string lastdistance = "dis_0";
+std::string actionName;
 
-
-
+// fix remote from robert
+bool STATUS_RUNNING = true;
+void sig_handler(int signo) {
+    if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM || signo == SIGTSTP) {
+        outputFile.close();
+        STATUS_RUNNING = false;
+        std::cout << "Received signal " << signo << ". Exiting..." << std::endl;
+    }
+}
 
 
 
@@ -146,9 +155,9 @@ void execute_command(int command, double angle, Drive& drive) {
         command_running = true;
     }
 
-    std::string actionName = get_action_name(command);
+     actionName = get_action_name(command);
 
-    if (actionName == "Invalid") {
+    if (actionName == "Invalid" && command != 5) {
         std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
         {
             std::lock_guard<std::mutex> lock(mtx);
@@ -161,7 +170,7 @@ void execute_command(int command, double angle, Drive& drive) {
     std::cout << "Action: " << actionName << std::endl;
 
     switch (command) {
-    case 8:
+    case 2:
         drive.set_speed(0.5);
         drive.move_forward(angle);
         break;
@@ -173,23 +182,44 @@ void execute_command(int command, double angle, Drive& drive) {
         drive.set_speed(0.5);
         drive.turn_right();
         break;
-    case 2:
+    case 8:
         drive.set_speed(0.5);
         drive.move_backward();
         break;
+    case 5:
+        drive.coast();
+        break;
+     default:
+        std::cout << "Invalid command. Please use 8, 4, 6, 5 or 2 with appropriate formatting.\n";
+        return;    
     }
 
-    // Distance sensor initialization
-    DistanceSensor distanceSensor;
-    int measuredDistance = distanceSensor.get_distance();
-    std::string distanceRange;
+}
 
-    // Color sensor initialization
-    ColorSensor colorSensor;
-    auto measuredColor = colorSensor.get_color();
-    std::string colorName;
 
-    for (int i = 0; i < 10; i++) {
+// Distance sensor initialization
+                DistanceSensor distanceSensor;
+                int measuredDistance = distanceSensor.get_distance();
+                std::string distanceRange;
+
+                // Color sensor initialization
+                ColorSensor colorSensor;
+                auto measuredColor = colorSensor.get_color();
+                std::string colorName;
+    
+
+
+
+            /////////////////// robert part sensor get ready
+    void getSensorreading() {
+            
+
+
+
+        while (STATUS_RUNNING)
+        { 
+        
+    //for (int i = 0; i < 10; i++) {
         measuredColor = colorSensor.get_color();
 
         float r = measuredColor.hue;  // These should be the RGB values
@@ -286,7 +316,7 @@ void execute_command(int command, double angle, Drive& drive) {
 
         double reward = calculate_reward(current_color, current_distance, next_color, next_distance, achieved, kd, kc, kg);
         //std::cout << "Reward: " << reward << std::endl;
-
+        
         std::string prevstate = "(" + lastcolor + ", " + lastdistance + ")" ;
         outputFile << "(" 
                 << prevstate 
@@ -298,19 +328,30 @@ void execute_command(int command, double angle, Drive& drive) {
 
         lastdistance = distanceRange; 
         lastcolor = colorName;
-    }
+    
 
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
-    drive.coast();
+    //drive.coast();
 
-    {
-        std::lock_guard<std::mutex> lock(mtx);
-        command_running = false;
-    }
-    cv.notify_one();
+    //{
+      //  std::lock_guard<std::mutex> lock(mtx);
+     //   command_running = false;
+    //}
+    //cv.notify_one();
 }
+}
+            
 
 int main() {
+
+        // register signal Ctrl+C and Ctrl+Z and some other signals
+            signal(SIGINT, sig_handler);
+            signal(SIGQUIT, sig_handler);
+            signal(SIGABRT, sig_handler);
+            signal(SIGTERM, sig_handler);
+            signal(SIGTSTP, sig_handler);
+
+
     auto& drive = Drive::getInstance();
     std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv";
     outputFile.open(filePath, std::ios::out | std::ios::app);
@@ -325,11 +366,13 @@ int main() {
     double angle = 0;
 
     std::cout << "Control the car with keyboard input.\n";
-    std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward.\n";
-
-    while (true) {
-        std::unique_lock<std::mutex> lock(mtx);
-        cv.wait(lock, [] { return !command_running; });
+    std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
+    std::cout << "CTRL + C and CTRL + Z close the program.\n";
+    std::thread sensing(getSensorreading);
+    
+    while (STATUS_RUNNING) {
+        //std::unique_lock<std::mutex> lock(mtx);
+        //cv.wait(lock, [] { return !command_running; });
 
         std::cout << "Enter command (e.g., '8,10' or '4'): ";
         std::getline(std::cin, input);
@@ -346,10 +389,12 @@ int main() {
             }
         }
 
-        lock.unlock();
+        //lock.unlock();
         std::thread execute(execute_command, command, angle, std::ref(drive));
+        
         execute.join();
     }
+    sensing.join();
 
     outputFile.close();
     return 0;
