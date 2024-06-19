@@ -237,7 +237,9 @@ void execute_command(int command, double angle, Drive& drive) {
         } else if (r >= brown_min_r && r <= brown_max_r && g >= brown_min_g && g <= brown_max_g && b >= brown_min_b && b <= brown_max_b) {
             colorName = "brown";
         } else {
+            continue;
             colorName = "Unknown";
+           // continue;
         }
 
         std::cout << "Detected Color: " << colorName << std::endl;
