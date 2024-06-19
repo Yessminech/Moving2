@@ -1,0 +1,43 @@
+TOPIC 1 - Organization:
+
+Milestone 2 presenters: Yessmine, Robert
+Willie will be gone from May 26th to June 2nd --> Test presentation should happen before
+
+
+TOPIC 2.1 - hear from the groups - Prototype and next plans:
+
+The group agreed to continue working with the skiing robot
+The next Task would be to include sensors and pi into the design to have a functional prototype -> Task
+We also need to do some testing and prototypes, to test the sensors position, as well as return values -> task for next week
+We discussed the gradient idea: discrete vs continuous color areas. For now we will stick with the discrete color space
+We also need to check the API for sensor capability, and consider time which might be needed to implement
+We need to check and understand the API to control motors with c++ and collect sensor data via API -> Task for next week
+The integration manager should come up with a diagram (UML) -> second milestone
+WE finally need to find two RL algorithms and key aspects (advantages, disadvantages) -> Task for next week 
+Each of the focus groups should come up with a presentation, either for RL Algorithm or for API usage
+Willie organized a PC from TEL: We can overwrite the old OS on this PC to get started -> Fix  it , Task for next week
+Comment of Willie: stable base line 3 library -> well known for RL Algorithms. We should take a look on it
+
+TOPIC 3 - Priorities for tasks and groups:
+1. API/Sensor- Group: Vera, Robert, Kevin
+Install Sensors
+Test sensor Callbacks
+
+Time plan:
+Check API (Sensors) - Vera
+Sensor Prototype 
+Check RPI HAT API
+2. RL/Backend-Group: Zied, Yessmine, Wangdong
+research Algorithms
+prepare presentation
+setup Backend PC - Zied
+
+TOPIC 4 - how is everyones manager role going?
+Project Mangers: Are doing fine
+Technical Manager: Is doing fine
+git branches should be: dev, main and one for each feature we are working on
+Integration Manger: Propses Protobuf and Cap N' Proto as fast binary formats for data exchange,  TODO: UML- Diagram
+Quality Managers: Need to come up with a c++ Coding Style, lower priority task develop a test plan
+
+TOPIC 5 - Assign moderator and note-taker for next week
+Moderator: Robert, Minuttaker: Kevin

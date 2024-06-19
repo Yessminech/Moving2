@@ -1,0 +1,61 @@
+Moderator today: Robert
+Minute-taker: Kevin (maybe someone different today bcs he is only joining via zoom) instead: Zied
+Agenda, possible points:
+
+- hear from the groups: hardware(test of sensors, consider given library, develop prototype further); software(setup of computer w/ architecture, choice of algorithms)
+- how is everyones manager role going?
+- plan for next week, assign responsibilities
+(according to last week and gantt chart, the following tasks need to be completed in the following weeks/week:
+- choose algorithm to implement first, get on it
+- hardcode movement in robot to practice and have better understanding
+- write missing functions for the distance sensor
+- build our testing infrastructure
+- specify our reward function
+
+- idea: collect all our specifications in one document (action space, observation space, algorithms, reward function, etc...)
+- Assign moderator and note-taker for next week
+
+
+Protocol : 
+
+  Software :
+    -Computer set up (ubuntu is installed, credentials to github) (computer in the corner)
+      -> Everyone should login with their git credentials 
+
+    -Algorithm : PPO : Well adapted for task 
+                  -Problem : not easily applicable for offline learning 
+                  -Decide if we want to do offline learning (and decide what to do on that basis) 
+                Mixed Space : can we use a Mixed observation space ?
+                  -> if not there are 2 solutions
+                    -Discretise Distance
+                    -make color continuous (gradient) 
+
+              => Decision : Offline Learning (yessmine) 
+              => TODO : research offline RL ALgorithm until Thursday (requirements : offline, easy to implement, -focus on discrete- )
+                      - Thursday : present algorithm research (zied , yin ) supoort already/
+
+
+  Hardware : 
+              -RPI : found place to fix
+              -Batteries : found place for batteries
+              -distance : not yet
+
+            API :
+                -distance : functions for distance sensor need to be written (TODO)
+                -distance : up to 1 meter
+                -color : functions for continuous color sensor 
+                -needs to be worked on
+                -motors : needs to be tried on motors
+
+Technical Manager: 
+            - do CI Pipeline : write CI Script ( 5 Lines of script ) (Yessmine) 
+
+Quality managers : 
+            - define Writing Style (Quality managers: Yin , Kevin )  C++ and Python
+
+
+Enviorenment : 
+            -check what we need and tell willie to order
+
+Minute-taker next week: Kevin
+Moderator next week: Yin

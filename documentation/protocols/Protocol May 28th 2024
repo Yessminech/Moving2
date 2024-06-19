@@ -1,0 +1,22 @@
+Moderator today: Yin
+Minute-taker: Kevin 
+
+
+
+Protocol :   
+  - Fix everything needed for the second milestone.
+  - Decide the best RL algorithm to use (BQ vs BCQ).
+      - BCQ is easier than BQ to implement, and for our first time using an RL algorithm, we choose BQ.
+
+
+
+TO DO :
+  - Video of Walking sensor (Robert - Vera)
+  - Setup physical environement (Yessmine - Vera - Yin )
+  - Define concret observation, reward and actions (Yessmine, Zied)
+  - Buildhat librairies & Extend it to discrete (Vera - Kevin)
+
+
+Moderator next week: Yessmine
+Minute-taker next week: Vera
+

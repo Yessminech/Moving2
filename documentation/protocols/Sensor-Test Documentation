@@ -1,0 +1,16 @@
+Tests performed, by reading out serial interface communication with Putty
+
+Distance sensor:
+select modes returning valuable data:
+- 0: according to manual distance in mm, range: 40 mm - 740 mm, note: it goes further (2000 mm), but it will need a 90 degree angle and widely free view
+- 1: according to manual distance in mm, range: 40 mm - 320 mm
+- 4: assuming it's raw time of sonic, not tested unit
+
+Color Sensor
+select modes tested, returning valuable data:
+- 0: Color sensor, for reliable data keep a maximum distance of 4 cm, closer distances seem to be more reliable
+- 1: Reflection sensor, higher values mean brighter, more withe colors or surfaces, lower numbers mean darker, black like surfaces
+- 2: ambient 
+- 3: light
+- 4: re-reflection??
+- 5: probably rgb + Brightness

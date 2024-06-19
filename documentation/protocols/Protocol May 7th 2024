@@ -1,0 +1,52 @@
+**if door is locked by key go to Prof Deniz (two doors over)**
+
+- requirements we are given: robot being capable of moving forward, does not fall over, uses 2 motors (at least)
+- other requirements we have to decide: what does the movement look like; observation space and rewards; actions the robot can take
+→ from this, formulate the requirements (for motors, sensors, environment, mechanical structure, RL algorithm ...), basic requirements need to be done for first milestone presentation
+→ goal: set basic requirements today
+
+- First Milestone presentation: fine if it is relatively basic; important: Why is reinforcement learning a good choice for learning movement? Why not just hard-code it?; presented part about RL and received feedback
+
+- safety requirements need to be set by end of week based on requirements; example: that robot does not leave track
+
+- gantt chart: segment it into weeks, set weekly goals as orientation for weekly meetings
+
+- goal for second milestone: implement at least one of the algorithms, in parallel have hardware group implement 
+
+- robot group from last week presented their results:
+  four options for movement, some pros and cons: 
+  walking: need to make sure we have enough motors; also consider number of sensors; maybe use a robot that has two big heavy legs so that it can’t fall over 
+  snake: where to put the sensors? Could also have an external sensor like a camera and then use external libraries; color sensor needs to have same distance to the ground always
+  omnidirectional: also difficult with the sensors
+  wheel: engineering-wise too complicated
+→ find a tutorial and build it: suggestions from Willie: skiing robot (two legged robot cannot fall over), or robot that has two legs and a passive wheeled frame; should be easier to learn than a snake or a two-step moving 
+
+- requirements to decide today:
+robot design/mechanical structure (two legged robot that doesn’t fall over)
+decide between model-free/model-based (decided on model-free: avoid early mistakes, handle limited predictability of environment)
+
+some suggestions what the robot could learn: 
+walk into a direction and stop at a specific spot; clear a space; turn; walk in one direction; walk in one direction: make a step, make several steps, make a turn
+
+idea for requirement: we want to the robot to move in one directions
+environment: we have a track with one color, its surroundings another color; wall that the distance is measured against and some free space to the sides so the distance to the wall is always shorter than the distance to the two walls to the side; extinction color space (trajectory is over when the color on the ground has been reached); colors to the side and distance away from the wall
+reward function: the color of the track rewards positively, the surroundings reward negatively in several steps; there is a distance sensor that rewards moving in the right direction (for instance away from a goal); so color maps on orientation and distance sensor maps on direction
+observation space: color sensor (make it discrete) and distance sensor (continuous rewards avoids sparse reward problem), time?, but distance sensor: when we change directions (a little bit even) what effect does this have
+action space: continuous (the robot learns to take steps; to make it easier we could define limits for the torque, for the angle (that it can only change until a specified angle; would maybe require us to reconsider observation space so that we can reward when it has successfully made a step and not just indirectly), contraint to move only one motor at the same time) or discrete ( maybe in a sense code “what is a step” and let it learn to take steps) (Willie fragen?)
+reward function: negative discrete reward for stepping on wrong color increasing with distance to path; or would it be better to stop experiment when going in the wrong color; colors have more powerful rewards in negative and positive directions; distance rewards are weaker but continuous, but need to be high enough to move in a direction, can be negative rewards for moving away( in our environment: increasing distance: positive reward; decreasing distance: negative reward); only receives reward when both color and distance were changed
+
+
+Tasks for next week/ in this case until thursday evening:
+Identify a tutorial and build a prototype: Yin, Robert, Kevin
+Identify two promising algorithms: Yessmine, Zied, Vera
+Moderator for next week: Zied
+Note-Taker for next week: Robert
+*Agenda prepared by Zied and Vera
+*safety requirements need to be considered by quality managers (Kevin and Yin)
+
+Agenda next week:
+- everyone implement/read through software results and then ask any questions if we have
+- hear from the groups
+- how is everyones manager role going?
+- plan for next week, assign responsibilities
+- Assign moderator and note-taker for next week
