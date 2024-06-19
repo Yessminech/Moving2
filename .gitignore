@@ -11,5 +11,3 @@ libBuildHAT++.a
 build
 CMakeFiles
 Makefile
-
-*.csv
