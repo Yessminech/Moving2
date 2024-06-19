@@ -22,7 +22,7 @@ from env import Catch
 
 # ToDo: Inference File (run.py) - This file will be used to run the trained model and visualize the game.
 # Do we need this if we don't have neural networks?
-# On pi only table 
+# On pi only table
 def _save_img(input: Type[np.array], image_path: str, c: int, grid_size: int) -> None:
     # Draw the environment
     plt.imshow(input.reshape((grid_size,) * 2), interpolation="none", cmap="gray")

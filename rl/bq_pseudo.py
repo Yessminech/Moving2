@@ -3,7 +3,7 @@
 #     # Read color and distance sensor data
 #     color_data = ...  # Read color sensor data
 #     distance_data = ...  # Read distance sensor data
-    
+
 #     # Preprocess sensor data
 #     state = (color_data, distance_data)  # Combine sensor data into state representation
 #     return state
@@ -23,7 +23,7 @@
 #     # Define reward based on state and action
 #     reward = ...
 #     return reward
-    
+
 # # Q-learning update rule
 # def q_learning_update(state, action, reward, next_state):
 #     # Update Q-value based on Q-learning update rule
@@ -31,7 +31,7 @@
 #     gamma = 0.9  # Discount factor
 #     max_next_q = np.max(q_values[next_state])
 #     q_values[state, action] += alpha * (reward + gamma * max_next_q - q_values[state, action])
-    
+
 # # Exploration vs. Exploitation
 #     # Exploration refers to trying out different actions to discover potentially better strategies,
 #     # while exploitation involves choosing actions that are currently believed to be the best based
@@ -43,5 +43,3 @@
 #         return np.random.choice(num_actions)
 #     else:
 #         return np.argmax(q_values[state])
-
-

@@ -10,19 +10,19 @@
 #     for _ in range(episode_length):
 #         # Randomly choose action
 #         action = np.random.choice(num_actions)
-        
+
 #         # Execute action on hardware (e.g., control motors)
 #         execute_action(action)
-        
+
 #         # Read sensor data
 #         state = read_sensor_data()
-        
+
 #         # Simulate reward (for example purposes)
 #         reward = simulate_reward(state)
-        
+
 #         # Wait for a short time (optional)
 #         time.sleep(0.1)
-        
+
 #         # Record data
 #         next_state = read_sensor_data()
 #         data.append((state, action, reward, next_state))

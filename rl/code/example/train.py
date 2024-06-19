@@ -15,7 +15,9 @@ import os
 from typing import Type
 
 from keras.models import Sequential
-from keras.layers import Dense # correct import (was from keras.layers.core import Dense)
+from keras.layers import (
+    Dense,
+)  # correct import (was from keras.layers.core import Dense)
 from keras.optimizers import SGD
 import tensorflow as tf
 import keras
@@ -34,7 +36,7 @@ def define_model(
 ) -> Type[keras.Model]:
     model = Sequential()
     model.add(
-        Dense(hidden_size, input_shape=(grid_size**2,), activation=hidden_activation)
+        Dense(hidden_size, input_shape=(grid_size ** 2,), activation=hidden_activation)
     )
     # Dynamically add additional hidden layers
     for _ in range(hidden_layers - 1):
@@ -112,7 +114,7 @@ if __name__ == "__main__":
     num_actions = 3
 
     # Define environment variable parameters. Smaller parameters values are adopted to reduce training time.
-    epochs = int(os.environ.get("TRAIN_EPOCHS", 60)) ##change from 1000 to run faster
+    epochs = int(os.environ.get("TRAIN_EPOCHS", 60))  ##change from 1000 to run faster
     epsilon = float(os.environ.get("TRAIN_EPSILON", 2e-4))
     max_memory = int(os.environ.get("TRAIN_MAX_MEMORY", 2_000))
     hidden_size = int(os.environ.get("TRAIN_HIDDEN_SIZE", 100))
