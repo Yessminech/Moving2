@@ -31,10 +31,10 @@ jobs:
         pip install black
         black .
 
-    # - name: Run tests
-    #   run: |
-    #     pip install pytest
-    #     pytest
+    - name: Run tests
+      run: |
+        pip install pytest
+        pytest
 
   # merge:
   #   needs: build
