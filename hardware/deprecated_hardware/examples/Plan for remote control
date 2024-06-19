@@ -1,9 +1,0 @@
-Steps: 
-1-figure out input via keyboard (https://raspberry-projects.com/pi/programming-in-c/keyboard-programming-in-c/reading-raw-keyboard-input)
-2- make a queue that receives this input and FIFO stores it 
-3- use some non-blocking/threading to always take an action command from the queue when no other thread is currently controlling the motors
-4- before the new thread is created, the "active" flag is taken; then the thread is created and the action can be taken. 
-5- after the action is taken, the sensor data can be received; now the active flag can be freed, and the sensor data saved away into a csv file
-6- meanwhile, the next action command from the queue can be taken care of
-
-this is just a rough idea for now
