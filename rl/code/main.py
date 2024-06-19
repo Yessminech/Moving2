@@ -109,7 +109,8 @@ class QLearningAgent:
             logging.info(f"Q_table successfully saved at {Q_table_path}")
         except Exception as e:
             logging.error(f"Failed to save Q_table at {Q_table_path}. Error: {e}")
-
+    def get_Q_table(self):
+        return self.Q_table
 
 ##TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
@@ -117,6 +118,6 @@ if __name__ == "__main__":
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    agent.populate_replay_buffer("generated_dataset/fake_dataset.txt")
+    agent.populate_replay_buffer("rl/code/generated_dataset/fake_dataset.txt")
     agent.train()
     agent.export_Q_table()

@@ -36,12 +36,6 @@ def import_Q_table():
     except FileNotFoundError:
         logging.error(f"Q_table not found at {Q_table_path}")
         return None
-    
-import pytest
-@pytest.fixture
-def Q_table():
-    # Load or create your Q_table here. For example:
-    return import_Q_table()
 
 # Example test
 test_curr_color = "red"
