@@ -13,8 +13,8 @@
 
 // inspired with demo5 Yin and color Robert
 
-std::mutex mtx;
-std::condition_variable cv;
+//std::mutex mtx;
+//std::condition_variable cv;
 bool command_running = false;
 std::ofstream outputFile;
 
@@ -150,20 +150,20 @@ std::string get_action_name(int command) {
 }
 
 void execute_command(int command, double angle, Drive& drive) {
-    {
-        std::lock_guard<std::mutex> lock(mtx);
-        command_running = true;
-    }
+    //{
+    //    std::lock_guard<std::mutex> lock(mtx);
+    //    command_running = true;
+    //}
 
      actionName = get_action_name(command);
 
     if (actionName == "Invalid" && command != 5) {
         std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
-        {
-            std::lock_guard<std::mutex> lock(mtx);
-            command_running = false;
-        }
-        cv.notify_one();
+        //{
+        //    std::lock_guard<std::mutex> lock(mtx);
+        //    //command_running = false;
+        //}
+        //cv.notify_one();
         return;
     }
 
@@ -186,7 +186,7 @@ void execute_command(int command, double angle, Drive& drive) {
         drive.set_speed(0.5);
         drive.move_backward();
         break;
-    case 5:
+    case 5: 
         drive.coast();
         break;
      default:
