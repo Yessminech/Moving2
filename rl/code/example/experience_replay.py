@@ -6,14 +6,15 @@ Python file containnig the Experience Replay class definitioin.
 Authors: Sofie Verrewaere, Hiru Ranasinghe & Daniel Miskell @ Datatonic
 """
 
-#ToDo In reinforcement learning, both approaches can be used, but they serve different purposes:
-#1. **Sequential [actions, observations] from start to end**: This approach is useful when the order of actions and their corresponding observations matter. This is often the case in tasks where the current action affects future states. For example, in your robot walking scenario, if the robot needs to learn how to balance itself while walking, then the sequence of actions and observations is important because an action taken at one time step affects the robot's balance at future time steps.
-#2. **Random [actions, observations]**: This approach is often used in conjunction with a technique called "experience replay" in reinforcement learning. The idea is to store the agent's experiences during the episode in a memory buffer and then sample a batch of experiences randomly from this buffer to train the model. This helps to break the correlation between consecutive experiences and stabilize the learning algorithm. In this case, the experiences don't need to be linked to each other.
-#In your specific case of a robot walking in a straight line, if the goal is simply to move forward without any balancing or other complex tasks, then random [actions, observations] might be sufficient. However, if the task is more complex and involves maintaining balance or avoiding obstacles, then a sequence of [actions, observations] might be more appropriate.
+# ToDo In reinforcement learning, both approaches can be used, but they serve different purposes:
+# 1. **Sequential [actions, observations] from start to end**: This approach is useful when the order of actions and their corresponding observations matter. This is often the case in tasks where the current action affects future states. For example, in your robot walking scenario, if the robot needs to learn how to balance itself while walking, then the sequence of actions and observations is important because an action taken at one time step affects the robot's balance at future time steps.
+# 2. **Random [actions, observations]**: This approach is often used in conjunction with a technique called "experience replay" in reinforcement learning. The idea is to store the agent's experiences during the episode in a memory buffer and then sample a batch of experiences randomly from this buffer to train the model. This helps to break the correlation between consecutive experiences and stabilize the learning algorithm. In this case, the experiences don't need to be linked to each other.
+# In your specific case of a robot walking in a straight line, if the goal is simply to move forward without any balancing or other complex tasks, then random [actions, observations] might be sufficient. However, if the task is more complex and involves maintaining balance or avoiding obstacles, then a sequence of [actions, observations] might be more appropriate.
 
 import numpy as np
 import keras
 from typing import Tuple, Type
+
 # experience replay buffer
 # experience = previous state, the action taken, the next state transitioned to, the reward received, and the signal that it is done.
 # list with max size. If nex experiences -> override
@@ -25,7 +26,7 @@ class ExperienceReplay(object):
     the model.
     """
 
-    #ToDo: init list
+    # ToDo: init list
     def __init__(self, max_memory: int = 100, discount: float = 0.99) -> None:
         """
         Initialization of the experience buffer.
@@ -38,7 +39,7 @@ class ExperienceReplay(object):
         self.memory = list()
         self.discount = discount
 
-    #ToDo: add experience and overrite if max_memory reached
+    # ToDo: add experience and overrite if max_memory reached
 
     def add_experience(self, sars: list, game_over: bool) -> None:
         """
@@ -53,7 +54,7 @@ class ExperienceReplay(object):
         if len(self.memory) > self.max_memory:
             del self.memory[0]
 
-    #ToDo: read function description
+    # ToDo: read function description
 
     def get_qlearning_batch(
         self, model: Type[keras.Model], batch_size: int = 10

@@ -95,7 +95,6 @@ class Catch(object):
         """
         return self.state[0, 0] == self.grid_size - 1
 
-
     # ToDo: Return current state
     def observe(self) -> Type[np.array]:
         """
