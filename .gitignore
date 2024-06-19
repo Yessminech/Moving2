@@ -13,3 +13,9 @@ CMakeFiles
 Makefile
 
 *.csv
+
+rl/catch_example
+rl/bq_pseudo.py
+rl/sampling_pseudo.py
+rl/training_pseudo.py
+hardware/deprecated_hardware
