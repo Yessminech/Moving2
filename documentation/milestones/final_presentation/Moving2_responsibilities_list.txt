@@ -1,0 +1,43 @@
+# Project Contribution Report
+
+## Team Members and Their Contributions
+
+### Member 1: Yessmine Chabchoub
+- **Functions and Concepts Contributed:**
+  1. Set up SSH communication with rbpi
+  2. Set up Lab computer for programming (os, sw..)
+  3. Reinforcement Learning Team
+    - Research Offline vs Online RL 
+    - RL Algorithms comparisons of Yin’s and Zied’s researches
+    - Defined requirements for data collection to HW (formatting, values..)
+    - RL Algorithm: 
+        - Implemented RL observation space, action space, and reward function (env.py) 
+        - Dataset generation 
+        - Agent refactoring and reviewing (main.py) 
+        - Agent testing (test.py)
+- **Role:** Technical Manager
+- **Actions Taken:**
+  1. Setting up a communication channel (WhatsApp) and ensuring seamless communication by migrating the channel to Slack.
+  2. Choosing and setting up version-control system (Github)
+  3. Introduced other group members to the correct use of this infrastructure (git_practices__Yessmine.pdf): 
+      - Defined Git workflow 
+      - Supported group members using GitHub
+      - Helped PMs with setting up project Kanban
+  4. Ensured that proper Git workflow is followed by regularly reorganizing repos/files and branches.
+  5. Set up CI infrastructure on GitHub
+      - Testing Automation
+      - Linting 
+      - TODO Automate build for HW code
+
+### Member 2: [Name]
+- **Functions and Concepts Contributed:**
+  1. [Function/Concept 1]
+  2. [Function/Concept 2]
+  3. [Function/Concept 3]
+
+  - **Role:** [Quality Manager, etc.]
+  - **Actions Taken:**
+    1. [Action 1]
+        - Subpoint 1 for Action 1
+    2. [Action 2]
+    3. [Action 3]
