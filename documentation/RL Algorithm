@@ -1,6 +1,0 @@
-Algorithms that are useful for offline learning with Discrete action and observation spaces, that are Model free , and off policy (exploration)
-would be offline DQN, QR-DQN and Batch-Q Learning 
-QR-DQN usually shows better results but is a bit more complex to implement.
-
-Implementation : 
--Like online algorithms but has to be adapted (still to research but seems doable)

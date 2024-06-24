@@ -1,10 +1,27 @@
-# CI/CD Guidelines
+# Moving2
 
-## Introduction
-This document provides guidelines and best practices for the Continuous Integration/Continuous Deployment (CI/CD) process within our project. Adhering to these practices ensures that our codebase remains clean, well-maintained, and ready for deployment at any time.
+## Description
+This project is focused on the development of a robot that can move autonomously using Reinforcement Learning.
+## Project Structure Overview
 
-## Pre-commit Checklist
-To maintain code quality and consistency, it's crucial to perform certain checks before committing your code. Here's what you need to do:
-
-### Code Formatting with Black
-Black is our chosen code formatter. It enforces a consistent code style across our entire codebase, making our code more readable and maintainable. 
+- **`/Moving2/`**: The root directory of the project.
+  - **`README.md`**: Provides a general overview and introduction to the directories organization.
+  - **`/documentation/`**: Houses all the documentation related to the project, including research, design documents, and tutorials.
+    - **`/control_system/`**: Contains information about the data formatting.
+    - **`/rl_research/`**: Dedicated to Reinforcement Learning research.
+    - **`/milestones/`**: Documents the project's progress and the milestones presentations.
+    - **`/tutorials/`**: Provides tutorials related to the project on the hardwaren the coding style and version control usage.
+  - **`/hardware/`**: Focuses on the physical components of the robot.
+    - **`README.md`**: Specific details about the hardware requirements and setup.
+    - **`/buildhat_firmware/buildhat++/examples/moving2_src/`**: The source code for the project utilizing the buildhat++ library.
+    - **`/code/libraries/`**: Includes code that directly interacts with the robot's hardware.
+    - **`/legacy/`**: Archives older or deprecated hardware files for historical reference.
+  - **`/rl/`**: Contains all files related to the Reinforcement Learning code of the project.
+    - **`/main/`**: The main directory for RL code, including scripts and data files.
+      - **`README.md`**: An overview of the RL component, explaining its purpose and functionality.
+      - **`main.py`**: The primary Python script for the RL model, orchestrating the learning process.
+      - **`env.py`**: Defines the environment for the RL model.
+      - **`test.py`**: Contains tests for the RL model.
+      - **`synth_all.py`**: A script for synthesizing fake datasets.
+      - **`Q_table.csv`**, **`Q_table.npy`**: Files containing the Q-table data, representing learned values for state-action pairs.
+    - **`/legacy/`**: Stores older or deprecated RL files, providing a record of the project's evolution.
