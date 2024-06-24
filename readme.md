@@ -5,35 +5,28 @@ This project aims to develop a robot capable of autonomous locomotion using Rein
 
 ## Project Structure
 /Moving2
-│
-├── README.md
-│
-├── /documentation
-│ ├── /control_system
-│ ├── /rl_research
-│ ├── /milestones
-│ └── /tutorials
-│
-├── /hardware
-│ ├── README.md
-│ ├── /buildhat_firmware
-│ ├── /code
-│ │ └── /libraries
-│ │  └── /buildhat++
-│ │      └── /examples
-│ │          └── /moving2_src
-│ └── /legacy
-│
-├── /rl
-│ ├── /main
-│ │ ├── README.md
-│ │ ├── main.py
-│ │ ├── env.py
-│ │ ├── test.py
-│ │ ├── synth_all.py
-│ │ ├── Q_table.csv
-│ ├─└── Q_table.npy
-└─└── /legacy
+
++-- README.md
++-- /documentation
+|   +-- /control_system
+|   +-- /rl_research
+|   +--/milestones
+|   +-- /tutorials
++-- /hardware
+|   +--README.md
+|   +-- /buildhat_firmware
+|   +-- /code/libraries/buildhat++/examples/moving2_src
+|   +--/legacy
++-- /rl
+|   +-- /main
+|   |   +-- README.md
+|   |   +-- main.py
+|   |   +-- env.py
+|   |   +-- test.py
+|   |   +-- synth_all.py
+|   |   +--  Q_table.csv
+|   |   +-- Q_table.npy
+|   +-- /legacy
 
 ### Explanation:
 - **/documentation**: Contains documentation files related to the project, such as design documents and user guides.
