@@ -10,11 +10,14 @@ import pandas as pd
 
 
 def convert_q_table_to_csv(q_table_npy_path, csv_path):
+    """
+    Convert the Q-table from a .npy file to a CSV file.
+    """
     Q_table = np.load(q_table_npy_path)
-    flattened_Q_table = Q_table.reshape(-1, Q_table.shape[-1]).astype(float)
+    flattened_Q_table = Q_table.reshape(-1).astype(float)
     df = pd.DataFrame(flattened_Q_table)
-    df.to_csv(csv_path, index=False)
-    logging.info(f"Q-table successfully converted to CSV and saved at {csv_path}")
+    df.to_csv(csv_path, header=False, index=False)
+    print(f"Q-table successfully converted to CSV and saved at {csv_path}")
 
 
 def get_best_action(Q_table, current_state, previous_state):
