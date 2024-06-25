@@ -86,8 +86,8 @@ void Drive::turn(bool _left) {
     static const double target_speed = 0.9;
 
     // time to turn - about 1.5 seconds, this is what our robot took for a 90-degree turn
-    static const int turn_time_ms = 1433;
-
+   // static const int turn_time_ms = 1433;
+    static const int turn_time_ms = 250;
     // set both motors to coast
     coast();
     std::this_thread::sleep_for(std::chrono::milliseconds{200});

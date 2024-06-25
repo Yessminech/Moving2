@@ -25,3 +25,8 @@ This project is focused on the development of a robot that can move autonomously
       - **`synth_all.py`**: A script for synthesizing fake datasets.
       - **`Q_table.csv`**, **`Q_table.npy`**: Files containing the Q-table data, representing learned values for state-action pairs.
     - **`/legacy/`**: Stores older or deprecated RL files, providing a record of the project's evolution.
+    - **`README.md`**: An overview of the RL repository.
+
+## CI Pipeline
+- The CI pipeline for this project includes formatting the code with Black and running tests to ensure code quality and functionality.
+Before pushing the code, make sure to run `black .` to format it properly.

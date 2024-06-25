@@ -1,0 +1,10 @@
+- **`/rl/`**: Contains all files related to the Reinforcement Learning code of the project.
+    - **`/main/`**: The main directory for RL code, including scripts and data files.
+        - **`README.md`**: An overview of the RL component, explaining its purpose and functionality.
+        - **`main.py`**: The primary Python script for the RL model, orchestrating the learning process.
+        - **`env.py`**: Defines the environment for the RL model.
+        - **`test.py`**: Contains tests for the RL model.
+        - **`synth_all.py`**: A script for synthesizing fake datasets.
+        - **`Q_table.csv`**, **`Q_table.npy`**: Files containing the Q-table data, representing learned values for state-action pairs.
+    - **`/legacy/`**: Stores older or deprecated RL files, providing a record of the project's evolution.
+    - **`README.md`**: An overview of the RL repository.
