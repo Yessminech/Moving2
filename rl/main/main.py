@@ -119,8 +119,25 @@ class QLearningAgent:
         with open(csv_file, "r") as csv_file:
             with open(txt_file, "w") as txt_file:
                 for i, line in enumerate(csv_file):
-                    # get colums from csv line
-                    txt_file.write(f"{i+1}: {line.strip()}\n")
+                    # get colums from csv line t add apostrophes accordingly
+                    columns = line.split(",")
+                    columns[0] = columns[0][0:2] + "'" + columns[0][2:] + "'"
+
+                    if columns[1][len(columns[1]) - 4] == "t":
+                        columns[1] = columns[1][:-4] + columns[1][-3:]
+                    columns[1] = " '" + columns[1][1:-1] + "')"
+
+                    columns[2] = columns[2][0:1] + "'" + columns[2][1:] + "'"
+
+                    columns[3] = columns[3][0:2] + "'" + columns[3][2:] + "'"
+
+                    if columns[4][len(columns[4]) - 4] == "t":
+                        columns[4] = columns[4][:-4] + columns[4][-3:]
+                    columns[4] = " '" + columns[4][1:-1] + "')"
+
+                    columns[5] = columns[5][:] + "'"
+                    # write line to txt file
+                    txt_file.write(f"{i+1}: {','.join(columns)}")
     
 
 ## TODO Convert .csv dataset to .txt
@@ -131,6 +148,6 @@ if __name__ == "__main__":
     agent.batch_size = 4500
     agent.learning_rate = 0.7
     agent.convert_csv_to_txt("hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv", "rl/main/generated_dataset/test_dataset.txt")
-    #agent.populate_replay_buffer("rl/main/generated_dataset/test_dataset.txt")
-    #agent.train()
-    #agent.export_Q_table()
+    agent.populate_replay_buffer("rl/main/generated_dataset/test_dataset.txt")
+    agent.train()
+    agent.export_Q_table()
