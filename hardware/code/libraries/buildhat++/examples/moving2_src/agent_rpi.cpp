@@ -165,8 +165,9 @@ void execute_command(int command, double angle, Drive& drive) {
     //    command_running = true;
     //}
 
-     actionName = get_action_name(command);
 
+     actionName = get_action_name(command); //do we want to change this to all-strings for better debugging?
+    /*
     if (actionName == "Invalid" && command != 5) {
         std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
         //{
@@ -175,8 +176,9 @@ void execute_command(int command, double angle, Drive& drive) {
         //}
         //cv.notify_one();
         return;
-    }
+    }*/
 
+    //command contains the correct command already - maybe we want to change int command to string
     std::cout << "Action: " << actionName << std::endl;
 
     switch (command) {
@@ -404,16 +406,16 @@ int main() {
     int command;
     double angle = 0;
 
-    std::cout << "Control the car with keyboard input.\n";
+    /*std::cout << "Control the car with keyboard input.\n";
     std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
-    std::cout << "CTRL + C and CTRL + Z close the program.\n";
+    std::cout << "CTRL + C and CTRL + Z close the program.\n";*/
     std::thread sensing(getSensorreading);
     
     while (STATUS_RUNNING) {
         //std::unique_lock<std::mutex> lock(mtx);
         //cv.wait(lock, [] { return !command_running; });
 
-        std::cout << "Enter command (e.g., '8,10' or '4'): ";
+        /*std::cout << "Enter command (e.g., '8,10' or '4'): ";
         std::getline(std::cin, input);
 
         std::istringstream iss(input);
@@ -426,7 +428,13 @@ int main() {
             } else {
                 angle = 0;
             }
-        }
+        }*/
+
+        //TO DO!!
+        //get sensor reading//or last saved reading
+        //lookup in q table
+        //translate/into command
+
 
         //lock.unlock();
         std::thread execute(execute_command, command, angle, std::ref(drive));
