@@ -2,8 +2,8 @@ import numpy as np
 from typing import Tuple, List, Dict
 
 # Define the obsevation space
-COLORS = ["white", "yellow", "blue", "red", "black", "brown"]
-Distances = ["dis_0", "dis_1", "dis_2", "dis_3", "dis_4"]  ##dis4 is better than dis0
+COLORS = ["white", "yellow", "blue", "red", "black", "brown", "lilas"]
+Distances = ["dis_0", "dis_1", "dis_2", "dis_3", "dis_4","dis_out"]  ##dis4 is better than dis0
 # Define the action space
 ACTIONS = ["forward", "backward", "right", "left", "stop"]
 
@@ -40,6 +40,7 @@ def get_distance_value(distance: str) -> int:
         "dis_2": 3,
         "dis_3": 4,
         "dis_4": 5,  ##dis4 is better than dis0
+        "dis_out": -10,  ##dis4 is better than dis0
     }
     return distance_map.get(distance, 0)  # default to 0 if color not found
 
@@ -57,7 +58,7 @@ def determine_distance_transition(current_distance: str, next_distance: str) -> 
 
 
 def get_color_value(color: str) -> int:
-    color_map = {"white": 1, "yellow": 2, "blue": 3, "red": 4, "black": 5, "brown": -10}
+    color_map = {"white": 1, "yellow": 2, "blue": 3, "red": 4, "black": 5, "brown": -10, "lilas": -10}
     return color_map.get(color, 0)  # default to 0 if color not found
 
 
