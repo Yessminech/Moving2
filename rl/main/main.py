@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import os
+import glob
 import ast
 import logging
 from collections import deque
@@ -134,7 +135,10 @@ class QLearningAgent:
                         columns[1] = columns[1][:-6] + columns[1][-5:]
                     columns[1] = " '" + columns[1][1:-1] + "')"
 
-                    columns[2] = columns[2][0:1] + "'" + columns[2][1:] + "'"
+                    if columns[2] == " Invalid":
+                        columns[2] = "stop"
+                    else:
+                        columns[2] = columns[2][0:1] + "'" + columns[2][1:] + "'"
 
                     columns[3] = columns[3][0:2] + "'" + columns[3][2:] + "'"
 
@@ -155,8 +159,12 @@ if __name__ == "__main__":
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    #file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
-    file_name = "rl/main/generated_dataset/fake_dataset.txt"
+    file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
+    #file_name get all pathes of files of hardware/code/libraries/buildhat++/examples/moving2_src/test/
+    #file_paths = glob.glob(os.path.join("hardware/code/libraries/buildhat++/examples/moving2_src/test/", f"*.csv"))
+    #file_name = ["rl/main/generated_dataset/fake_dataset.txt"]
+    #for file_name in file_paths:
+    print(file_name)
     agent.convert_csv_to_txt(file_name, "rl/main/generated_dataset/training_dataset.txt")
     agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
     agent.train()
