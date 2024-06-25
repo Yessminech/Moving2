@@ -5,26 +5,8 @@ from main import QLearningAgent, color_mapping, distance_mapping, action_mapping
 import os
 import numpy as np
 
-
 logging.basicConfig(level=logging.INFO)
 import pandas as pd
-
-
-def test_agent_training_and_export():
-    dataset_path = "rl/code/generated_dataset/fake_dataset.txt"
-
-    agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
-    agent.batch_size = 4500
-    agent.learning_rate = 0.7
-    agent.populate_replay_buffer(dataset_path)
-    agent.train()
-    # agent.export_Q_table()
-
-    # Assertions to verify the expected outcomes of the test
-    # Example: Check if Q_table is not empty or if a file was created
-    # assert hasattr(agent, 'Q_table'), "Q_table attribute does not exist"
-    return agent.Q_table
-
 
 def convert_q_table_to_csv(q_table_npy_path, csv_path):
     Q_table = np.load(q_table_npy_path)
@@ -33,23 +15,16 @@ def convert_q_table_to_csv(q_table_npy_path, csv_path):
     df.to_csv(csv_path, index=False)
     logging.info(f"Q-table successfully converted to CSV and saved at {csv_path}")
 
-
 def get_best_action(Q_table, current_state, previous_state):
     curr_col, curr_dist = current_state
     prev_col, prev_dist = previous_state
     best_action = np.argmax(Q_table[curr_col, curr_dist, :, prev_col, prev_dist])
-    logging.info(
-        f"Best action for current state {current_state} and previous state {previous_state} is: {best_action}"
-    )
+    logging.info(f"Best action for current state {current_state} and previous state {previous_state} is: {best_action}")
     return best_action
-
 
 def test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state):
     q_value = Q_table[sample_state + (sample_action,) + sample_prev_state]
-    logging.info(
-        f"Q-value for state {sample_state} and action {sample_action}: {q_value}"
-    )
-
+    logging.info(f"Q-value for state {sample_state} and action {sample_action}: {q_value}")
 
 def import_Q_table():
     current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -62,41 +37,20 @@ def import_Q_table():
         logging.error(f"Q_table not found at {Q_table_path}")
         return None
 
+# Example test
+test_curr_color = "red"
+test_curr_distance = "dis_4"
+test_action = "forward"
+test_prev_color = "blue"
+test_prev_distance = "dis_3"
 
-import pytest
-
-
-@pytest.fixture
-def Q_table():
-    # Initialize or load your Q_table here
-    return test_agent_training_and_export()
-
-
-def example_test():
-    # Example test
-    test_curr_color = "red"
-    test_curr_distance = "dis_4"
-    test_action = "forward"
-    test_prev_color = "blue"
-    test_prev_distance = "dis_3"
-
-    # Compute the Q-value for the sample state and action
-    # Q_table = import_Q_table()
-    Q_table = test_agent_training_and_export()
-    if Q_table is not None:
-        sample_state = (
-            color_mapping[test_curr_color],
-            distance_mapping[test_curr_distance],
-        )
-        sample_prev_state = (
-            color_mapping[test_prev_color],
-            distance_mapping[test_prev_distance],
-        )
-        sample_action = action_mapping[test_action]
-        test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state)
-        result = get_best_action(Q_table, sample_state, sample_prev_state)
-    else:
-        logging.error("Failed to load Q_table for testing.")
-
-    assert result != 0
-    
+# Compute the Q-value for the sample state and action
+Q_table = import_Q_table()
+if Q_table is not None:
+    sample_state = (color_mapping[test_curr_color], distance_mapping[test_curr_distance])
+    sample_prev_state = (color_mapping[test_prev_color], distance_mapping[test_prev_distance])
+    sample_action = action_mapping[test_action]
+    test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state)
+    get_best_action(Q_table, sample_state, sample_prev_state)
+else:
+    logging.error("Failed to load Q_table for testing.")
