@@ -12,6 +12,7 @@ build
 CMakeFiles
 Makefile
 
+training_dataset.txt
 
 rl/catch_example
 rl/bq_pseudo.py
