@@ -38,10 +38,11 @@ class QLearningAgentTests(unittest.TestCase):
             batch_size=32,
         )
 
-## Testing that the Q table is initialized and modified correctly
+    ## Testing that the Q table is initialized and modified correctly
     def test_initialize_Q_table(self):
         Q_table = self.agent.initialize_Q_table()
         self.assertEqual(Q_table.shape, (7, 6, 5, 7, 6))
+
     def test_update_Q_table(self):
         batch = [
             (("white", "dis_0"), "forward", ("yellow", "dis_2"), 17.0, False),
@@ -52,12 +53,13 @@ class QLearningAgentTests(unittest.TestCase):
         self.assertEqual(Q_table.shape, (7, 6, 5, 7, 6))
         self.assertNotEqual(Q_table.sum(), 0)
 
-## Testing that the Q_table is exported correctly
+    ## Testing that the Q_table is exported correctly
     def test_export_Q_table(self):
         import os
+
         # TODO double check .csv or .txt
-        self.assertTrue(os.path.isfile("rl/main/Q_table.csv")) 
-        
+        self.assertTrue(os.path.isfile("rl/main/Q_table.csv"))
+
+
 if __name__ == "__main__":
     unittest.main()
-
