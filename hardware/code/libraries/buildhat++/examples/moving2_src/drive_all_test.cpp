@@ -16,10 +16,11 @@
 //std::mutex mtx;
 //std::condition_variable cv;
 bool command_running = false;
+bool save_data = false;
 std::ofstream outputFile;
 
 std::string lastcolor = "white";
-std::string lastdistance = "dis_0";
+std::string lastdistance = "dist_0";
 std::string actionName;
 
 // fix remote from robert
@@ -37,12 +38,15 @@ void sig_handler(int signo) {
 
 /////////////////////////
    bool goal_achieved(const std::string& current_color, const std::string& current_distance) {
-             return current_color == "black" && current_distance == "dis_4";
+    //if(current_distance == "dist_4"){
+      //  std::cout<< "okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"<< std::endl;
+    //}
+             return current_color == "black" && current_distance == "dist_4";
         }  
 // Constants
 const double kd = 1.0; // Distance reward factor
-const double kc = 1.0; // Color reward factor
-const double kg = 1.0; // Goal achievement reward
+const double kc = 10.0; // Color reward factor
+const double kg = 100.0; // Goal achievement reward
 
 double calculate_reward(const std::string& current_color, const std::string& current_distance, 
                         const std::string& next_color, const std::string& next_distance, 
@@ -74,31 +78,37 @@ double calculate_reward(const std::string& current_color, const std::string& cur
     // Helper function to get distance value
     auto get_distance_value = [](const std::string& distance) -> double {
         // Implement your logic to get the distance value
-        if (distance == "dis_0") {
-            return 0.0;
-        } else if (distance == "dis_1") {
+        if (distance == "dist_0") {
             return 1.0;
-        } else if (distance == "dis_2") {
+        } else if (distance == "dist_1") {
             return 2.0;
-        } else if (distance == "dis_3") {
+        } else if (distance == "dist_2") {
             return 3.0;
-        } else if (distance == "dis_4") {
+        } else if (distance == "dist_3") {
             return 4.0;
+        } else if (distance == "dist_4") {
+            return 5.0;
         } else {
-            return -1.0; // Default case
+            return -10.0; // Default case
         }
     };
 
     // Helper function to get color value
     auto get_color_value = [](const std::string& color) -> double {
         // Implement your logic to get the color value
-        if (color == "red") {
+        if (color == "white") {
             return 1.0;
-        } else if (color == "blue") {
+        } else if (color == "yellow") {
             return 2.0;
-        } else if (color == "green") {
+        } else if (color == "blue") {
             return 3.0;
-        } else {
+        } else if (color == "red") {
+            return 4.0;
+        } else if (color == "black") {
+            return 5.0;   
+        }else if (color == "brown") {
+            return -10.0;      
+        }else {
             return 0.0; // Default case
         }
     };
@@ -173,18 +183,37 @@ void execute_command(int command, double angle, Drive& drive) {
     case 2:
         drive.set_speed(1);
         drive.move_forward(angle);
+         // wait for one second
+        std::this_thread::sleep_for(std::chrono::milliseconds{500});
+        // stop the drive
+         drive.coast();
         break;
     case 4:
         drive.set_speed(0.5);
         drive.turn_left();
+        // wait for one second
+        std::this_thread::sleep_for(std::chrono::milliseconds{500});
+        // stop the drive
+         drive.coast();
+         save_data = true;
         break;
     case 6:
         drive.set_speed(0.5);
         drive.turn_right();
+         // wait for one second
+        std::this_thread::sleep_for(std::chrono::milliseconds{500});
+        // stop the drive
+         drive.coast();
+         save_data = true;
         break;
     case 8:
         drive.set_speed(1);
         drive.move_backward();
+         // wait for one second
+        std::this_thread::sleep_for(std::chrono::milliseconds{500});
+        // stop the drive
+         drive.coast();
+         save_data = true;
         break;
     case 5: 
         drive.coast();
@@ -227,9 +256,9 @@ void execute_command(int command, double angle, Drive& drive) {
         float b = measuredColor.val;  // These should be the RGB values
 
         // Define ranges for each color
-        const float blue_min_r = 0.0, blue_max_r = 250.0;
-        const float blue_min_g = 0.0, blue_max_g = 255.0;
-        const float blue_min_b = 150.0, blue_max_b = 300.0;
+        const float blue_min_r = 180.0, blue_max_r = 200.0;
+        const float blue_min_g = 200.0, blue_max_g = 255.0;
+        const float blue_min_b = 250.0, blue_max_b = 300.0;
 
         const float black_min_r = 0.0, black_max_r = 80.0;
         const float black_min_g = 0.0, black_max_g = 80.0;
@@ -241,19 +270,19 @@ void execute_command(int command, double angle, Drive& drive) {
 
         const float white_min_r = 500.0, white_max_r = 550.0;
         const float white_min_g = 500.0, white_max_g = 550.0;
-        const float white_min_b = 450.0, white_max_b = 550.0;
+        const float white_min_b = 500.0, white_max_b = 570.0;
 
-        //const float yellow_min_r = 200.0, yellow_max_r = 450.0;
-        //const float yellow_min_g = 200.0, yellow_max_g = 450.0;
-        //const float yellow_min_b = 0.0, yellow_max_b = 255.0;
+        const float lila_min_r = 230.0, lila_max_r = 300.0;
+        const float lila_min_g = 200.0, lila_max_g = 250.0;
+        const float lila_min_b = 250.0, lila_max_b = 300.0;
 
         const float yellow_min_r = 400.0, yellow_max_r = 500.0;
         const float yellow_min_g = 300.0, yellow_max_g = 400.0;
         const float yellow_min_b = 200.0, yellow_max_b = 300.0;
 
-        const float brown_min_r = 200.0, brown_max_r = 300.0;
-        const float brown_min_g = 200.0, brown_max_g = 255.0;
-        const float brown_min_b = 150.0, brown_max_b = 200.0;
+        const float brown_min_r = 250.0, brown_max_r = 300.0;
+        const float brown_min_g = 200.0, brown_max_g = 250.0;
+        const float brown_min_b = 200.0, brown_max_b = 250.0;
 
         // Determine the color based on RGB values
         std::cerr << ">>> Measurement Color (r|g|b) : " << measuredColor.hue << " | " << measuredColor.sat << " | " << measuredColor.val << std::endl;
@@ -270,6 +299,8 @@ void execute_command(int command, double angle, Drive& drive) {
             colorName = "blue";
         } else if (r >= brown_min_r && r <= brown_max_r && g >= brown_min_g && g <= brown_max_g && b >= brown_min_b && b <= brown_max_b) {
             colorName = "brown";
+        } else if (r >= lila_min_r && r <= lila_max_r && g >= lila_min_g && g <= lila_max_g && b >= lila_min_b && b <= lila_max_b) {
+            colorName = "lila";    
         } else {
             continue;
             colorName = "Unknown";
@@ -283,16 +314,18 @@ void execute_command(int command, double angle, Drive& drive) {
         std::cerr << ">>> Measurement Distance : " << measuredDistance << std::endl;
 
         // Determine distance range
-        if (measuredDistance <= 240) {
+        if (0 < measuredDistance &&  measuredDistance <= 240) {
             distanceRange = "dist_4";
-        } else if (measuredDistance <= 480) {
+        } else if (0 < measuredDistance && measuredDistance <= 480) {
             distanceRange = "dist_3";
-        } else if (measuredDistance <= 720) {
+        } else if (0 < measuredDistance && measuredDistance <= 720) {
             distanceRange = "dist_2";
-        } else if (measuredDistance <= 960) {
+        } else if (0 < measuredDistance &&  measuredDistance <= 960) {
             distanceRange = "dist_1";
-        } else if (measuredDistance <= 1200) {
+        } else if (0 < measuredDistance && measuredDistance <= 1200) {
             distanceRange = "dist_0";
+        } else if ( measuredDistance == -1) {
+            distanceRange = "dist_out";    
         } else {
             distanceRange = "dist_out";
         }
@@ -321,6 +354,7 @@ void execute_command(int command, double angle, Drive& drive) {
         double reward = calculate_reward(current_color, current_distance, next_color, next_distance, achieved, kd, kc, kg);
         //std::cout << "Reward: " << reward << std::endl;
         
+        if( save_data == true ){
         std::string prevstate = "(" + lastcolor + ", " + lastdistance + ")" ;
         outputFile << "(" 
                 << prevstate 
@@ -329,7 +363,8 @@ void execute_command(int command, double angle, Drive& drive) {
                 << "), " << reward 
                 << ", " << (achieved ? "True" : "False") 
                 << ")" << std::endl;
-
+                save_data = false;
+        }
         lastdistance = distanceRange; 
         lastcolor = colorName;
     
@@ -357,7 +392,7 @@ int main() {
 
 
     auto& drive = Drive::getInstance();
-    std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv";
+    std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data1.csv";
     outputFile.open(filePath, std::ios::out | std::ios::app);
     if (!outputFile.is_open()) {
         std::cerr << "Failed to open file at " << filePath << std::endl;
