@@ -114,8 +114,13 @@ class QLearningAgent:
         return self.Q_table
     
     def convert_csv_to_txt(self, csv_file, txt_file):
-        # csv line will look like: ((white, dist_4), forward , (white, dist_4), 0, False)
-        # txt lines should look like: n: (('white', 'dist_4'), 'forward', ('white', 'dist_4'), 0, False), where n is line number starting from 1
+        # if file is already in txt format, just copy it
+        if csv_file.endswith(".txt"):
+            with open(csv_file, "r") as csv_file:
+                with open(txt_file, "w") as txt_file:
+                    txt_file.write(csv_file.read())
+                    return
+
         with open(csv_file, "r") as csv_file:
             with open(txt_file, "w") as txt_file:
                 for i, line in enumerate(csv_file):
@@ -150,7 +155,9 @@ if __name__ == "__main__":
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    agent.convert_csv_to_txt("hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv", "rl/main/generated_dataset/test_dataset.txt")
-    agent.populate_replay_buffer("rl/main/generated_dataset/test_dataset.txt")
+    #file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
+    file_name = "rl/main/generated_dataset/fake_dataset.txt"
+    agent.convert_csv_to_txt(file_name, "rl/main/generated_dataset/training_dataset.txt")
+    agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
     agent.train()
     agent.export_Q_table()
