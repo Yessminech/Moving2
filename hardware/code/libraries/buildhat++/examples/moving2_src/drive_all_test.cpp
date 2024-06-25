@@ -154,6 +154,8 @@ std::string get_action_name(int command) {
         return "right";
     case 2:
         return "backward";
+    case 5:
+        return "stop";
     default:
         return "Invalid";
     }
