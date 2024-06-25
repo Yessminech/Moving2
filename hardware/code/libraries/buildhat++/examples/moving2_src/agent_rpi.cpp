@@ -23,6 +23,8 @@ std::string lastcolor = "white";
 std::string lastdistance = "dist_0";
 std::string actionName;
 
+std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> Q_table;  //Q_Table
+
 // fix remote from robert
 bool STATUS_RUNNING = true;
 void sig_handler(int signo) {
@@ -381,7 +383,19 @@ void execute_command(int command, double angle, Drive& drive) {
     //cv.notify_one();
 }
 }
-            
+
+int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist) {
+        int best_index = 0;
+        double max_value = this.Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
+
+        for (int i = 1; i < actions_dimension; ++i) {
+            if (this.Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
+                max_value = this.Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
+                best_index = i;
+            }
+        }
+        return best_index;
+    }            
 
 int main() {
 
@@ -394,7 +408,7 @@ int main() {
 
 
     auto& drive = Drive::getInstance();
-    std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data1.csv";
+    /*std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data1.csv";
     outputFile.open(filePath, std::ios::out | std::ios::app);
     if (!outputFile.is_open()) {
         std::cerr << "Failed to open file at " << filePath << std::endl;
