@@ -396,11 +396,11 @@ void execute_command(int command, double angle, Drive& drive) {
 
 int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist) {
         int best_index = 0;
-        double max_value = this.Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
+        double max_value = Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
 
-        for (int i = 1; i < actions_dimension; ++i) {
-            if (this.Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
-                max_value = this.Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
+        for (int i = 1; i < 5; ++i) { //there was a reference here to actions_dimensions which was not defined!!!!
+            if (Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
+                max_value = Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
                 best_index = i;
             }
         }
@@ -408,7 +408,7 @@ int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist) {
     }
 
 // refactored from calculate_reward
-auto get_distance_value() {
+auto get_distance_value(std::string distance) {
     // Implement your logic to get the distance value
     if (distance == "dist_0") {
         return 1.0;
@@ -423,7 +423,26 @@ auto get_distance_value() {
     } else {
         return -10.0; // Default case
     }
-    };
+ };
+
+auto get_color_value(std::string color){
+    // Implement your logic to get the color value
+    if (color == "white") {
+        return 1.0;
+    } else if (color == "yellow") {
+        return 2.0;
+    } else if (color == "blue") {
+        return 3.0;
+    } else if (color == "red") {
+        return 4.0;
+    } else if (color == "black") {
+        return 5.0;
+    }else if (color == "brown") {
+        return -10.0;
+    }else {
+        return 0.0; // Default case
+    }
+};
 
 int main() {
 
@@ -478,7 +497,7 @@ int main() {
         //this is a little confusing, but lastcolor and lastdistance are last measured values, so CURRENT values,
         // and prev_col and prev_dist are the previously measured(before the last step) values
 
-        q_index = argmax(get_color_value(lastcolor), lastdistance, get_color_value(prev_col), prev_dist);
+        q_index = argmax(get_color_value(lastcolor), get_distance_value(lastdistance), get_color_value(prev_col), get_distance_value(prev_dist));
 
 
         //TO DO!!
