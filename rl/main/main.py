@@ -125,6 +125,8 @@ class QLearningAgent:
 
                     if columns[1][len(columns[1]) - 4] == "t":
                         columns[1] = columns[1][:-4] + columns[1][-3:]
+                    elif columns[1][len(columns[1]) - 6] == "t":
+                        columns[1] = columns[1][:-6] + columns[1][-5:]
                     columns[1] = " '" + columns[1][1:-1] + "')"
 
                     columns[2] = columns[2][0:1] + "'" + columns[2][1:] + "'"
@@ -133,6 +135,8 @@ class QLearningAgent:
 
                     if columns[4][len(columns[4]) - 4] == "t":
                         columns[4] = columns[4][:-4] + columns[4][-3:]
+                    if columns[4][len(columns[4]) - 6] == "t":
+                        columns[4] = columns[4][:-6] + columns[4][-5:]
                     columns[4] = " '" + columns[4][1:-1] + "')"
 
                     # write line to txt file
