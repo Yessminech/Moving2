@@ -44,13 +44,14 @@ class QLearningAgentTests(unittest.TestCase):
 
     def test_update_Q_table(self):
         batch = [
-            (('white', 'dis_0'), 'forward', ('yellow', 'dis_2'), 17.0, False),
-            (('yellow', 'dis_2'), 'forward', ('yellow', 'dis_2'), 17.0, False),
+            (("white", "dis_0"), "forward", ("yellow", "dis_2"), 17.0, False),
+            (("yellow", "dis_2"), "forward", ("yellow", "dis_2"), 17.0, False),
         ]
         self.agent.update_Q_table(batch)
         Q_table = self.agent.get_Q_table()
         self.assertEqual(Q_table.shape, (7, 6, 5, 7, 6))
         self.assertNotEqual(Q_table.sum(), 0)
+
 
 if __name__ == "__main__":
     unittest.main()
