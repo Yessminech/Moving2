@@ -143,9 +143,75 @@ double calculate_reward(const std::string& current_color, const std::string& cur
 
 
 /////////////////////////
-/////////////////////////
+/////////////////////////       Q_TABLE 
 /////////////////////////
 
+// Function to read CSV into a 1D vector
+std::vector<double> readCSV(const std::string& filename) {
+    std::vector<double> data;
+    std::ifstream file(filename);
+    
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return data;
+    }
+    
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream lineStream(line);
+        std::string cell;
+        
+        while (std::getline(lineStream, cell, ',')) {
+            if (!cell.empty()) {
+                data.push_back(std::stod(cell));
+            }
+        }
+    }
+    
+    file.close();
+    return data;
+}
+
+// Function to reshape 1D vector into a 5D vector
+std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> reshapeTo5D(const std::vector<double>& flatData, int d1, int d2, int d3, int d4, int d5) {
+    std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> data(d1, std::vector<std::vector<std::vector<std::vector<double>>>>(d2, std::vector<std::vector<std::vector<double>>>(d3, std::vector<std::vector<double>>(d4, std::vector<double>(d5)))));
+    
+    int index = 0;
+    for (int i = 0; i < d1; ++i) {
+        for (int j = 0; j < d2; ++j) {
+            for (int k = 0; k < d3; ++k) {
+                for (int l = 0; l < d4; ++l) {
+                    for (int m = 0; m < d5; ++m) {
+                        data[i][j][k][l][m] = flatData[index++];
+                    }
+                }
+            }
+        }
+    }
+    
+    return data;
+}
+
+
+// Function to load and reshape the Q-table
+std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> loadAndReshapeQTable(const std::string& csvFilename) {
+    std::vector<double> flatData = readCSV(csvFilename);
+     // Define the dimensions of the original 5D table
+    int d1 = 7;
+    int d2 = 6;
+    int d3 = 5;
+    int d4 = 7;
+    int d5 = 6;
+
+    return reshapeTo5D(flatData, d1, d2, d3, d4, d5);
+}
+
+///// MAPPING : ACTIONS = ["forward", "backward", "right", "left", "stop"]
+
+
+/////////////////////////
+/////////////////////////       Q_TABLE 
+/////////////////////////
 std::string get_action_name(int command) {
     switch (command) {
     case 8:
