@@ -135,7 +135,6 @@ class QLearningAgent:
                         columns[4] = columns[4][:-4] + columns[4][-3:]
                     columns[4] = " '" + columns[4][1:-1] + "')"
 
-                    columns[5] = columns[5][:] + "'"
                     # write line to txt file
                     txt_file.write(f"{i+1}: {','.join(columns)}")
     
