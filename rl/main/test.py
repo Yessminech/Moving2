@@ -62,17 +62,18 @@ def import_Q_table():
         logging.error(f"Q_table not found at {Q_table_path}")
         return None
 
+
 import pytest
+
 
 @pytest.fixture
 def Q_table():
     # Initialize or load your Q_table here
-    return  test_agent_training_and_export()
-
+    return test_agent_training_and_export()
 
 
 def example_test():
-        # Example test
+    # Example test
     test_curr_color = "red"
     test_curr_distance = "dis_4"
     test_action = "forward"
@@ -96,5 +97,5 @@ def example_test():
         result = get_best_action(Q_table, sample_state, sample_prev_state)
     else:
         logging.error("Failed to load Q_table for testing.")
-        
+
     assert result != 0
