@@ -10,8 +10,15 @@
 #include "modules/sensors/DistanceSensor.hpp"
 #include <string>
 #include <signal.h>
+#include <vector>
 
-// inspired with demo5 Yin and color Robert
+// developed from drive_all_test.cpp
+
+
+//global variables for calculating index of q table
+std::string prev_col;
+std::string prev_dist;
+//these are the colors before the last step
 
 //std::mutex mtx;
 //std::condition_variable cv;
@@ -19,6 +26,7 @@ bool command_running = false;
 bool save_data = false;
 std::ofstream outputFile;
 
+//these are the colors that were measured after the last step and before the one we take now
 std::string lastcolor = "white";
 std::string lastdistance = "dist_0";
 std::string actionName;
@@ -433,7 +441,9 @@ void execute_command(int command, double angle, Drive& drive) {
                 << "), " << reward 
                 << ", " << (achieved ? "True" : "False") 
                 << ")" << std::endl;
-                save_data = false;
+        prev_col=lastcolor;
+        prev_dist = lastdistance;
+        save_data = false;
         }
         lastdistance = distanceRange; 
         lastcolor = colorName;
@@ -452,16 +462,53 @@ void execute_command(int command, double angle, Drive& drive) {
 
 int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist) {
         int best_index = 0;
-        double max_value = this.Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
+        double max_value = Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
 
-        for (int i = 1; i < actions_dimension; ++i) {
-            if (this.Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
-                max_value = this.Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
+        for (int i = 1; i < 5; ++i) { //there was a reference here to actions_dimensions which was not defined!!!!
+            if (Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
+                max_value = Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
                 best_index = i;
             }
         }
         return best_index;
-    }            
+    }
+
+// refactored from calculate_reward
+auto get_distance_value(std::string distance) {
+    // Implement your logic to get the distance value
+    if (distance == "dist_0") {
+        return 1.0;
+    } else if (distance == "dist_1") {
+        return 2.0;
+    } else if (distance == "dist_2") {
+        return 3.0;
+    } else if (distance == "dist_3") {
+        return 4.0;
+    } else if (distance == "dist_4") {
+        return 5.0;
+    } else {
+        return -10.0; // Default case
+    }
+ };
+
+auto get_color_value(std::string color){
+    // Implement your logic to get the color value
+    if (color == "white") {
+        return 1.0;
+    } else if (color == "yellow") {
+        return 2.0;
+    } else if (color == "blue") {
+        return 3.0;
+    } else if (color == "red") {
+        return 4.0;
+    } else if (color == "black") {
+        return 5.0;
+    }else if (color == "brown") {
+        return -10.0;
+    }else {
+        return 0.0; // Default case
+    }
+};
 
 int main() {
 
@@ -474,7 +521,7 @@ int main() {
 
 
     auto& drive = Drive::getInstance();
-    /*std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data1.csv";
+    std::string filePath = "/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/test/data1.csv";
     outputFile.open(filePath, std::ios::out | std::ios::app);
     if (!outputFile.is_open()) {
         std::cerr << "Failed to open file at " << filePath << std::endl;
@@ -485,11 +532,15 @@ int main() {
     std::string input;
     int command;
     double angle = 0;
+    int q_index;
 
     /*std::cout << "Control the car with keyboard input.\n";
     std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
     std::cout << "CTRL + C and CTRL + Z close the program.\n";*/
     std::thread sensing(getSensorreading);
+
+
+
     
     while (STATUS_RUNNING) {
         //std::unique_lock<std::mutex> lock(mtx);
@@ -509,6 +560,11 @@ int main() {
                 angle = 0;
             }
         }*/
+        //this is a little confusing, but lastcolor and lastdistance are last measured values, so CURRENT values,
+        // and prev_col and prev_dist are the previously measured(before the last step) values
+
+        q_index = argmax(get_color_value(lastcolor), get_distance_value(lastdistance), get_color_value(prev_col), get_distance_value(prev_dist));
+
 
         //TO DO!!
         //get sensor reading//or last saved reading
