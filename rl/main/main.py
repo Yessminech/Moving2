@@ -20,9 +20,9 @@ class QLearningAgent:
         color_mapping,
         distance_mapping,
         action_mapping,
-        learning_rate=0.1,
+        learning_rate=0.5,
         discount_factor=0.99,
-        num_episodes=100,
+        num_episodes=10000,
         batch_size=32,
     ):
         self.color_mapping = color_mapping
@@ -113,13 +113,13 @@ class QLearningAgent:
     def get_Q_table(self):
         return self.Q_table
 
-
-##TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
+## TODO Convert .csv dataset to .txt
+## TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    agent.populate_replay_buffer("rl/code/generated_dataset/fake_dataset.txt")
+    agent.populate_replay_buffer("rl/main/generated_dataset/fake_dataset.txt")
     agent.train()
     agent.export_Q_table()
