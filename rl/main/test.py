@@ -4,6 +4,7 @@ from tqdm import tqdm
 from main import QLearningAgent, color_mapping, distance_mapping, action_mapping
 import os
 import numpy as np
+from env import goal_achieved
 
 logging.basicConfig(level=logging.INFO)
 import pandas as pd
@@ -46,26 +47,26 @@ def import_Q_table():
         return None
 
 
-# Example test
-test_curr_color = "red"
-test_curr_distance = "dis_4"
-test_action = "forward"
-test_prev_color = "blue"
-test_prev_distance = "dis_3"
+# # Example test
+# test_curr_color = "red"
+# test_curr_distance = "dis_4"
+# test_action = "forward"
+# test_prev_color = "blue"
+# test_prev_distance = "dis_3"
 
-# Compute the Q-value for the sample state and action
+# # Compute the Q-value for the sample state and action
 Q_table = import_Q_table()
-if Q_table is not None:
-    sample_state = (
-        color_mapping[test_curr_color],
-        distance_mapping[test_curr_distance],
-    )
-    sample_prev_state = (
-        color_mapping[test_prev_color],
-        distance_mapping[test_prev_distance],
-    )
-    sample_action = action_mapping[test_action]
-    test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state)
-    get_best_action(Q_table, sample_state, sample_prev_state)
-else:
-    logging.error("Failed to load Q_table for testing.")
+# if Q_table is not None:
+#     sample_state = (
+#         color_mapping[test_curr_color],
+#         distance_mapping[test_curr_distance],
+#     )
+#     sample_prev_state = (
+#         color_mapping[test_prev_color],
+#         distance_mapping[test_prev_distance],
+#     )
+#     sample_action = action_mapping[test_action]
+#     test_Qvalue(Q_table, sample_state, sample_action, sample_prev_state)
+#     get_best_action(Q_table, sample_state, sample_prev_state)
+# else:
+#     logging.error("Failed to load Q_table for testing.")
