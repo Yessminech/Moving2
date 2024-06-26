@@ -9,7 +9,7 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 from env import get_colors, get_distances, get_actions
-from policy_evaluator import PolicyEvaluator  
+from policy_evaluator import PolicyEvaluator
 
 color_mapping = {color: i for i, color in enumerate(get_colors())}
 distance_mapping = {distance: i for i, distance in enumerate(get_distances())}
@@ -105,9 +105,11 @@ class QLearningAgent:
             batch = self.sample_batch()
             self.update_Q_table(batch)
         PolicyEvaluator.plot_rewards_over_batches(self.rewards)
-        PolicyEvaluator.plot_average_rewards_over_episodes(self.rewards, self.num_episodes)   
+        PolicyEvaluator.plot_average_rewards_over_episodes(
+            self.rewards, self.num_episodes
+        )
         PolicyEvaluator.plot_values_distribution(self.Q_table)
-        print(PolicyEvaluator.number_of_steps_from_start(self.Q_table, color_mapping, distance_mapping))
+        # print(PolicyEvaluator.number_of_steps_from_start(self.Q_table, color_mapping, distance_mapping))       )
 
     def export_Q_table(self):
         current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -165,12 +167,12 @@ if __name__ == "__main__":
     agent.learning_rate = 0.7
     # file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
     file_name = "rl/main/generated_dataset/fake_dataset.txt"
-    if (training_dataset):
+    if training_dataset:
         agent.convert_csv_to_txt(
             file_name, "rl/main/generated_dataset/training_dataset.txt"
         )
         agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
-    else:    
+    else:
         agent.populate_replay_buffer(file_name)
     agent.train()
     agent.export_Q_table()
