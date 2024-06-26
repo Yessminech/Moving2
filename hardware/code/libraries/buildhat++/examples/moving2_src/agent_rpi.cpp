@@ -460,11 +460,11 @@ void execute_command(int command, double angle, Drive& drive) {
 }
 }
 
-int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist) {
+int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist, int actions) {
         int best_index = 0;
         double max_value = Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
 
-        for (int i = 1; i < 5; ++i) { //there was a reference here to actions_dimensions which was not defined!!!!
+        for (int i = 1; i < actions; ++i) { //there was a reference here to actions_dimensions which was not defined!!!!
             if (Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
                 max_value = Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
                 best_index = i;
@@ -530,9 +530,9 @@ int main() {
     ///outputFile << "Command,Angle,Color,Distance\n";
 
     std::string input;
-    int command;
     double angle = 0;
-    int q_index;
+    int command_value;
+    int actions = 4;
 
     /*std::cout << "Control the car with keyboard input.\n";
     std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
@@ -546,34 +546,13 @@ int main() {
         //std::unique_lock<std::mutex> lock(mtx);
         //cv.wait(lock, [] { return !command_running; });
 
-        /*std::cout << "Enter command (e.g., '8,10' or '4'): ";
-        std::getline(std::cin, input);
-
-        std::istringstream iss(input);
-        std::string part;
-        if (std::getline(iss, part, ',')) {
-            std::istringstream(part) >> command;
-
-            if (std::getline(iss, part)) {
-                std::istringstream(part) >> angle;
-            } else {
-                angle = 0;
-            }
-        }*/
         //this is a little confusing, but lastcolor and lastdistance are last measured values, so CURRENT values,
         // and prev_col and prev_dist are the previously measured(before the last step) values
 
-        q_index = argmax(get_color_value(lastcolor), get_distance_value(lastdistance), get_color_value(prev_col), get_distance_value(prev_dist));
-
-
-        //TO DO!!
-        //get sensor reading//or last saved reading
-        //lookup in q table
-        //translate/into command
-
+        command_value = argmax(get_color_value(lastcolor), get_distance_value(lastdistance), get_color_value(prev_col), get_distance_value(prev_dist), actions);
 
         //lock.unlock();
-        std::thread execute(execute_command, command, angle, std::ref(drive));
+        std::thread execute(execute_command, command_value, angle, std::ref(drive));
         
         execute.join();
     }
