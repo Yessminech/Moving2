@@ -222,13 +222,13 @@ std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> loadAndR
 /////////////////////////
 std::string get_action_name(int command) {
     switch (command) {
-    case 8:
+    case 0:
         return "forward";
-    case 4:
+    case 3:
         return "left";
-    case 6:
-        return "right";
     case 2:
+        return "right";
+    case 1:
         return "backward";
     default:
         return "Invalid";
@@ -242,23 +242,23 @@ void execute_command(int command, double angle, Drive& drive) {
     //}
 
 
-     actionName = get_action_name(command); //do we want to change this to all-strings for better debugging?
-    /*
-    if (actionName == "Invalid" && command != 5) {
-        std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
+     actionName = get_action_name(command);
+
+    if (actionName == "Invalid" && command != 4) {
+        std::cout << "Invalid command. Command from the table not in appropriate formatting.\n";
         //{
         //    std::lock_guard<std::mutex> lock(mtx);
         //    //command_running = false;
         //}
         //cv.notify_one();
         return;
-    }*/
+    }
 
     //command contains the correct command already - maybe we want to change int command to string
     std::cout << "Action: " << actionName << std::endl;
 
     switch (command) {
-    case 2:
+    case 0:
         drive.set_speed(1);
         drive.move_forward(angle);
          // wait for one second
@@ -266,7 +266,7 @@ void execute_command(int command, double angle, Drive& drive) {
         // stop the drive
          drive.coast();
         break;
-    case 4:
+    case 3:
         drive.set_speed(0.5);
         drive.turn_left();
         // wait for one second
@@ -275,7 +275,7 @@ void execute_command(int command, double angle, Drive& drive) {
          drive.coast();
          save_data = true;
         break;
-    case 6:
+    case 2:
         drive.set_speed(0.5);
         drive.turn_right();
          // wait for one second
@@ -284,7 +284,7 @@ void execute_command(int command, double angle, Drive& drive) {
          drive.coast();
          save_data = true;
         break;
-    case 8:
+    case 1:
         drive.set_speed(1);
         drive.move_backward();
          // wait for one second
@@ -293,11 +293,11 @@ void execute_command(int command, double angle, Drive& drive) {
          drive.coast();
          save_data = true;
         break;
-    case 5: 
+    case 4: //what is supposed to be done when the command is to stop?? is this sufficient
         drive.coast();
         break;
      default:
-        std::cout << "Invalid command. Please use 8, 4, 6, 5 or 2 with appropriate formatting.\n";
+        std::cout << "Invalid command. Check q table if everything is correct with appropriate formatting.\n";
         return;    
     }
 
