@@ -15,6 +15,6 @@
       - **`/src/`**:
       - **`.CMakeLists.txt.swp`**:
       - **`CMakeLists.txt`**:
-      - **`readme.md`**:
+      - **`readme.md`**: Overview of how to use the buildhat++
     - **`/legacy/`**: Contains older or deprecated Hardware code
-  - **`README.md`**: An overview of the RL repository.
+  - **`README.md`**: An overview of the Hardware repository.
