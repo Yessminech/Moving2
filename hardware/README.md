@@ -1,1 +1,11 @@
-# Hardware Directory Overview
+- **`/hardware/`**: Contains all files related to the Hardware code of the project.
+    - **`/buildhat_firmware/`**: Contains tzhe firmware to flash and reboot the raspberry pi
+    - **`/code/libraries/buildhat++/`**:
+      - **`/.vscode/`**:
+      - **`/examples/`**:
+      - **`/src/`**:
+      - **`.CMakeLists.txt.swp`**:
+      - **`CMakeLists.txt`**:
+      - **`readme.md`**:
+    - **`/legacy/`**: Contains older or deprecated Hardware code
+  - **`README.md`**: An overview of the RL repository.
