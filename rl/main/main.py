@@ -1,6 +1,7 @@
 import numpy as np
 import random
 import os
+import glob
 import ast
 import logging
 from collections import deque
@@ -136,16 +137,23 @@ class QLearningAgent:
                 for i, line in enumerate(csv_file):
                     # get colums from csv line t add apostrophes accordingly
                     columns = line.split(",")
+                    if columns[0] == "((lila":
+                        columns[0] = "((lilas"
                     columns[0] = columns[0][0:2] + "'" + columns[0][2:] + "'"
-
-                    if columns[1][len(columns[1]) - 4] == "t":
-                        columns[1] = columns[1][:-4] + columns[1][-3:]
-                    elif columns[1][len(columns[1]) - 6] == "t":
+                    print(len(columns))
+                    print(len(columns[1]) - 6)
+                    if columns[1][len(columns[1]) - 6] == "t":
                         columns[1] = columns[1][:-6] + columns[1][-5:]
+                    elif columns[1][len(columns[1]) - 4] == "t":
+                        columns[1] = columns[1][:-4] + columns[1][-3:]
                     columns[1] = " '" + columns[1][1:-1] + "')"
 
-                    columns[2] = columns[2][0:1] + "'" + columns[2][1:] + "'"
-
+                    if columns[2] == " Invalid":
+                        columns[2] = " 'stop'"
+                    else:
+                        columns[2] = columns[2][0:1] + "'" + columns[2][1:] + "'"
+                    if columns[3] == " (lila":
+                        columns[3] = " (lilas"
                     columns[3] = columns[3][0:2] + "'" + columns[3][2:] + "'"
 
                     if columns[4][len(columns[4]) - 4] == "t":
@@ -165,14 +173,16 @@ if __name__ == "__main__":
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    # file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
-    file_name = "rl/main/generated_dataset/fake_dataset.txt"
-    if training_dataset:
-        agent.convert_csv_to_txt(
-            file_name, "rl/main/generated_dataset/training_dataset.txt"
-        )
+    #file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
+    #file_name get all pathes of files of hardware/code/libraries/buildhat++/examples/moving2_src/test/
+    file_paths = glob.glob(os.path.join("hardware/code/libraries/buildhat++/examples/moving2_src/test/", f"*.csv"))
+    #file_name = ["rl/main/generated_dataset/fake_dataset.txt"]
+    for file_name in file_paths:
+        if "data9" in file_name or "data3" in file_name:
+            continue
+        print(file_name)
+        agent.convert_csv_to_txt(file_name, "rl/main/generated_dataset/training_dataset.txt")
+        agent.replay_buffer = deque(maxlen=10000)
         agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
-    else:
-        agent.populate_replay_buffer(file_name)
-    agent.train()
+        agent.train()
     agent.export_Q_table()
