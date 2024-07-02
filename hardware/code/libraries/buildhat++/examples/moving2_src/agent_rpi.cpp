@@ -543,6 +543,7 @@ int main() {
     std::cout << "CTRL + C and CTRL + Z close the program.\n";*/
     std::thread sensing(getSensorreading);
 
+    Q_table = loadAndReshapeQTable("/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/Q_table.csv");
 
 
     
