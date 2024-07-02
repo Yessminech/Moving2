@@ -1,0 +1,16 @@
+>>> Measurement Color (r|g|b) : 407 | 333 | 236
+Detected Color: yellow
+>>> Measurement Distance : 810
+Distance Range: dist_1
+
+
+>>> Measurement Color (r|g|b) : 407 | 333 | 237
+Detected Color: yellow
+>>> Measurement Distance : 808
+Distance Range: dist_1
+
+
+>>> Measurement Color (r|g|b) : 410 | 335 | 237
+Detected Color: yellow
+>>> Measurement Distance : 810
+Distance Range: dist_1

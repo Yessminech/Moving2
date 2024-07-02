@@ -5,10 +5,12 @@ import glob
 import ast
 import logging
 from collections import deque
-
 import data_processing
-from env import get_colors, get_distances, get_actions
 from tqdm import tqdm
+import matplotlib.pyplot as plt
+
+from env import get_colors, get_distances, get_actions
+from policy_evaluator import PolicyEvaluator
 
 color_mapping = {color: i for i, color in enumerate(get_colors())}
 distance_mapping = {distance: i for i, distance in enumerate(get_distances())}
@@ -23,7 +25,7 @@ class QLearningAgent:
         action_mapping,
         learning_rate=0.5,
         discount_factor=0.99,
-        num_episodes=10000,
+        num_episodes=100,
         batch_size=32,
     ):
         self.color_mapping = color_mapping
@@ -35,6 +37,7 @@ class QLearningAgent:
         self.batch_size = batch_size
         self.replay_buffer = deque(maxlen=10000)
         self.Q_table = self.initialize_Q_table()
+        self.rewards = []
 
     def initialize_Q_table(self):
         num_colors = len(self.color_mapping)
@@ -92,6 +95,7 @@ class QLearningAgent:
                 self.learning_rate * td_error
             )
             prev_state = state
+        self.rewards.append(reward)
 
     def train(self):
         for episode in tqdm(
@@ -101,6 +105,12 @@ class QLearningAgent:
         ):
             batch = self.sample_batch()
             self.update_Q_table(batch)
+        PolicyEvaluator.plot_rewards_over_batches(self.rewards)
+        PolicyEvaluator.plot_average_rewards_over_episodes(
+            self.rewards, self.num_episodes
+        )
+        PolicyEvaluator.plot_values_distribution(self.Q_table)
+        # print(PolicyEvaluator.number_of_steps_from_start(self.Q_table, color_mapping, distance_mapping))       )
 
     def export_Q_table(self):
         current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -113,7 +123,7 @@ class QLearningAgent:
 
     def get_Q_table(self):
         return self.Q_table
-    
+
     def convert_csv_to_txt(self, csv_file, txt_file):
         # if file is already in txt format, just copy it
         if csv_file.endswith(".txt"):
@@ -154,11 +164,11 @@ class QLearningAgent:
 
                     # write line to txt file
                     txt_file.write(f"{i+1}: {','.join(columns)}")
-    
 
-## TODO Convert .csv dataset to .txt
+
 ## TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
+    training_dataset = False
     logging.basicConfig(level=logging.INFO)
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500

@@ -1,1 +1,20 @@
-# Hardware Directory Overview
+- **`/hardware/`**: Contains all files related to the Hardware code of the project.
+    - **`/buildhat_firmware/`**: Contains the firmware to flash and reboot the raspberry pi
+    - **`/code/libraries/buildhat++/`**:
+      - **`/.vscode/`**:
+      - **`/examples/`**:
+          - **`/moving2_src/`**:
+              - **`/test/`**: Contains all data
+              - **`agent_rpi.cpp`**:
+              - **`drive_all_test.cpp`**:
+          - **`calibrate_colors.cpp`**:
+          - **`color_test_2.cpp`**:
+          - **`drive_and_color_example.cpp`**:
+          - **`drive_and_distance_example.cpp`**:
+          - **`drive_one_second.cpp`**:
+      - **`/src/`**:
+      - **`.CMakeLists.txt.swp`**:
+      - **`CMakeLists.txt`**:
+      - **`readme.md`**: Overview of how to use the buildhat++
+    - **`/legacy/`**: Contains older or deprecated Hardware code
+  - **`README.md`**: An overview of the Hardware repository.
