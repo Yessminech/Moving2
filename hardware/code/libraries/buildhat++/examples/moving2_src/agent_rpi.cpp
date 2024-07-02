@@ -473,8 +473,8 @@ int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist, int actions
         return best_index;
     }
 
-// refactored from calculate_reward
-auto get_distance_value(std::string distance) {
+
+auto get_distance_conforms(std::string distance) {
     // Implement your logic to get the distance value
     if (distance == "dist_0") {
         return 1.0;
@@ -491,7 +491,7 @@ auto get_distance_value(std::string distance) {
     }
  };
 
-auto get_color_value(std::string color){
+auto get_color_conforms(std::string color){
     // Implement your logic to get the color value
     if (color == "white") {
         return 1.0;
@@ -505,6 +505,8 @@ auto get_color_value(std::string color){
         return 5.0;
     }else if (color == "brown") {
         return -10.0;
+    }else if (color == "lila"){
+        return -10.0;//these are taken from env.py.. but clearly there is something wrong here because lila and brown are not the same
     }else {
         return 0.0; // Default case
     }
@@ -549,7 +551,7 @@ int main() {
         //this is a little confusing, but lastcolor and lastdistance are last measured values, so CURRENT values,
         // and prev_col and prev_dist are the previously measured(before the last step) values
 
-        command_value = argmax(get_color_value(lastcolor), get_distance_value(lastdistance), get_color_value(prev_col), get_distance_value(prev_dist), actions);
+        command_value = argmax(get_color_conforms(lastcolor), get_distance_conforms(lastdistance), get_color_conforms(prev_col), get_distance_conforms(prev_dist), actions);
 
         //lock.unlock();
         std::thread execute(execute_command, command_value, angle, std::ref(drive));
