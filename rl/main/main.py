@@ -4,6 +4,7 @@ import os
 import glob
 import ast
 import logging
+import test
 from collections import deque
 import data_processing
 from tqdm import tqdm
@@ -186,3 +187,4 @@ if __name__ == "__main__":
         agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
         agent.train()
     agent.export_Q_table()
+    test.convert_q_table_to_csv("rl/main/Q_table.npy", "rl/main/Q_table.csv")
