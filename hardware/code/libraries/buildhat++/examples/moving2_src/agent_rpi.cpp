@@ -474,41 +474,43 @@ int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist, int actions
     }
 
 
-auto get_distance_conforms(std::string distance) {
+int get_distance_conforms(std::string distance) {
     // Implement your logic to get the distance value
     if (distance == "dist_0") {
-        return 1.0;
+        return 0;
     } else if (distance == "dist_1") {
-        return 2.0;
+        return 1;
     } else if (distance == "dist_2") {
-        return 3.0;
+        return 2;
     } else if (distance == "dist_3") {
-        return 4.0;
+        return 3;
     } else if (distance == "dist_4") {
-        return 5.0;
-    } else {
-        return -10.0; // Default case
+        return 4;
+    } else if (distance == "dist_out") {
+        return -10; // Default case
+    }else {
+    return 10;
     }
  };
 
-auto get_color_conforms(std::string color){
+int get_color_conforms(std::string color){
     // Implement your logic to get the color value
     if (color == "white") {
-        return 1.0;
+        return 0;
     } else if (color == "yellow") {
-        return 2.0;
+        return 1;
     } else if (color == "blue") {
-        return 3.0;
+        return 2;
     } else if (color == "red") {
-        return 4.0;
+        return 3;
     } else if (color == "black") {
-        return 5.0;
+        return 4;
     }else if (color == "brown") {
-        return -10.0;
-    }else if (color == "lila"){
-        return -10.0;//these are taken from env.py.. but clearly there is something wrong here because lila and brown are not the same
-    }else {
-        return 0.0; // Default case
+        return 5;
+    }else if (color == "lila") {
+        return 6;
+    }else{
+    return 10; //default case for when color has no match
     }
 };
 
@@ -550,8 +552,22 @@ int main() {
 
         //this is a little confusing, but lastcolor and lastdistance are last measured values, so CURRENT values,
         // and prev_col and prev_dist are the previously measured(before the last step) values
+        int curCol = get_color_conforms(lastcolor);
+        int lastCol = get_color_conforms(prev_col);
+        int lastDis = get_distance_conforms(prev_dist);
+        int curDis = get_distance_conforms(lastdistance);
+        //for debugging
+        if(curCol > 6 || lastCol > 6){
+            std::cerr << "Color out of range" << std::endl;
+        }
+        if(curDis == -10 || lastDis == -10){
+            std::cerr << "Distance out of range - default dist_out" << std::endl;
+        }
+        if(curDis == 10 || lastDis == 10){
+            std::cerr << "unexpected value in distance" << std::endl;
+        }
 
-        command_value = argmax(get_color_conforms(lastcolor), get_distance_conforms(lastdistance), get_color_conforms(prev_col), get_distance_conforms(prev_dist), actions);
+        command_value = argmax(curCol, curDis, lastCol, lastDis, actions);
 
         //lock.unlock();
         std::thread execute(execute_command, command_value, angle, std::ref(drive));
