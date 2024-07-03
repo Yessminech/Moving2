@@ -1,4 +1,6 @@
 import unittest
+from collections import deque
+
 from main import QLearningAgent
 
 
@@ -59,6 +61,28 @@ class QLearningAgentTests(unittest.TestCase):
 
         # TODO double check .csv or .txt
         self.assertTrue(os.path.isfile("rl/main/Q_table.csv"))
+
+    def test_populate_replay_buffer(self):
+        self.agent.populate_replay_buffer("E:/Fichier/TUB/STUDIUM/SoSe 24/EES Projekt (RL)/RL/GIT repo 2/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+        print(self.agent.replay_buffer)
+        test_buffer = deque([(('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False),
+       (('white', 'dis_0'), 'forward', ('white', 'dis_1'), -2.0, False),
+       (('white', 'dis_0'), 'forward', ('white', 'dis_2'), -3.0, False)],
+      maxlen=10000)
+        self.assertEqual(self.agent.replay_buffer , test_buffer )
+
+    def test_sample_batch_1(self):
+        self.agent.populate_replay_buffer("E:/Fichier/TUB/STUDIUM/SoSe 24/EES Projekt (RL)/RL/GIT repo 2/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+        batch = self.agent.sample_batch()
+        print(batch)
+
+    def test_sample_batch_2(self):
+        self.agent.populate_replay_buffer("E:/Fichier/TUB/STUDIUM/SoSe 24/EES Projekt (RL)/RL/GIT repo 2/Moving2/rl/main/generated_dataset/fake_dataset.txt")
+        batch = self.agent.sample_batch()
+        self.assertEqual(len(batch), self.agent.batch_size)
+
+
+
 
 
 if __name__ == "__main__":
