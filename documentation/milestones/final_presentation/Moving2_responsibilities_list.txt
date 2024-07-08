@@ -29,15 +29,65 @@
       - Linting 
       - TODO Automate build for HW code
 
-### Member 2: [Name]
+### Member 2: Vera Wagner
+- **Functions and Concepts Contributed:**
+  1. Develop Concepts for Robot
+  2. Contributed Concept for Remote Control
+      - Developed concept for code; decided on requirements together with Yin (keyboard use, etc.)
+      - Contributed Code (Program was implemented by Yin, Robert and Kevin)
+  3. Agent RPI
+      - Implemented Agent together with Zied
+  4. Collaboration in different areas of hardware team
+      - collected Training Data together with Kevin
+      - Build Robot Environment (together with Yessmine and Yin)
+
+  - **Role:** Project Manager
+  - **Actions Taken:**
+    - **Early Phase**
+    1. Define requirements
+        - Propose possible requirements to the other team members
+        - Discuss requirements with the other team members
+    2. Assign work packages
+        - Initially set up working groups more loosely (hardware, RL research)
+    3. Update initial Gantt chart
+      - **Mid Phase**
+    1. Update Gantt Chart
+        - Update Gantt chart
+        - Use Gantt Chart to inform agenda
+    2. Assign general work groups
+        - Assign groups for Backend Programming and Hardware Programming
+    3. Update and distribute Tickets
+        - Set up issues and Kanban Board (with Yessmine)
+        - Add issues, distribute tasks
+        - Set up Milestones
+        - Update Kanban Board and issues
+      - **Late Phase**
+    1. Update Gantt Chart
+        - Update Gantt Chart
+        - Evaluate Requirements with Gantt Chart
+    2. Update and distribute Tickets
+
+### Member 2: [name]
 - **Functions and Concepts Contributed:**
   1. [Function/Concept 1]
   2. [Function/Concept 2]
   3. [Function/Concept 3]
 
-  - **Role:** [Quality Manager, etc.]
+  - **Role:** [manager role]
   - **Actions Taken:**
+    - **Early Phase**
     1. [Action 1]
         - Subpoint 1 for Action 1
     2. [Action 2]
     3. [Action 3]
+      - **Mid Phase**
+    1. [Action 1]
+        - Subpoint 1 for Action 1
+    2. [Action 2]
+    3. [Action 3]
+      - **Late Phase**
+    1. [Action 1]
+        - Subpoint 1 for Action 1
+    2. [Action 2]
+    3. [Action 3]
+
