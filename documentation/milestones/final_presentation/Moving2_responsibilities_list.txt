@@ -35,11 +35,14 @@
   2. Contributed Concept for Remote Control
       - Developed concept for code; decided on requirements together with Yin (keyboard use, etc.)
       - Contributed Code (Program was implemented by Yin, Robert and Kevin)
+  3. Robot Environment and Development of Reward Function and RL spaces
+      - Build Robot Environment (together with Yessmine and Yin)
+      - In Early Phase, developed ideas for the Reward Function and RL spaces (see First Milestone     Presentation)
   3. Agent RPI
       - Implemented Agent together with Zied
   4. Collaboration in different areas of hardware team
       - collected Training Data together with Kevin
-      - Build Robot Environment (together with Yessmine and Yin)
+
 
   - **Role:** Project Manager
   - **Actions Taken:**
