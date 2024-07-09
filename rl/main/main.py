@@ -13,12 +13,17 @@ import matplotlib.pyplot as plt
 from env import get_colors, get_distances, get_actions
 from policy_evaluator import PolicyEvaluator
 
+# Mapping for Obseravtion and Action space
 color_mapping = {color: i for i, color in enumerate(get_colors())}
 distance_mapping = {distance: i for i, distance in enumerate(get_distances())}
 action_mapping = {action: i for i, action in enumerate(get_actions())}
 
 
 class QLearningAgent:
+    """
+    Q-learning agent to form Q_table from a provided Dataset in a .csv file using BQ Algorithm.
+    """
+
     def __init__(
         self,
         color_mapping,
@@ -26,7 +31,7 @@ class QLearningAgent:
         action_mapping,
         learning_rate=0.5,
         discount_factor=0.99,
-        num_episodes=100,
+        num_episodes=10000,
         batch_size=32,
     ):
         self.color_mapping = color_mapping
@@ -40,15 +45,17 @@ class QLearningAgent:
         self.Q_table = self.initialize_Q_table()
         self.rewards = []
 
+    # Initialize Q_table with zeros
     def initialize_Q_table(self):
         num_colors = len(self.color_mapping)
         num_distances = len(self.distance_mapping)
         num_actions = len(self.action_mapping)
         Q_table = np.zeros(
             (num_colors, num_distances, num_actions, num_colors, num_distances)
-        )  # observation state contains preivous and current states
+        )  # observation state contains previous and current states
         return Q_table
 
+    # Populate replay buffer with data from dataset
     def populate_replay_buffer(self, dataset):
         with open(dataset, "r") as file:
             for line in file:
@@ -57,13 +64,16 @@ class QLearningAgent:
                 data_tuple = ast.literal_eval(data)
                 self.replay_buffer.append(data_tuple)
 
+    # Sample batch from replay buffer
     def sample_batch(self):
         return data_processing.random_slice(
             self.replay_buffer, min(len(self.replay_buffer), self.batch_size)
         )
 
+    # Update Q_table from batch
     def update_Q_table(self, batch):
         prev_state = batch[0][0]  # takes initial state as previous state
+        # iterate over batch and update Q_table
         for state, action, next_state, reward, goal in batch:
             prev_col, prev_dist = (
                 self.color_mapping[prev_state[0]],
@@ -92,12 +102,14 @@ class QLearningAgent:
                 td_target
                 - self.Q_table[curr_col, curr_dist, action, prev_col, prev_dist]
             )
+            # Update Q value
             self.Q_table[curr_col, curr_dist, action, prev_col, prev_dist] += (
                 self.learning_rate * td_error
             )
             prev_state = state
         self.rewards.append(reward)
 
+    # Train the agent for num_episodes and plot evaluation metrics
     def train(self):
         for episode in tqdm(
             range(self.num_episodes),
@@ -111,7 +123,6 @@ class QLearningAgent:
             self.rewards, self.num_episodes
         )
         PolicyEvaluator.plot_values_distribution(self.Q_table)
-        # print(PolicyEvaluator.number_of_steps_from_start(self.Q_table, color_mapping, distance_mapping))       )
 
     def export_Q_table(self):
         current_dir = os.path.dirname(os.path.realpath(__file__))
@@ -143,7 +154,7 @@ class QLearningAgent:
         with open(csv_file, "r") as csv_file:
             with open(txt_file, "w") as txt_file:
                 for i, line in enumerate(csv_file):
-                    # get colums from csv line t add apostrophes accordingly
+                    # get columns from csv line to add apostrophes accordingly
                     columns = line.split(",")
                     if columns[0] == "((lila":
                         columns[0] = "((lilas"
@@ -222,21 +233,27 @@ class QLearningAgent:
 
 ## TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
-    training_dataset = False
+    # choose the fake or real dataset to train the agent
+    training_dataset = False # fake dataset
     logging.basicConfig(level=logging.INFO)
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
-    
+    # agent parameter to be configured
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    # file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
-    # file_name get all pathes of files of hardware/code/libraries/buildhat++/examples/moving2_src/test/
+    # --deprecated-- file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
+    # --deprecated-- file_name get all pathes of files of hardware/code/libraries/buildhat++/examples/moving2_src/test/
+    # --deprecated-- file_name = ["rl/main/generated_dataset/fake_dataset.txt"]
+
+    # Get all real dataset files
     file_paths = glob.glob(
         os.path.join(
             "hardware/code/libraries/buildhat++/examples/moving2_src/test/", f"*.csv"
         )
     )
-    # file_name = ["rl/main/generated_dataset/fake_dataset.txt"]
+    
+    # Train the agent with all real dataset files
     for file_name in file_paths:
+        # skip data9 and data3 files because of faulty data
         if "data9" in file_name or "data3" in file_name:
             continue
         print(file_name)
@@ -246,10 +263,12 @@ if __name__ == "__main__":
         agent.replay_buffer = deque(maxlen=10000)
         agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
         agent.train()
+        
+    # Export Q_table to .npy and .csv files
     agent.export_Q_table()
-    agent.convert_q_table_to_csv(
-        "rl/main/Q_table.npy", "rl/main/Q_table.csv"
-    )
-    
+
     agent.visualize_Q_table()
-# /home/yessmine/Studies/6Semester/Project/Moving2/rl/main/Q_table.csv
+    base_dir = os.path.expanduser("~/Studies/6Semester/Project/Moving2/rl/main")
+    file_path_npy = os.path.join(base_dir, "Q_table.npy")
+    file_path_csv = os.path.join(base_dir, "Q_table.csv")
+    agent.convert_q_table_to_csv(file_path_npy, file_path_csv)
