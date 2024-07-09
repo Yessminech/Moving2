@@ -164,4 +164,5 @@
         - Update Gantt Chart
         - Evaluate Requirements with Gantt Chart
     2. Update and distribute Tickets
+    3. wrote first part of the presentation video (+participated in shooting and voice recording)
 
