@@ -124,7 +124,7 @@ class QLearningAgent:
 
     def get_Q_table(self):
         return self.Q_table
-    
+
     def convert_q_table_to_csv(self, q_table_npy_path, csv_path):
         Q_table = np.load(q_table_npy_path)
         flattened_Q_table = Q_table.reshape(-1).astype(float)
@@ -181,18 +181,26 @@ if __name__ == "__main__":
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
     agent.batch_size = 4500
     agent.learning_rate = 0.7
-    #file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
-    #file_name get all pathes of files of hardware/code/libraries/buildhat++/examples/moving2_src/test/
-    file_paths = glob.glob(os.path.join("hardware/code/libraries/buildhat++/examples/moving2_src/test/", f"*.csv"))
-    #file_name = ["rl/main/generated_dataset/fake_dataset.txt"]
+    # file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
+    # file_name get all pathes of files of hardware/code/libraries/buildhat++/examples/moving2_src/test/
+    file_paths = glob.glob(
+        os.path.join(
+            "hardware/code/libraries/buildhat++/examples/moving2_src/test/", f"*.csv"
+        )
+    )
+    # file_name = ["rl/main/generated_dataset/fake_dataset.txt"]
     for file_name in file_paths:
         if "data9" in file_name or "data3" in file_name:
             continue
         print(file_name)
-        agent.convert_csv_to_txt(file_name, "rl/main/generated_dataset/training_dataset.txt")
+        agent.convert_csv_to_txt(
+            file_name, "rl/main/generated_dataset/training_dataset.txt"
+        )
         agent.replay_buffer = deque(maxlen=10000)
         agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
         agent.train()
     agent.export_Q_table()
-    agent.convert_q_table_to_csv("Moving2/rl/main/Q_table.npy", "Moving2/rl/main/Q_table.csv")
-#/home/yessmine/Studies/6Semester/Project/Moving2/rl/main/Q_table.csv
+    agent.convert_q_table_to_csv(
+        "Moving2/rl/main/Q_table.npy", "Moving2/rl/main/Q_table.csv"
+    )
+# /home/yessmine/Studies/6Semester/Project/Moving2/rl/main/Q_table.csv

@@ -10,7 +10,7 @@ Distances = [
     "dis_3",
     "dis_4",
     "dis_out",
-] # dis_4 is better than dis_0
+]  # dis_4 is better than dis_0
 # Define the action space
 ACTIONS = ["forward", "backward", "right", "left", "stop"]
 
@@ -34,9 +34,9 @@ def goal_achieved(state) -> bool:
 # Define the reward  function
 
 # Define weights for the reward function
-kd = 1.0 # Distance weight
-kc = 10.0 # Color weight
-kg = 100.0 # Goal weight
+kd = 1.0  # Distance weight
+kc = 10.0  # Color weight
+kg = 100.0  # Goal weight
 
 
 # Define the helper functions
@@ -47,7 +47,7 @@ def get_distance_value(distance: str) -> int:
         "dis_2": 3,
         "dis_3": 4,
         "dis_4": 5,
-        "dis_out": -10, # dis_4 is better than dis_0
+        "dis_out": -10,  # dis_4 is better than dis_0
     }
     return distance_map.get(distance, 0)  # default to 0 if color not found
 
@@ -57,7 +57,7 @@ def determine_distance_transition(current_distance: str, next_distance: str) -> 
     prev_value = get_distance_value(current_distance)
     curr_value = get_color_value(next_distance)
     if curr_value > prev_value:
-        return "better" # dis_4 is better than dis_0
+        return "better"  # dis_4 is better than dis_0
     elif curr_value < prev_value:
         return "worse"
     else:
@@ -128,5 +128,3 @@ def calculate_reward(
     # Total reward
     R = R_distance + R_color + R_goal
     return R
-
-

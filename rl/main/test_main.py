@@ -5,7 +5,7 @@ from main import QLearningAgent
 
 
 class QLearningAgentTests(unittest.TestCase):
-    # Initialize the agent with observations and actions    
+    # Initialize the agent with observations and actions
     def setUp(self):
         self.color_mapping = {
             "white": 1,
@@ -22,7 +22,7 @@ class QLearningAgentTests(unittest.TestCase):
             "dis_2": 3,
             "dis_3": 4,
             "dis_4": 5,
-            "dis_out": -10, #dis_4 is better than dis_0
+            "dis_out": -10,  # dis_4 is better than dis_0
         }
         self.action_mapping = {
             "forward": 0,
@@ -59,35 +59,43 @@ class QLearningAgentTests(unittest.TestCase):
     ## Testing that the Q_table is converted to a CSV file correctly
     def test_export_Q_table(self):
         import os
+
         base_dir = os.path.expanduser("~/Studies/6Semester/Project/Moving2/rl/main")
         file_name = "Q_table.csv"
         file_path = os.path.join(base_dir, file_name)
         self.assertTrue(os.path.isfile(file_path))
 
-    ## TODO
+    ## Testing buffer population in a deque
     def test_populate_replay_buffer(self):
-        self.agent.populate_replay_buffer("/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+        self.agent.populate_replay_buffer(
+            "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
+        )
         print(self.agent.replay_buffer)
-        test_buffer = deque([(('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False),
-       (('white', 'dis_0'), 'forward', ('white', 'dis_1'), -2.0, False),
-       (('white', 'dis_0'), 'forward', ('white', 'dis_2'), -3.0, False)],
-      maxlen=10000)
-        self.assertEqual(self.agent.replay_buffer , test_buffer )
+        test_buffer = deque(
+            [
+                (("white", "dis_0"), "forward", ("white", "dis_0"), -1.0, False),
+                (("white", "dis_0"), "forward", ("white", "dis_1"), -2.0, False),
+                (("white", "dis_0"), "forward", ("white", "dis_2"), -3.0, False),
+            ],
+            maxlen=10000,
+        )
+        self.assertEqual(self.agent.replay_buffer, test_buffer)
 
-    ## TODO
+    ## Print out the batch
     def test_sample_batch_1(self):
-        self.agent.populate_replay_buffer("/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+        self.agent.populate_replay_buffer(
+            "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
+        )
         batch = self.agent.sample_batch()
         print(batch)
 
-    ## TODO
+    ## Testing that the batch length to be is sampled is correct
     def test_sample_batch_2(self):
-        self.agent.populate_replay_buffer("/Moving2/rl/main/generated_dataset/fake_dataset.txt")
+        self.agent.populate_replay_buffer(
+            "/Moving2/rl/main/generated_dataset/fake_dataset.txt"
+        )
         batch = self.agent.sample_batch()
         self.assertEqual(len(batch), self.agent.batch_size)
-
-
-
 
 
 if __name__ == "__main__":
