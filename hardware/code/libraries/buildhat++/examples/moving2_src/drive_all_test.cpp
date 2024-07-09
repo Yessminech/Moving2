@@ -182,7 +182,7 @@ void execute_command(int command, double angle, Drive& drive) {
     std::cout << "Action: " << actionName << std::endl;
 
     switch (command) {
-    case 2:
+    case 8:
         drive.set_speed(1);
         drive.move_forward(angle);
          // wait for one second
@@ -208,7 +208,7 @@ void execute_command(int command, double angle, Drive& drive) {
          drive.coast();
          save_data = true;
         break;
-    case 8:
+    case 2:
         drive.set_speed(1);
         drive.move_backward();
          // wait for one second
