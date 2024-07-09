@@ -218,7 +218,7 @@ void execute_command(int command, double angle, Drive& drive) {
     //    command_running = true;
     //}
 
-     actionName = get_action_name(command);
+    actionName = get_action_name(command);
 
     if (actionName == "Invalid" && command != 5) {
         std::cout << "Invalid command. Please use 8, 4, 6, 5, or 2 with appropriate formatting.\n";
@@ -306,8 +306,7 @@ void getSensorreading() {
 
 
 
-    while (STATUS_RUNNING)
-    { 
+    while (STATUS_RUNNING){ 
     
 //for (int i = 0; i < 10; i++) {
     measuredColor = colorSensor.get_color();
@@ -431,14 +430,14 @@ void getSensorreading() {
     
 
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
-    //drive.coast();
+    /* drive.coast();
 
-    //{
-      //  std::lock_guard<std::mutex> lock(mtx);
-     //   command_running = false;
-    //}
-    //cv.notify_one();
-}
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        command_running = false;
+    }
+    cv.notify_one(); */
+    }
 }
             
 

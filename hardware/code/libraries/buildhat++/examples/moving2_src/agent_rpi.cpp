@@ -35,6 +35,13 @@ std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> Q_table;
 
 // fix remote from robert
 bool STATUS_RUNNING = true;
+/**
+ * @brief Signal handler function.
+ * 
+ * This function is called when a signal is received. It performs the necessary cleanup and sets the STATUS_RUNNING flag to false.
+ * 
+ * @param signo The signal number.
+ */
 void sig_handler(int signo) {
     if (signo == SIGINT || signo == SIGQUIT || signo == SIGABRT || signo == SIGTERM || signo == SIGTSTP) {
         outputFile.close();
@@ -47,17 +54,37 @@ void sig_handler(int signo) {
 
 
 /////////////////////////
-   bool goal_achieved(const std::string& current_color, const std::string& current_distance) {
-    //if(current_distance == "dist_4"){
-      //  std::cout<< "okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"<< std::endl;
-    //}
-             return current_color == "black" && current_distance == "dist_4";
-        }  
+/**
+ * Checks if the goal is achieved based on the current color and distance.
+ * 
+ * @param current_color The current color.
+ * @param current_distance The current distance.
+ * @return True if the goal is achieved, false otherwise.
+ */
+bool goal_achieved(const std::string& current_color, const std::string& current_distance) {
+/*     if(current_distance == "dist_4"){
+        std::cout<< "okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"<< std::endl;
+    } */
+    return current_color == "black" && current_distance == "dist_4";
+}  
 // Constants
 const double kd = 1.0; // Distance reward factor
 const double kc = 10.0; // Color reward factor
 const double kg = 100.0; // Goal achievement reward
 
+/**
+ * Calculates the reward based on the current and next color, distance, and goal achievement.
+ * 
+ * @param current_color The current color.
+ * @param current_distance The current distance.
+ * @param next_color The next color.
+ * @param next_distance The next distance.
+ * @param goal_achieved Indicates whether the goal is achieved.
+ * @param kd The distance coefficient (default value is kd).
+ * @param kc The color coefficient (default value is kc).
+ * @param kg The goal coefficient (default value is kg).
+ * @return The calculated reward.
+ */
 double calculate_reward(const std::string& current_color, const std::string& current_distance, 
                         const std::string& next_color, const std::string& next_distance, 
                         bool goal_achieved, double kd = kd, double kc = kc, double kg = kg) {
@@ -181,6 +208,17 @@ std::vector<double> readCSV(const std::string& filename) {
 }
 
 // Function to reshape 1D vector into a 5D vector
+/**
+ * Reshapes a flat vector of data into a 5-dimensional vector.
+ *
+ * @param flatData The flat vector of data to be reshaped.
+ * @param d1 The size of the first dimension.
+ * @param d2 The size of the second dimension.
+ * @param d3 The size of the third dimension.
+ * @param d4 The size of the fourth dimension.
+ * @param d5 The size of the fifth dimension.
+ * @return The reshaped 5-dimensional vector.
+ */
 std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> reshapeTo5D(const std::vector<double>& flatData, int d1, int d2, int d3, int d4, int d5) {
     std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> data(d1, std::vector<std::vector<std::vector<std::vector<double>>>>(d2, std::vector<std::vector<std::vector<double>>>(d3, std::vector<std::vector<double>>(d4, std::vector<double>(d5)))));
     
@@ -202,6 +240,12 @@ std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> reshapeT
 
 
 // Function to load and reshape the Q-table
+/**
+ * Loads a CSV file and reshapes the data into a 5-dimensional vector.
+ * 
+ * @param csvFilename The path to the CSV file.
+ * @return A 5-dimensional vector containing the reshaped data.
+ */
 std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> loadAndReshapeQTable(const std::string& csvFilename) {
     std::vector<double> flatData = readCSV(csvFilename);
      // Define the dimensions of the original 5D table
@@ -220,6 +264,14 @@ std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> loadAndR
 /////////////////////////
 /////////////////////////       Q_TABLE 
 /////////////////////////
+
+
+/**
+ * Returns the name of the action corresponding to the given command.
+ *
+ * @param command The command value representing the action.
+ * @return The name of the action as a string.
+ */
 std::string get_action_name(int command) {
     switch (command) {
     case 0:
@@ -235,6 +287,13 @@ std::string get_action_name(int command) {
     }
 }
 
+/**
+ * Executes a command based on the given parameters. Considered to be a thread function.
+ * 
+ * @param command The command to execute.
+ * @param angle The angle parameter for certain commands.
+ * @param drive The Drive object used for controlling the movement.
+ */
 void execute_command(int command, double angle, Drive& drive) {
     //{
     //    std::lock_guard<std::mutex> lock(mtx);
@@ -242,7 +301,7 @@ void execute_command(int command, double angle, Drive& drive) {
     //}
 
 
-     actionName = get_action_name(command);
+    actionName = get_action_name(command);
 
     if (actionName == "Invalid" && command != 4) {
         std::cout << "Invalid command. Command from the table not in appropriate formatting.\n";
@@ -305,161 +364,184 @@ void execute_command(int command, double angle, Drive& drive) {
 
 
 // Distance sensor initialization
-                DistanceSensor distanceSensor;
-                int measuredDistance = distanceSensor.get_distance();
-                std::string distanceRange;
+DistanceSensor distanceSensor;
+int measuredDistance = distanceSensor.get_distance();
+std::string distanceRange;
 
-                // Color sensor initialization
-                ColorSensor colorSensor;
-                auto measuredColor = colorSensor.get_color();
-                std::string colorName;
+// Color sensor initialization
+ColorSensor colorSensor;
+auto measuredColor = colorSensor.get_color();
+std::string colorName;
     
 
 
 
             /////////////////// robert part sensor get ready
-    void getSensorreading() {
-            
-
-
-
-        while (STATUS_RUNNING)
-        { 
+/**
+ * @brief Reads sensor values and performs color and distance analysis.
+ * 
+ * This function continuously reads sensor values and analyzes the color and distance based on the RGB values.
+ * It determines the color based on predefined ranges and assigns a color name accordingly.
+ * It also determines the distance range based on predefined thresholds.
+ * The color name, distance range, and other relevant information are printed to the console.
+ * Additionally, it calculates the reward and saves the data if the save_data flag is set to true.
+ * It is intended to be executed in a separate thread.
+ * 
+ * @note This function assumes that the colorSensor and distanceSensor objects have been properly initialized.
+ * 
+ * @note This function runs in a loop until the STATUS_RUNNING flag is false.
+ */
+void getSensorreading() {
         
-    //for (int i = 0; i < 10; i++) {
-        measuredColor = colorSensor.get_color();
-
-        float r = measuredColor.hue;  // These should be the RGB values
-        float g = measuredColor.sat;  // These should be the RGB values
-        float b = measuredColor.val;  // These should be the RGB values
-
-        // Define ranges for each color
-        const float blue_min_r = 180.0, blue_max_r = 200.0;
-        const float blue_min_g = 200.0, blue_max_g = 255.0;
-        const float blue_min_b = 250.0, blue_max_b = 300.0;
-
-        const float black_min_r = 0.0, black_max_r = 80.0;
-        const float black_min_g = 0.0, black_max_g = 80.0;
-        const float black_min_b = 0.0, black_max_b = 80.0;
-
-        const float red_min_r = 200.0, red_max_r = 300.0;
-        const float red_min_g = 0.0, red_max_g = 100.0;
-        const float red_min_b = 100.0, red_max_b = 150.0;
-
-        const float white_min_r = 500.0, white_max_r = 550.0;
-        const float white_min_g = 500.0, white_max_g = 550.0;
-        const float white_min_b = 500.0, white_max_b = 570.0;
-
-        const float lila_min_r = 230.0, lila_max_r = 300.0;
-        const float lila_min_g = 200.0, lila_max_g = 250.0;
-        const float lila_min_b = 250.0, lila_max_b = 300.0;
-
-        const float yellow_min_r = 400.0, yellow_max_r = 500.0;
-        const float yellow_min_g = 300.0, yellow_max_g = 400.0;
-        const float yellow_min_b = 200.0, yellow_max_b = 300.0;
-
-        const float brown_min_r = 250.0, brown_max_r = 300.0;
-        const float brown_min_g = 200.0, brown_max_g = 250.0;
-        const float brown_min_b = 200.0, brown_max_b = 250.0;
-
-        // Determine the color based on RGB values
-        std::cerr << ">>> Measurement Color (r|g|b) : " << measuredColor.hue << " | " << measuredColor.sat << " | " << measuredColor.val << std::endl;
-
-        if (r >= black_min_r && r <= black_max_r && g >= black_min_g && g <= black_max_g && b >= black_min_b && b <= black_max_b) {
-            colorName = "black";
-        } else if (r >= white_min_r && r <= white_max_r && g >= white_min_g && g <= white_max_g && b >= white_min_b && b <= white_max_b) {
-            colorName = "white";
-        } else if (r >= red_min_r && r <= red_max_r && g >= red_min_g && g <= red_max_g && b >= red_min_b && b <= red_max_b) {
-            colorName = "red";
-        } else if (r >= yellow_min_r && r <= yellow_max_r && g >= yellow_min_g && g <= yellow_max_g && b >= yellow_min_b && b <= yellow_max_b) {
-            colorName = "yellow";
-        } else if (r >= blue_min_r && r <= blue_max_r && g >= blue_min_g && g <= blue_max_g && b >= blue_min_b && b <= blue_max_b) {
-            colorName = "blue";
-        } else if (r >= brown_min_r && r <= brown_max_r && g >= brown_min_g && g <= brown_max_g && b >= brown_min_b && b <= brown_max_b) {
-            colorName = "brown";
-        } else if (r >= lila_min_r && r <= lila_max_r && g >= lila_min_g && g <= lila_max_g && b >= lila_min_b && b <= lila_max_b) {
-            colorName = "lila";    
-        } else {
-            continue;
-            colorName = "Unknown";
-           // continue;
-        }
-
-        std::cout << "Detected Color: " << colorName << std::endl;
-
-        // Loop for measuring distance
-        measuredDistance = distanceSensor.get_distance();
-        std::cerr << ">>> Measurement Distance : " << measuredDistance << std::endl;
-
-        // Determine distance range
-        if (0 < measuredDistance &&  measuredDistance <= 240) {
-            distanceRange = "dist_4";
-        } else if (0 < measuredDistance && measuredDistance <= 480) {
-            distanceRange = "dist_3";
-        } else if (0 < measuredDistance && measuredDistance <= 720) {
-            distanceRange = "dist_2";
-        } else if (0 < measuredDistance &&  measuredDistance <= 960) {
-            distanceRange = "dist_1";
-        } else if (0 < measuredDistance && measuredDistance <= 1200) {
-            distanceRange = "dist_0";
-        } else if ( measuredDistance == -1) {
-            distanceRange = "dist_out";    
-        } else {
-            distanceRange = "dist_out";
-        }
-
-        std::cout << "Distance Range: " << distanceRange << std::endl;
-        std::cout << std::endl;
-        std::cout << std::endl;
-
-        std::this_thread::sleep_for(std::chrono::milliseconds{1000});
-
-        // Use Python code
-        std::string current_color = lastcolor;
-        std::string current_distance = lastdistance;
-        std::string next_color = colorName;
-        std::string next_distance = distanceRange;
 
 
 
-        //function to calculate goal
-        
-        bool achieved = goal_achieved(colorName, distanceRange);  
-        //std::cout << "Goal achieved: " << (achieved ? "Yes" : "No") << std::endl;
-
-
-
-        double reward = calculate_reward(current_color, current_distance, next_color, next_distance, achieved, kd, kc, kg);
-        //std::cout << "Reward: " << reward << std::endl;
-        
-        if( save_data == true ){
-        std::string prevstate = "(" + lastcolor + ", " + lastdistance + ")" ;
-        outputFile << "(" 
-                << prevstate 
-                << ", " << actionName 
-                << ", (" << colorName << ", " << distanceRange 
-                << "), " << reward 
-                << ", " << (achieved ? "True" : "False") 
-                << ")" << std::endl;
-        prev_col=lastcolor;
-        prev_dist = lastdistance;
-        save_data = false;
-        }
-        lastdistance = distanceRange; 
-        lastcolor = colorName;
+    while (STATUS_RUNNING){ 
     
+//for (int i = 0; i < 10; i++) {
+    measuredColor = colorSensor.get_color();
+
+    float r = measuredColor.hue;  // These should be the RGB values
+    float g = measuredColor.sat;  // These should be the RGB values
+    float b = measuredColor.val;  // These should be the RGB values
+
+    // Define ranges for each color
+    const float blue_min_r = 180.0, blue_max_r = 200.0;
+    const float blue_min_g = 200.0, blue_max_g = 255.0;
+    const float blue_min_b = 250.0, blue_max_b = 300.0;
+
+    const float black_min_r = 0.0, black_max_r = 80.0;
+    const float black_min_g = 0.0, black_max_g = 80.0;
+    const float black_min_b = 0.0, black_max_b = 80.0;
+
+    const float red_min_r = 200.0, red_max_r = 300.0;
+    const float red_min_g = 0.0, red_max_g = 100.0;
+    const float red_min_b = 100.0, red_max_b = 150.0;
+
+    const float white_min_r = 500.0, white_max_r = 550.0;
+    const float white_min_g = 500.0, white_max_g = 550.0;
+    const float white_min_b = 500.0, white_max_b = 570.0;
+
+    const float lila_min_r = 230.0, lila_max_r = 300.0;
+    const float lila_min_g = 200.0, lila_max_g = 250.0;
+    const float lila_min_b = 250.0, lila_max_b = 300.0;
+
+    const float yellow_min_r = 400.0, yellow_max_r = 500.0;
+    const float yellow_min_g = 300.0, yellow_max_g = 400.0;
+    const float yellow_min_b = 200.0, yellow_max_b = 300.0;
+
+    const float brown_min_r = 250.0, brown_max_r = 300.0;
+    const float brown_min_g = 200.0, brown_max_g = 250.0;
+    const float brown_min_b = 200.0, brown_max_b = 250.0;
+
+    // Determine the color based on RGB values
+    std::cerr << ">>> Measurement Color (r|g|b) : " << measuredColor.hue << " | " << measuredColor.sat << " | " << measuredColor.val << std::endl;
+
+    if (r >= black_min_r && r <= black_max_r && g >= black_min_g && g <= black_max_g && b >= black_min_b && b <= black_max_b) {
+        colorName = "black";
+    } else if (r >= white_min_r && r <= white_max_r && g >= white_min_g && g <= white_max_g && b >= white_min_b && b <= white_max_b) {
+        colorName = "white";
+    } else if (r >= red_min_r && r <= red_max_r && g >= red_min_g && g <= red_max_g && b >= red_min_b && b <= red_max_b) {
+        colorName = "red";
+    } else if (r >= yellow_min_r && r <= yellow_max_r && g >= yellow_min_g && g <= yellow_max_g && b >= yellow_min_b && b <= yellow_max_b) {
+        colorName = "yellow";
+    } else if (r >= blue_min_r && r <= blue_max_r && g >= blue_min_g && g <= blue_max_g && b >= blue_min_b && b <= blue_max_b) {
+        colorName = "blue";
+    } else if (r >= brown_min_r && r <= brown_max_r && g >= brown_min_g && g <= brown_max_g && b >= brown_min_b && b <= brown_max_b) {
+        colorName = "brown";
+    } else if (r >= lila_min_r && r <= lila_max_r && g >= lila_min_g && g <= lila_max_g && b >= lila_min_b && b <= lila_max_b) {
+        colorName = "lila";    
+    } else {
+        continue;
+        colorName = "Unknown";
+        // continue;
+    }
+
+    std::cout << "Detected Color: " << colorName << std::endl;
+
+    // Loop for measuring distance
+    measuredDistance = distanceSensor.get_distance();
+    std::cerr << ">>> Measurement Distance : " << measuredDistance << std::endl;
+
+    // Determine distance range
+    if (0 < measuredDistance &&  measuredDistance <= 240) {
+        distanceRange = "dist_4";
+    } else if (0 < measuredDistance && measuredDistance <= 480) {
+        distanceRange = "dist_3";
+    } else if (0 < measuredDistance && measuredDistance <= 720) {
+        distanceRange = "dist_2";
+    } else if (0 < measuredDistance &&  measuredDistance <= 960) {
+        distanceRange = "dist_1";
+    } else if (0 < measuredDistance && measuredDistance <= 1200) {
+        distanceRange = "dist_0";
+    } else if ( measuredDistance == -1) {
+        distanceRange = "dist_out";    
+    } else {
+        distanceRange = "dist_out";
+    }
+
+    std::cout << "Distance Range: " << distanceRange << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
 
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
-    //drive.coast();
 
-    //{
-      //  std::lock_guard<std::mutex> lock(mtx);
-     //   command_running = false;
-    //}
-    //cv.notify_one();
-}
+    // Use Python code
+    std::string current_color = lastcolor;
+    std::string current_distance = lastdistance;
+    std::string next_color = colorName;
+    std::string next_distance = distanceRange;
+
+
+
+    //function to calculate goal
+    
+    bool achieved = goal_achieved(colorName, distanceRange);  
+    //std::cout << "Goal achieved: " << (achieved ? "Yes" : "No") << std::endl;
+
+
+
+    double reward = calculate_reward(current_color, current_distance, next_color, next_distance, achieved, kd, kc, kg);
+    //std::cout << "Reward: " << reward << std::endl;
+    
+    if( save_data == true ){
+    std::string prevstate = "(" + lastcolor + ", " + lastdistance + ")" ;
+    outputFile << "(" 
+            << prevstate 
+            << ", " << actionName 
+            << ", (" << colorName << ", " << distanceRange 
+            << "), " << reward 
+            << ", " << (achieved ? "True" : "False") 
+            << ")" << std::endl;
+    prev_col=lastcolor;
+    prev_dist = lastdistance;
+    save_data = false;
+    }
+    lastdistance = distanceRange; 
+    lastcolor = colorName;
+
+
+    std::this_thread::sleep_for(std::chrono::milliseconds{1000});
+    /* drive.coast();
+
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        command_running = false;
+    }
+    cv.notify_one(); */
+    }
 }
 
+/**
+ * Finds the index of the maximum value in the Q_table for a given state.
+ * 
+ * @param curr_col The current column index.
+ * @param curr_dist The current distance index.
+ * @param prev_col The previous column index.
+ * @param prev_dist The previous distance index.
+ * @param actions The number of actions.
+ * @return The index of the maximum value in the Q_table.
+ */
 int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist, int actions) {
         int best_index = 0;
         double max_value = Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
@@ -474,6 +556,12 @@ int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist, int actions
     }
 
 
+/**
+ * Returns the distance value based on the provided distance string.
+ *
+ * @param distance The distance string to be evaluated.
+ * @return The corresponding distance value.
+ */
 int get_distance_conforms(std::string distance) {
     // Implement your logic to get the distance value
     if (distance == "dist_0") {
@@ -493,6 +581,14 @@ int get_distance_conforms(std::string distance) {
     }
  };
 
+/**
+ * Returns the color conformity value based on the given color.
+ *
+ * @param color The color to check conformity for.
+ * @return The color conformity value. Returns 0 for "white", 1 for "yellow",
+ *         2 for "blue", 3 for "red", 4 for "black", 5 for "brown", 6 for "lila",
+ *         and 10 for any other color.
+ */
 int get_color_conforms(std::string color){
     // Implement your logic to get the color value
     if (color == "white") {
@@ -514,14 +610,23 @@ int get_color_conforms(std::string color){
     }
 };
 
+/**
+ * @brief The main function of the program.
+ *
+ * This function is the entry point of the program. It registers signal handlers for Ctrl+C, Ctrl+Z, and other signals.
+ * It opens a file for writing and checks if the file was opened successfully. It initializes variables and starts a thread
+ * for sensor reading. It enters a loop and performs actions based on sensor readings. Finally, it closes the file and returns 0.
+ *
+ * @return 0 if the program executed successfully, 1 otherwise.
+ */
 int main() {
 
-        // register signal Ctrl+C and Ctrl+Z and some other signals
-            signal(SIGINT, sig_handler);
-            signal(SIGQUIT, sig_handler);
-            signal(SIGABRT, sig_handler);
-            signal(SIGTERM, sig_handler);
-            signal(SIGTSTP, sig_handler);
+    // register signal Ctrl+C and Ctrl+Z and some other signals
+    signal(SIGINT, sig_handler);
+    signal(SIGQUIT, sig_handler);
+    signal(SIGABRT, sig_handler);
+    signal(SIGTERM, sig_handler);
+    signal(SIGTSTP, sig_handler);
 
 
     auto& drive = Drive::getInstance();
