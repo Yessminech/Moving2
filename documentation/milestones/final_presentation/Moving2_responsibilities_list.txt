@@ -13,8 +13,8 @@
     - RL Algorithm: 
         - Implemented RL observation space, action space, and reward function (env.py) 
         - Dataset generation 
-        - Agent refactoring and reviewing (main.py) 
-        - Agent testing (test.py)
+        - Learning algorithm refactoring and reviewing (main.py) 
+        - Learning algorithm testing (test.py)
 - **Role:** Technical Manager
 - **Actions Taken:**
   1. Setting up a communication channel (WhatsApp) and ensuring seamless communication by migrating the channel to Slack.
@@ -101,27 +101,34 @@
 
 
 
-### Member 2: [name]
+### Member 4: Zied Marrakchi
 - **Functions and Concepts Contributed:**
-  1. [Function/Concept 1]
-  2. [Function/Concept 2]
-  3. [Function/Concept 3]
+  1. Research RL Algorithms
+  2. proposed concept of enviorenment
+  3. proposed concept of Observation / Action space and reward function
+  4. Decided on RL Algorithm, observation and action spaces with Yessmine chabchoub
+  5. Coded and refined Backend with Yessmine 
+  6. Defined concept of agent_rpi
+  7. Contributed to the coding of agent_rpi : argmax() , importing Q_table 
+  8. Wrote Tests for backend
 
   - **Role:** [manager role]
   - **Actions Taken:**
     - **Early Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. presented research results for RL ALgorithms 
+        - + wrote documentation
+    2. Defined requierments with Vera
+    3. Create initial Gantt Chart
       - **Mid Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. Update Gantt Chart
+    2. Assign general work groups
+    3. Update and distribute Tickets
+        - Add issues, distribute tasks
+        - Set up Milestones
+        - Update Kanban Board and issues
       - **Late Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. Update Gantt Chart
+        - Update Gantt Chart
+        - Evaluate Requirements with Gantt Chart
+    2. Update and distribute Tickets
 
