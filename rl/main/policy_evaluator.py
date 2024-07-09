@@ -83,7 +83,7 @@ class PolicyEvaluator:
         directory = os.path.dirname(os.path.abspath(__file__))
         Q_values = Q_table.flatten()
         plt.figure(figsize=(10, 6))
-        plt.hist(Q_values, bins=30, alpha=0.75, color="blue", edgecolor="black")
+        plt.hist(Q_values, bins=2, alpha=0.75, color="blue", edgecolor="black")
         plt.title("Distribution of Q-values")
         plt.xlabel("Q-value")
         plt.ylabel("Frequency")
