@@ -6,11 +6,10 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-## TODO Add comments here
-
-
 class PolicyEvaluator:
-
+    """
+    A class that evaluates the policy and plots rewards over batches.
+    """
     def plot_rewards_over_batches(rewards):
         directory = os.path.dirname(os.path.abspath(__file__))
         plt.plot(rewards)
@@ -48,6 +47,7 @@ class PolicyEvaluator:
             prev_dist,
         ]
 
+    # Evaluate the policy by counting the number of steps from the start state to the goal state
     def number_of_steps_from_start(
         Q_table,
         color_mapping,
@@ -79,6 +79,7 @@ class PolicyEvaluator:
                 break
         return steps
 
+    # Plot the distribution of Q-values
     def plot_values_distribution(Q_table):
         directory = os.path.dirname(os.path.abspath(__file__))
         Q_values = Q_table.flatten()
