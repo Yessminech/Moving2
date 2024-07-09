@@ -100,6 +100,39 @@
     3. [Action 3]
 
 
+### Member 2: Kevin
+- **Functions and Concepts Contributed:**
+  1. Part of Robot development (building, idea)
+  2. Basic test Programm with Kevin
+  3. Contributed Concept for Remote Control
+    - Extension of Testprogramm from Yin and Robert for :
+        - Remote control 
+        - Data collection
+        - Adapt reward function in c++ for data collection 
+        - 
+  4. Collect data with Vera
+  
+
+  - **Role:** [manager role]
+  - **Actions Taken:**
+    - **Early Phase**
+    1. [Action 1]
+        - Subpoint 1 for Action 1
+    2. [Action 2]
+    3. [Action 3]
+      - **Mid Phase**
+    1. [Action 1]
+        - Subpoint 1 for Action 1
+    2. [Action 2]
+    3. [Action 3]
+      - **Late Phase**
+    1. [Action 1]
+        - Subpoint 1 for Action 1
+    2. [Action 2]
+    3. [Action 3]
+
+
+
 
 ### Member 2: [name]
 - **Functions and Concepts Contributed:**
