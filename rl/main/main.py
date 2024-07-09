@@ -148,8 +148,6 @@ class QLearningAgent:
                     if columns[0] == "((lila":
                         columns[0] = "((lilas"
                     columns[0] = columns[0][0:2] + "'" + columns[0][2:] + "'"
-                    print(len(columns))
-                    print(len(columns[1]) - 6)
                     if columns[1][len(columns[1]) - 6] == "t":
                         columns[1] = columns[1][:-6] + columns[1][-5:]
                     elif columns[1][len(columns[1]) - 4] == "t":
@@ -172,6 +170,52 @@ class QLearningAgent:
 
                     # write line to txt file
                     txt_file.write(f"{i+1}: {','.join(columns)}")
+    def visualize_Q_table(self):
+        # Visualize Q_table as csv table
+        # Scheme:
+        #                        |    current state
+        # previous state, action |    reward
+        
+
+        # Get all possible colours and distances
+        colours = list(self.color_mapping.keys())
+        distances = list(self.distance_mapping.keys())
+        states = [(dist, col) for dist in distances for col in colours]
+        actions = list(self.action_mapping.keys())
+        states_actions = [(state, action) for state in states for action in actions]
+
+        # Create a dataframe with the Q_table
+        #df = pd.DataFrame(index=pd.MultiIndex.from_tuples(states_actions), columns=states)
+        df = pd.DataFrame(index=pd.MultiIndex.from_tuples(states_actions, names=['Previous State', 'Action']),
+                      columns=pd.MultiIndex.from_tuples(states, names=['Current Distance', 'Current Colour']))
+
+        # Adjusted loop for setting values in the DataFrame
+        for state_action in states_actions:
+            prev_state, action = state_action
+            prev_dist, prev_col = prev_state
+            action_idx = self.action_mapping[action]
+            prev_col_idx = self.color_mapping[prev_col]
+            prev_dist_idx = self.distance_mapping[prev_dist]
+            # No change needed in the extraction of indices from mappings
+            for state in states:
+                curr_dist, curr_col = state                
+                # Access Q_table with integer indices as before
+                curr_col_idx = self.color_mapping[curr_col]
+                curr_dist_idx = self.distance_mapping[curr_dist]
+                reward = self.Q_table[curr_col_idx, curr_dist_idx, action_idx, prev_col_idx, prev_dist_idx]
+                # Adjusted indexing to match DataFrame structure
+                # Ensure that the row index is a tuple of (state, action) and column index is state
+                df.loc[(prev_state, action), state] = reward
+        df.to_csv("rl/main/Q_table_visual.csv")
+        plt.figure(figsize=(20, 10))
+        plt.imshow(df.astype(float), cmap="coolwarm", interpolation="nearest")
+        plt.colorbar()
+        plt.show()
+
+
+
+        
+        
 
 
 ## TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
@@ -179,6 +223,7 @@ if __name__ == "__main__":
     training_dataset = False
     logging.basicConfig(level=logging.INFO)
     agent = QLearningAgent(color_mapping, distance_mapping, action_mapping)
+    
     agent.batch_size = 4500
     agent.learning_rate = 0.7
     # file_name = "hardware/code/libraries/buildhat++/examples/moving2_src/test/data0.csv"
@@ -201,6 +246,8 @@ if __name__ == "__main__":
         agent.train()
     agent.export_Q_table()
     agent.convert_q_table_to_csv(
-        "Moving2/rl/main/Q_table.npy", "Moving2/rl/main/Q_table.csv"
+        "rl/main/Q_table.npy", "rl/main/Q_table.csv"
     )
+    
+    agent.visualize_Q_table()
 # /home/yessmine/Studies/6Semester/Project/Moving2/rl/main/Q_table.csv
