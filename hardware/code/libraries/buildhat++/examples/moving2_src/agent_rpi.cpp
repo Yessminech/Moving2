@@ -10,8 +10,15 @@
 #include "modules/sensors/DistanceSensor.hpp"
 #include <string>
 #include <signal.h>
+#include <vector>
 
-// inspired with demo5 Yin and color Robert
+// developed from drive_all_test.cpp
+
+
+//global variables for calculating index of q table
+std::string prev_col;
+std::string prev_dist;
+//these are the colors before the last step
 
 //std::mutex mtx;
 //std::condition_variable cv;
@@ -19,9 +26,12 @@ bool command_running = false;
 bool save_data = false;
 std::ofstream outputFile;
 
+//these are the colors that were measured after the last step and before the one we take now
 std::string lastcolor = "white";
 std::string lastdistance = "dist_0";
 std::string actionName;
+
+std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> Q_table;  //Q_Table
 
 // fix remote from robert
 bool STATUS_RUNNING = true;
@@ -141,18 +151,84 @@ double calculate_reward(const std::string& current_color, const std::string& cur
 
 
 /////////////////////////
-/////////////////////////
+/////////////////////////       Q_TABLE 
 /////////////////////////
 
+// Function to read CSV into a 1D vector
+std::vector<double> readCSV(const std::string& filename) {
+    std::vector<double> data;
+    std::ifstream file(filename);
+    
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return data;
+    }
+    
+    std::string line;
+    while (std::getline(file, line)) {
+        std::stringstream lineStream(line);
+        std::string cell;
+        
+        while (std::getline(lineStream, cell, ',')) {
+            if (!cell.empty()) {
+                data.push_back(std::stod(cell));
+            }
+        }
+    }
+    
+    file.close();
+    return data;
+}
+
+// Function to reshape 1D vector into a 5D vector
+std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> reshapeTo5D(const std::vector<double>& flatData, int d1, int d2, int d3, int d4, int d5) {
+    std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> data(d1, std::vector<std::vector<std::vector<std::vector<double>>>>(d2, std::vector<std::vector<std::vector<double>>>(d3, std::vector<std::vector<double>>(d4, std::vector<double>(d5)))));
+    
+    int index = 0;
+    for (int i = 0; i < d1; ++i) {
+        for (int j = 0; j < d2; ++j) {
+            for (int k = 0; k < d3; ++k) {
+                for (int l = 0; l < d4; ++l) {
+                    for (int m = 0; m < d5; ++m) {
+                        data[i][j][k][l][m] = flatData[index++];
+                    }
+                }
+            }
+        }
+    }
+    
+    return data;
+}
+
+
+// Function to load and reshape the Q-table
+std::vector<std::vector<std::vector<std::vector<std::vector<double>>>>> loadAndReshapeQTable(const std::string& csvFilename) {
+    std::vector<double> flatData = readCSV(csvFilename);
+     // Define the dimensions of the original 5D table
+    int d1 = 7;
+    int d2 = 6;
+    int d3 = 5;
+    int d4 = 7;
+    int d5 = 6;
+
+    return reshapeTo5D(flatData, d1, d2, d3, d4, d5);
+}
+
+///// MAPPING : ACTIONS = ["forward", "backward", "right", "left", "stop"]
+
+
+/////////////////////////
+/////////////////////////       Q_TABLE 
+/////////////////////////
 std::string get_action_name(int command) {
     switch (command) {
-    case 8:
+    case 0:
         return "forward";
-    case 4:
+    case 3:
         return "left";
-    case 6:
-        return "right";
     case 2:
+        return "right";
+    case 1:
         return "backward";
     default:
         return "Invalid";
@@ -166,23 +242,23 @@ void execute_command(int command, double angle, Drive& drive) {
     //}
 
 
-     actionName = get_action_name(command); //do we want to change this to all-strings for better debugging?
-    /*
-    if (actionName == "Invalid" && command != 5) {
-        std::cout << "Invalid command. Please use 8, 4, 6, or 2 with appropriate formatting.\n";
+     actionName = get_action_name(command);
+
+    if (actionName == "Invalid" && command != 4) {
+        std::cout << "Invalid command. Command from the table not in appropriate formatting.\n";
         //{
         //    std::lock_guard<std::mutex> lock(mtx);
         //    //command_running = false;
         //}
         //cv.notify_one();
         return;
-    }*/
+    }
 
     //command contains the correct command already - maybe we want to change int command to string
     std::cout << "Action: " << actionName << std::endl;
 
     switch (command) {
-    case 2:
+    case 0:
         drive.set_speed(1);
         drive.move_forward(angle);
          // wait for one second
@@ -190,7 +266,7 @@ void execute_command(int command, double angle, Drive& drive) {
         // stop the drive
          drive.coast();
         break;
-    case 4:
+    case 3:
         drive.set_speed(0.5);
         drive.turn_left();
         // wait for one second
@@ -199,7 +275,7 @@ void execute_command(int command, double angle, Drive& drive) {
          drive.coast();
          save_data = true;
         break;
-    case 6:
+    case 2:
         drive.set_speed(0.5);
         drive.turn_right();
          // wait for one second
@@ -208,7 +284,7 @@ void execute_command(int command, double angle, Drive& drive) {
          drive.coast();
          save_data = true;
         break;
-    case 8:
+    case 1:
         drive.set_speed(1);
         drive.move_backward();
          // wait for one second
@@ -217,11 +293,11 @@ void execute_command(int command, double angle, Drive& drive) {
          drive.coast();
          save_data = true;
         break;
-    case 5: 
+    case 4: //what is supposed to be done when the command is to stop?? is this sufficient
         drive.coast();
         break;
      default:
-        std::cout << "Invalid command. Please use 8, 4, 6, 5 or 2 with appropriate formatting.\n";
+        std::cout << "Invalid command. Check q table if everything is correct with appropriate formatting.\n";
         return;    
     }
 
@@ -365,7 +441,9 @@ void execute_command(int command, double angle, Drive& drive) {
                 << "), " << reward 
                 << ", " << (achieved ? "True" : "False") 
                 << ")" << std::endl;
-                save_data = false;
+        prev_col=lastcolor;
+        prev_dist = lastdistance;
+        save_data = false;
         }
         lastdistance = distanceRange; 
         lastcolor = colorName;
@@ -381,7 +459,60 @@ void execute_command(int command, double angle, Drive& drive) {
     //cv.notify_one();
 }
 }
-            
+
+int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist, int actions) {
+        int best_index = 0;
+        double max_value = Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
+
+        for (int i = 1; i < actions; ++i) { //there was a reference here to actions_dimensions which was not defined!!!!
+            if (Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
+                max_value = Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
+                best_index = i;
+            }
+        }
+        return best_index;
+    }
+
+
+int get_distance_conforms(std::string distance) {
+    // Implement your logic to get the distance value
+    if (distance == "dist_0") {
+        return 0;
+    } else if (distance == "dist_1") {
+        return 1;
+    } else if (distance == "dist_2") {
+        return 2;
+    } else if (distance == "dist_3") {
+        return 3;
+    } else if (distance == "dist_4") {
+        return 4;
+    } else if (distance == "dist_out") {
+        return -10; // Default case
+    }else {
+    return 10;
+    }
+ };
+
+int get_color_conforms(std::string color){
+    // Implement your logic to get the color value
+    if (color == "white") {
+        return 0;
+    } else if (color == "yellow") {
+        return 1;
+    } else if (color == "blue") {
+        return 2;
+    } else if (color == "red") {
+        return 3;
+    } else if (color == "black") {
+        return 4;
+    }else if (color == "brown") {
+        return 5;
+    }else if (color == "lila") {
+        return 6;
+    }else{
+    return 10; //default case for when color has no match
+    }
+};
 
 int main() {
 
@@ -403,41 +534,44 @@ int main() {
     ///outputFile << "Command,Angle,Color,Distance\n";
 
     std::string input;
-    int command;
     double angle = 0;
+    int command_value;
+    int actions = 4;
 
     /*std::cout << "Control the car with keyboard input.\n";
     std::cout << "Use format like '8,10' for forward with an angle, '4' for left, '6' for right, '2' for backward and 5 for stop.\n";
     std::cout << "CTRL + C and CTRL + Z close the program.\n";*/
     std::thread sensing(getSensorreading);
+
+    Q_table = loadAndReshapeQTable("/home/moving2/Moving2/hardware/code/libraries/buildhat++/examples/moving2_src/Q_table.csv");
+
+
     
     while (STATUS_RUNNING) {
         //std::unique_lock<std::mutex> lock(mtx);
         //cv.wait(lock, [] { return !command_running; });
 
-        /*std::cout << "Enter command (e.g., '8,10' or '4'): ";
-        std::getline(std::cin, input);
+        //this is a little confusing, but lastcolor and lastdistance are last measured values, so CURRENT values,
+        // and prev_col and prev_dist are the previously measured(before the last step) values
+        int curCol = get_color_conforms(lastcolor);
+        int lastCol = get_color_conforms(prev_col);
+        int lastDis = get_distance_conforms(prev_dist);
+        int curDis = get_distance_conforms(lastdistance);
+        //for debugging
+        if(curCol > 6 || lastCol > 6){
+            std::cerr << "Color out of range" << std::endl;
+        }
+        if(curDis == -10 || lastDis == -10){
+            std::cerr << "Distance out of range - default dist_out" << std::endl;
+        }
+        if(curDis == 10 || lastDis == 10){
+            std::cerr << "unexpected value in distance" << std::endl;
+        }
 
-        std::istringstream iss(input);
-        std::string part;
-        if (std::getline(iss, part, ',')) {
-            std::istringstream(part) >> command;
-
-            if (std::getline(iss, part)) {
-                std::istringstream(part) >> angle;
-            } else {
-                angle = 0;
-            }
-        }*/
-
-        //TO DO!!
-        //get sensor reading//or last saved reading
-        //lookup in q table
-        //translate/into command
-
+        command_value = argmax(curCol, curDis, lastCol, lastDis, actions);
 
         //lock.unlock();
-        std::thread execute(execute_command, command, angle, std::ref(drive));
+        std::thread execute(execute_command, command_value, angle, std::ref(drive));
         
         execute.join();
     }
