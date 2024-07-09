@@ -70,16 +70,17 @@
         - Evaluate Requirements with Gantt Chart
     2. Update and distribute Tickets
 
-### Member 3: Robert
+### Member 3: Robert Wilde
 - **Functions and Concepts Contributed:**
   1. Part of Robot development (building, idea)
-  2 Sensor evaluation (accuracy, range)
+  2. Sensor evaluation (accuracy, range)
   3. Distance Sensor Class
   4. Basic test Programm with Kevin
   5. Extension of Testprogramm from Yin with continuous commands and Signal catcher
   6. csv to txt parser
   7. Multi training data training extension
   8. SCP Bash script (not used now)
+  9. Q-Table Visualization
 
   - **Role:** Integration Manager
   - **Actions Taken:**
