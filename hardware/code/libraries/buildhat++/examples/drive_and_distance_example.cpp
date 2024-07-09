@@ -3,6 +3,16 @@
 #include "functions/Drive.hpp"
 #include "modules/sensors/DistanceSensor.hpp"
 
+
+/**
+ * @brief This function represents a thread that measures and prints the distance using a distance sensor.
+ * 
+ * The function initializes a `DistanceSensor` object and repeatedly measures the distance using the `get_distance` method.
+ * The measured distance is then printed to the standard error stream.
+ * 
+ * @note This function is intended to be executed in a separate thread.
+ */
+
 void colorThread(){
     DistanceSensor distanceSensor;
     for (int i = 0; i < 10; i++)
@@ -24,7 +34,7 @@ int main() {
     //drive.set_speed(0.6);
     //drive.move_forward(0);
 
-    // wait for one second
+    // wait for a couple of seconds
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
     std::this_thread::sleep_for(std::chrono::milliseconds{1000});
