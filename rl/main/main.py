@@ -1,10 +1,10 @@
 import numpy as np
 import random
 import os
+import pandas as pd
 import glob
 import ast
 import logging
-import test
 from collections import deque
 import data_processing
 from tqdm import tqdm
@@ -124,6 +124,13 @@ class QLearningAgent:
 
     def get_Q_table(self):
         return self.Q_table
+    
+    def convert_q_table_to_csv(self, q_table_npy_path, csv_path):
+        Q_table = np.load(q_table_npy_path)
+        flattened_Q_table = Q_table.reshape(-1).astype(float)
+        df = pd.DataFrame(flattened_Q_table)
+        df.to_csv(csv_path, header=False, index=False)
+        print(f"Q-table successfully converted to CSV and saved at {csv_path}")
 
     def convert_csv_to_txt(self, csv_file, txt_file):
         # if file is already in txt format, just copy it
@@ -187,4 +194,5 @@ if __name__ == "__main__":
         agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
         agent.train()
     agent.export_Q_table()
-    test.convert_q_table_to_csv("rl/main/Q_table.npy", "rl/main/Q_table.csv")
+    agent.convert_q_table_to_csv("Moving2/rl/main/Q_table.npy", "Moving2/rl/main/Q_table.csv")
+#/home/yessmine/Studies/6Semester/Project/Moving2/rl/main/Q_table.csv

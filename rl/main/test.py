@@ -1,7 +1,6 @@
 import logging
 from collections import deque
 from tqdm import tqdm
-from main import QLearningAgent, color_mapping, distance_mapping, action_mapping
 import os
 import numpy as np
 from env import goal_achieved

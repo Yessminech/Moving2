@@ -5,6 +5,7 @@ from main import QLearningAgent
 
 
 class QLearningAgentTests(unittest.TestCase):
+    # Initialize the agent with observations and actions    
     def setUp(self):
         self.color_mapping = {
             "white": 1,
@@ -21,7 +22,7 @@ class QLearningAgentTests(unittest.TestCase):
             "dis_2": 3,
             "dis_3": 4,
             "dis_4": 5,
-            "dis_out": -10,  ##dis4 is better than dis0
+            "dis_out": -10, #dis_4 is better than dis_0
         }
         self.action_mapping = {
             "forward": 0,
@@ -55,15 +56,17 @@ class QLearningAgentTests(unittest.TestCase):
         self.assertEqual(Q_table.shape, (7, 6, 5, 7, 6))
         self.assertNotEqual(Q_table.sum(), 0)
 
-    ## Testing that the Q_table is exported correctly
+    ## Testing that the Q_table is converted to a CSV file correctly
     def test_export_Q_table(self):
         import os
+        base_dir = os.path.expanduser("~/Studies/6Semester/Project/Moving2/rl/main")
+        file_name = "Q_table.csv"
+        file_path = os.path.join(base_dir, file_name)
+        self.assertTrue(os.path.isfile(file_path))
 
-        # TODO double check .csv or .txt
-        self.assertTrue(os.path.isfile("rl/main/Q_table.csv"))
-
+    ## TODO
     def test_populate_replay_buffer(self):
-        self.agent.populate_replay_buffer("E:/Fichier/TUB/STUDIUM/SoSe 24/EES Projekt (RL)/RL/GIT repo 2/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+        self.agent.populate_replay_buffer("/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
         print(self.agent.replay_buffer)
         test_buffer = deque([(('white', 'dis_0'), 'forward', ('white', 'dis_0'), -1.0, False),
        (('white', 'dis_0'), 'forward', ('white', 'dis_1'), -2.0, False),
@@ -71,13 +74,15 @@ class QLearningAgentTests(unittest.TestCase):
       maxlen=10000)
         self.assertEqual(self.agent.replay_buffer , test_buffer )
 
+    ## TODO
     def test_sample_batch_1(self):
-        self.agent.populate_replay_buffer("E:/Fichier/TUB/STUDIUM/SoSe 24/EES Projekt (RL)/RL/GIT repo 2/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+        self.agent.populate_replay_buffer("/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
         batch = self.agent.sample_batch()
         print(batch)
 
+    ## TODO
     def test_sample_batch_2(self):
-        self.agent.populate_replay_buffer("E:/Fichier/TUB/STUDIUM/SoSe 24/EES Projekt (RL)/RL/GIT repo 2/Moving2/rl/main/generated_dataset/fake_dataset.txt")
+        self.agent.populate_replay_buffer("/Moving2/rl/main/generated_dataset/fake_dataset.txt")
         batch = self.agent.sample_batch()
         self.assertEqual(len(batch), self.agent.batch_size)
 
