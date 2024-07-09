@@ -145,7 +145,7 @@
   7. Contributed to the coding of agent_rpi : argmax() , importing Q_table 
   8. Wrote Tests for backend
 
-  - **Role:** [manager role]
+  - **Role:** Project Manager
   - **Actions Taken:**
     - **Early Phase**
     1. presented research results for RL ALgorithms 
