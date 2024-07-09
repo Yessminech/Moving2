@@ -206,6 +206,8 @@ class QLearningAgent:
                 # Adjusted indexing to match DataFrame structure
                 # Ensure that the row index is a tuple of (state, action) and column index is state
                 df.loc[(prev_state, action), state] = reward
+        df = df.loc[~(df == 0).all(axis=1)]
+        df = df.loc[:, ~(df == 0).all(axis=0)]
         df.to_csv("rl/main/Q_table_visual.csv")
         plt.figure(figsize=(20, 10))
         plt.imshow(df.astype(float), cmap="coolwarm", interpolation="nearest")

@@ -21,4 +21,4 @@ rl/training_pseudo.py
 hardware/deprecated_hardware
 code
 
-*Q_table_visual*
+*.Q_table_visual*
