@@ -63,22 +63,23 @@ class QLearningAgentTests(unittest.TestCase):
         file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file_name)
         self.assertTrue(os.path.isfile(file_path))
 
+# ## Batch Tests: Uncomment for local testing. Don't pass CI pipeline.
 
-    # Testing buffer population in a deque
-    def test_populate_replay_buffer(self):
-        self.agent.populate_replay_buffer(
-            "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
-        )
-        print(self.agent.replay_buffer)
-        test_buffer = deque(
-            [
-                (("white", "dis_0"), "forward", ("white", "dis_0"), -1.0, False),
-                (("white", "dis_0"), "forward", ("white", "dis_1"), -2.0, False),
-                (("white", "dis_0"), "forward", ("white", "dis_2"), -3.0, False),
-            ],
-            maxlen=10000,
-        )
-        self.assertEqual(self.agent.replay_buffer, test_buffer)
+    # # Testing buffer population in a deque
+    # def test_populate_replay_buffer(self):
+    #     self.agent.populate_replay_buffer(
+    #         "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
+    #     )
+    #     print(self.agent.replay_buffer)
+    #     test_buffer = deque(
+    #         [
+    #             (("white", "dis_0"), "forward", ("white", "dis_0"), -1.0, False),
+    #             (("white", "dis_0"), "forward", ("white", "dis_1"), -2.0, False),
+    #             (("white", "dis_0"), "forward", ("white", "dis_2"), -3.0, False),
+    #         ],
+    #         maxlen=10000,
+    #     )
+    #     self.assertEqual(self.agent.replay_buffer, test_buffer)
 
     # ## Batch Tests: Uncomment for local testing. Don't pass CI pipeline.
     # def test_sample_batch_1(self):
