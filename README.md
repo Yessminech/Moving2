@@ -7,8 +7,9 @@ This project is focused on the development of a robot that can move autonomously
 
 ### Connect to SSH
   - Connect to "Free Wifi Berlin"
-  - run :
-    - ssh moving2@172.16.35.163
+  - Run:
+    ```bash
+    ssh moving2@172.16.35.163
   - enter password: moving2024
 
   - How to get the IP address :
