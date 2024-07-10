@@ -44,11 +44,11 @@ To collect data for training the robot:
 ```bash
 ./drive_all_test
 ```
-    Control the robot using the following keys:
-      - 8 : forward
-      - 2 : backward
-      - 4 : left
-      - 6 : right
+Control the robot using the following keys:
+  - 8 : forward
+  - 2 : backward
+  - 4 : left
+  - 6 : right
   
 - Update the file path to collect more data (10) in
   ***buildhat++/examples/moving2_src/drive_all_test.cpp***, line 397.
