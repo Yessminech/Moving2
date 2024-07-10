@@ -20,6 +20,7 @@ To find the IP address of your Raspberry Pi:
       hostname -I
       #or
       ifconfig
+      ```
   
 ### Compile the code:
   1 - Navigate to the project folder:
