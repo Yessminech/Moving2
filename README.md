@@ -3,7 +3,7 @@
 ## Description
 This project is focused on the development of a robot that can move autonomously using Reinforcement Learning.
 
-## How to use it ?
+## How to use HW 
 
 ### Connect to SSH
   - Connect to "Free Wifi Berlin"
@@ -55,8 +55,58 @@ To run the autonomous agent on the Raspberry Pi:
 ```bash
 ./agent_rpi
 ```
-  
 
+## How to use RL
 
+### Compute Q_table and export it to .csv
+```bash
+python main.py
+```
 
+#### Changing Parameters for RL-Algorithm
+Learning rate: learning_rate (default: 0.5)
+Discount factor: discount_factor (default: 0.99)
+Number of episodes: num_episodes (default: 10000)
+Batch size: batch_size (default: 32)
 
+#### Changing Parameters for RL-Algorithm
+- **Learning rate**: `learning_rate` (default: 0.5)
+- **Discount factor**: `discount_factor` (default: 0.99)
+- **Number of episodes**: `num_episodes` (default: 10000)
+- **Batch size**: `batch_size` (default: 32)
+
+#### Adding New Datasets
+Add new datasets under `hardware/code/libraries/buildhat++/examples/moving2_src/test/` in the format specified in `documentation/control_system/Data_Collection_Guidelines.md`.
+
+#### Policy Evaluation
+Add the desired evaluator under `def train(self)`:
+- `plot_rewards_over_batches`
+- `plot_average_rewards_over_episodes`
+- `get_best_action`
+- [`get_max_q`](command:_github.copilot.openSymbolFromReferences?%5B%7B%22%24mid%22%3A1%2C%22path%22%3A%22%2Fhome%2Fyessmine%2FStudies%2F6Semester%2FProject%2FMoving2%2Frl%2Fmain%2Fpolicy_evaluator.py%22%2C%22scheme%22%3A%22file%22%7D%2C%7B%22line%22%3A38%2C%22character%22%3A8%7D%5D "policy_evaluator.py")
+- `number_of_steps_from_start`
+- `plot_values_distribution`
+
+#### Adding New Datasets
+Add new datasets under hardware/code/libraries/buildhat++/examples/moving2_src/test/ in the format specified in documentation/control_system/Data_Collection_Guidelines.md.
+
+#### Policy Evaluation
+Add the desired evaluator under def train(self):
+
+plot_rewards_over_batches
+plot_average_rewards_over_episodes
+get_best_action
+get_max_q
+number_of_steps_from_start
+plot_values_distribution
+
+#### Default Evaluators
+```python
+PolicyEvaluator.plot_rewards_over_batches(self.rewards)
+PolicyEvaluator.plot_average_rewards_over_episodes(self.rewards, self.num_episodes)
+PolicyEvaluator.plot_values_distribution(self.Q_table)
+```
+#### Testing
+```bash
+python test_main.py
+```
