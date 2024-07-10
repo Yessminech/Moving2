@@ -1,4 +1,5 @@
 import unittest
+import os
 from collections import deque
 
 from main import QLearningAgent
@@ -58,45 +59,41 @@ class QLearningAgentTests(unittest.TestCase):
 
     ## Testing that the Q_table is converted to a CSV file correctly
     def test_export_Q_table(self):
-        import os
-
         file_name = "Q_table.csv"
         file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file_name)
         self.assertTrue(os.path.isfile(file_path))
 
 
-    ## Testing buffer population in a deque
-    # def test_populate_replay_buffer(self):
-    #     self.agent.populate_replay_buffer(
-    #         "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
-    #     )
-    #     print(self.agent.replay_buffer)
-    #     test_buffer = deque(
-    #         [
-    #             (("white", "dis_0"), "forward", ("white", "dis_0"), -1.0, False),
-    #             (("white", "dis_0"), "forward", ("white", "dis_1"), -2.0, False),
-    #             (("white", "dis_0"), "forward", ("white", "dis_2"), -3.0, False),
-    #         ],
-    #         maxlen=10000,
-    #     )
-    #     self.assertEqual(self.agent.replay_buffer, test_buffer)
+    # Testing buffer population in a deque
+    def test_populate_replay_buffer(self):
+        self.agent.populate_replay_buffer(
+            "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
+        )
+        print(self.agent.replay_buffer)
+        test_buffer = deque(
+            [
+                (("white", "dis_0"), "forward", ("white", "dis_0"), -1.0, False),
+                (("white", "dis_0"), "forward", ("white", "dis_1"), -2.0, False),
+                (("white", "dis_0"), "forward", ("white", "dis_2"), -3.0, False),
+            ],
+            maxlen=10000,
+        )
+        self.assertEqual(self.agent.replay_buffer, test_buffer)
 
-## Batch Tests: Uncomment for local testing. Don't pass CI pipeline.
-#    ## Print out the batch
-#    def test_sample_batch_1(self):
-#        self.agent.populate_replay_buffer(
-#            "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
-#        )
-#        batch = self.agent.sample_batch()
-#        print(batch)
-#
-#    ## Testing that the batch length to be is sampled is correct
-#    def test_sample_batch_2(self):
-#        self.agent.populate_replay_buffer(
-#            "/Moving2/rl/main/generated_dataset/fake_dataset.txt"
-#        )
-#        batch = self.agent.sample_batch()
-#        self.assertEqual(len(batch), self.agent.batch_size)
+# Batch Tests: Uncomment for local testing. Don't pass CI pipeline.
+    ## Print out the batch
+    def test_sample_batch_1(self):
+        dataset_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+        self.agent.populate_replay_buffer(dataset_path)
+        batch = self.agent.sample_batch()
+        print(batch)
+
+    ## Testing that the batch length to be is sampled is correct
+    def test_sample_batch_2(self):
+        dataset_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_dataset/fake_dataset.txt")
+        self.agent.populate_replay_buffer(dataset_path)
+        batch = self.agent.sample_batch()
+        self.assertEqual(len(batch), self.agent.batch_size)
 
 
 if __name__ == "__main__":
