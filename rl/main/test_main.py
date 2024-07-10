@@ -81,21 +81,22 @@ class QLearningAgentTests(unittest.TestCase):
         )
         self.assertEqual(self.agent.replay_buffer, test_buffer)
 
-    ## Print out the batch
-    def test_sample_batch_1(self):
-        self.agent.populate_replay_buffer(
-            "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
-        )
-        batch = self.agent.sample_batch()
-        print(batch)
-
-    ## Testing that the batch length to be is sampled is correct
-    def test_sample_batch_2(self):
-        self.agent.populate_replay_buffer(
-            "/Moving2/rl/main/generated_dataset/fake_dataset.txt"
-        )
-        batch = self.agent.sample_batch()
-        self.assertEqual(len(batch), self.agent.batch_size)
+## Batch Tests: Uncomment for local testing. Don't pass CI pipeline.
+#    ## Print out the batch
+#    def test_sample_batch_1(self):
+#        self.agent.populate_replay_buffer(
+#            "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"
+#        )
+#        batch = self.agent.sample_batch()
+#        print(batch)
+#
+#    ## Testing that the batch length to be is sampled is correct
+#    def test_sample_batch_2(self):
+#        self.agent.populate_replay_buffer(
+#            "/Moving2/rl/main/generated_dataset/fake_dataset.txt"
+#        )
+#        batch = self.agent.sample_batch()
+#        self.assertEqual(len(batch), self.agent.batch_size)
 
 
 if __name__ == "__main__":
