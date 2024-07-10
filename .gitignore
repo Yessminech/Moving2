@@ -14,7 +14,7 @@ Makefile
 
 training_dataset.txt
 
-rl/catch_example
+#rl/catch_example
 rl/bq_pseudo.py
 rl/sampling_pseudo.py
 rl/training_pseudo.py
