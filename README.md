@@ -24,18 +24,20 @@ To find the IP address of your Raspberry Pi:
   ```
   
 ### Compile the code:
-  1 - Navigate to the project folder:
-      ```bash
-      cd hardware/code/libraries/buildhat++
-      ```
-  2 - Compile the code   
-      ```bash
-      cmake .
-      make
-  3 -Navigate to the executables:    
-     ```bash
-     cd bin/
-    
+1 - Navigate to the project folder:
+  ```bash
+  cd hardware/code/libraries/buildhat++
+  ```
+2 - Compile the code   
+  ```bash
+  cmake .
+  make
+  ```
+3 -Navigate to the executables:    
+   ```bash
+   cd bin/
+   ```
+
 ### Collect Data
 To collect data for training the robot:
   - Run the data collection script:
