@@ -10,6 +10,7 @@ This project is focused on the development of a robot that can move autonomously
   - Run:
     ```bash
     ssh moving2@172.16.35.163
+    ```
   - Enter password: moving2024.
 
 ### Finding the IP address:
