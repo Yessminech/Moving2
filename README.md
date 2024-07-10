@@ -2,31 +2,112 @@
 
 ## Description
 This project is focused on the development of a robot that can move autonomously using Reinforcement Learning.
-## Project Structure Overview
 
-- **`/Moving2/`**: The root directory of the project.
-  - **`README.md`**: Provides a general overview and introduction to the directories organization.
-  - **`/documentation/`**: Houses all the documentation related to the project, including research, design documents, and tutorials.
-    - **`/control_system/`**: Contains information about the data formatting.
-    - **`/rl_research/`**: Dedicated to Reinforcement Learning research.
-    - **`/milestones/`**: Documents the project's progress and the milestones presentations.
-    - **`/tutorials/`**: Provides tutorials related to the project on the hardwaren the coding style and version control usage.
-  - **`/hardware/`**: Focuses on the physical components of the robot.
-    - **`README.md`**: Specific details about the hardware requirements and setup.
-    - **`/buildhat_firmware/buildhat++/examples/moving2_src/`**: The source code for the project utilizing the buildhat++ library.
-    - **`/code/libraries/`**: Includes code that directly interacts with the robot's hardware.
-    - **`/legacy/`**: Archives older or deprecated hardware files for historical reference.
-  - **`/rl/`**: Contains all files related to the Reinforcement Learning code of the project.
-    - **`/main/`**: The main directory for RL code, including scripts and data files.
-      - **`README.md`**: An overview of the RL component, explaining its purpose and functionality.
-      - **`main.py`**: The primary Python script for the RL model, orchestrating the learning process.
-      - **`env.py`**: Defines the environment for the RL model.
-      - **`test.py`**: Contains tests for the RL model.
-      - **`synth_all.py`**: A script for synthesizing fake datasets.
-      - **`Q_table.csv`**, **`Q_table.npy`**: Files containing the Q-table data, representing learned values for state-action pairs.
-    - **`/legacy/`**: Stores older or deprecated RL files, providing a record of the project's evolution.
-    - **`README.md`**: An overview of the RL repository.
+## How to use HW 
 
-## CI Pipeline
-- The CI pipeline for this project includes formatting the code with Black and running tests to ensure code quality and functionality.
-Before pushing the code, make sure to run `black .` to format it properly.
+### Connect to SSH
+  - Connect to "Free Wifi Berlin"
+  - Run:
+    ```bash
+    ssh moving2@172.16.35.163
+    ```
+  - Enter password: moving2024.
+
+### Finding the IP address:
+To find the IP address of your Raspberry Pi:
+- Open a terminal on the Raspberry Pi.
+- Use one of the following commands:
+  ```bash
+  hostname -I
+  #or
+  ifconfig
+  ```
+  
+### Compile the code:
+1 - Navigate to the project folder:
+  ```bash
+  cd hardware/code/libraries/buildhat++
+  ```
+2 - Compile the code   
+  ```bash
+  cmake .
+  make
+  ```
+3 - Navigate to the executables:    
+   ```bash
+   cd bin/
+   ```
+
+### Collect Data
+To collect data for training the robot:
+- Run the data collection script:
+```bash
+./drive_all_test
+```
+  
+- Update the file path to collect more data (10) in
+  ***buildhat++/examples/moving2_src/drive_all_test.cpp***, line 397.
+  
+    
+### Run Agent
+To run the autonomous agent on the Raspberry Pi:
+- Execute the agent
+```bash
+./agent_rpi
+```
+
+## How to use RL
+
+### Compute Q_table and export it to .csv
+```bash
+python main.py
+```
+An example output of the console is in exp_out.png.
+
+#### Changing Parameters for RL-Algorithm
+Learning rate: learning_rate (default: 0.5)
+Discount factor: discount_factor (default: 0.99)
+Number of episodes: num_episodes (default: 10000)
+Batch size: batch_size (default: 32)
+
+#### Changing Parameters for RL-Algorithm
+- **Learning rate**: `learning_rate` (default: 0.5)
+- **Discount factor**: `discount_factor` (default: 0.99)
+- **Number of episodes**: `num_episodes` (default: 10000)
+- **Batch size**: `batch_size` (default: 32)
+
+#### Adding New Datasets
+Add new datasets under `hardware/code/libraries/buildhat++/examples/moving2_src/test/` in the format specified in `documentation/control_system/Data_Collection_Guidelines.md`.
+
+#### Policy Evaluation
+Add the desired evaluator under `def train(self)`:
+- `plot_rewards_over_batches`
+- `plot_average_rewards_over_episodes`
+- `get_best_action`
+- [`get_max_q`](command:_github.copilot.openSymbolFromReferences?%5B%7B%22%24mid%22%3A1%2C%22path%22%3A%22%2Fhome%2Fyessmine%2FStudies%2F6Semester%2FProject%2FMoving2%2Frl%2Fmain%2Fpolicy_evaluator.py%22%2C%22scheme%22%3A%22file%22%7D%2C%7B%22line%22%3A38%2C%22character%22%3A8%7D%5D "policy_evaluator.py")
+- `number_of_steps_from_start`
+- `plot_values_distribution`
+
+#### Adding New Datasets
+Add new datasets under hardware/code/libraries/buildhat++/examples/moving2_src/test/ in the format specified in documentation/control_system/Data_Collection_Guidelines.md.
+
+#### Policy Evaluation
+Add the desired evaluator under def train(self):
+
+plot_rewards_over_batches
+plot_average_rewards_over_episodes
+get_best_action
+get_max_q
+number_of_steps_from_start
+plot_values_distribution
+
+#### Default Evaluators
+```python
+PolicyEvaluator.plot_rewards_over_batches(self.rewards)
+PolicyEvaluator.plot_average_rewards_over_episodes(self.rewards, self.num_episodes)
+PolicyEvaluator.plot_values_distribution(self.Q_table)
+```
+#### Testing
+```bash
+python test_main.py
+```
