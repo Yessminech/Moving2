@@ -43,7 +43,7 @@ To collect data for training the robot:
 - Run the data collection script:
 ```bash
 ./drive_all_test
-``
+```
   Control the robot using the following keys:
     - 8 : forward
     - 2 : backward
