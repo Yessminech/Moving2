@@ -60,12 +60,12 @@ class QLearningAgentTests(unittest.TestCase):
     def test_export_Q_table(self):
         import os
 
-        base_dir = os.path.expanduser("~/Studies/6Semester/Project/Moving2/rl/main")
         file_name = "Q_table.csv"
-        file_path = os.path.join(base_dir, file_name)
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), file_name)
         self.assertTrue(os.path.isfile(file_path))
 
-    ## Testing buffer population in a deque: : Uncomment for local testing. Don't pass CI pipeline.
+
+    ## Testing buffer population in a deque
     # def test_populate_replay_buffer(self):
     #     self.agent.populate_replay_buffer(
     #         "/Moving2/rl/main/generated_dataset/fake_dataset_test_populatereplaybefore.txt"

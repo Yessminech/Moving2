@@ -181,7 +181,7 @@ class QLearningAgent:
 
                     # write line to txt file
                     txt_file.write(f"{i+1}: {','.join(columns)}")
-    def visualize_Q_table(self, base_dir):
+    def visualize_Q_table(self):
         # Visualize Q_table as csv table
         # Scheme:
         #                        |    current state
@@ -219,7 +219,7 @@ class QLearningAgent:
                 df.loc[(prev_state, action), state] = reward
         df = df.loc[~(df == 0).all(axis=1)]
         df = df.loc[:, ~(df == 0).all(axis=0)]
-        df.to_csv(os.path.join(base_dir, "rl/main/Q_table_visual.csv"))
+        df.to_csv("rl/main/Q_table_visual.csv")
         plt.figure(figsize=(20, 10))
         plt.imshow(df.astype(float), cmap="coolwarm", interpolation="nearest")
         plt.colorbar()
@@ -233,7 +233,6 @@ class QLearningAgent:
 
 ## TODO - Add performance tests for different configurations(learning rate, batch size, num_episodes..)
 if __name__ == "__main__":
-    base_dir = os.path.expanduser("~/Studies/6Semester/Project/Moving2")
     # choose the fake or real dataset to train the agent
     training_dataset = False # fake dataset
     logging.basicConfig(level=logging.INFO)
@@ -247,7 +246,7 @@ if __name__ == "__main__":
 
     # Get all real dataset files
     file_paths = glob.glob(
-        os.path.join( base_dir,
+        os.path.join(
             "hardware/code/libraries/buildhat++/examples/moving2_src/test/", f"*.csv"
         )
     )
@@ -259,17 +258,17 @@ if __name__ == "__main__":
             continue
         print(file_name)
         agent.convert_csv_to_txt(
-            file_name, os.path.join(base_dir, "rl/main/generated_dataset/training_dataset.txt")
+            file_name, "rl/main/generated_dataset/training_dataset.txt"
         )
         agent.replay_buffer = deque(maxlen=10000)
-        agent.populate_replay_buffer(os.path.join(base_dir, "rl/main/generated_dataset/training_dataset.txt"))
+        agent.populate_replay_buffer("rl/main/generated_dataset/training_dataset.txt")
         agent.train()
         
     # Export Q_table to .npy and .csv files
     agent.export_Q_table()
 
-    agent.visualize_Q_table(base_dir)
-    
-    file_path_npy = os.path.join(base_dir, "rl/main/Q_table.npy")
-    file_path_csv = os.path.join(base_dir, "rl/main/Q_table.csv")
+    #agent.visualize_Q_table()
+    base_dir = os.path.dirname(os.path.realpath(__file__))
+    file_path_npy = os.path.join(base_dir, "Q_table.npy")
+    file_path_csv = os.path.join(base_dir, "Q_table.csv")
     agent.convert_q_table_to_csv(file_path_npy, file_path_csv)
