@@ -6,28 +6,36 @@
 - **Functions and Concepts Contributed:**
   1. Set up SSH communication with rbpi
   2. Set up Lab computer for programming (os, sw..)
+  3. Build Robot Environment: Bought material for physical environment (50%)
   3. Reinforcement Learning Team
     - Research Offline vs Online RL 
-    - RL Algorithms comparisons of Yin’s and Zied’s researches
+    - RL Algorithms comparisons of Yin’s and Zied’s researches 20%
     - Defined requirements for data collection to HW (formatting, values..)
     - RL Algorithm: 
-        - Implemented RL observation space, action space, and reward function (env.py) 
-        - Dataset generation 
-        - Learning algorithm refactoring and reviewing (main.py) 
-        - Learning algorithm testing (test.py)
+        - Implemented RL observation space, action space, and reward function (env.py) 100%
+        - Fakedataset generation (syth_all.py) 100%
+        - Learning algorithm refactoring and reviewing and exportation of Q_table. (main.py) 50%
+        - Learning algorithm testing (main_test.py) 50%
+        - Offline RL policy evluation and metrics (policy_evaluator.py) 100%
+        - Code commenting (all files) 50%
+    - Documentation on how to use the code
+  4. Poster Design: RL/ SW Architecture and evaluation 30%
 - **Role:** Technical Manager
 - **Actions Taken:**
+- **Early Phase**
   1. Setting up a communication channel (WhatsApp) and ensuring seamless communication by migrating the channel to Slack.
   2. Choosing and setting up version-control system (Github)
   3. Introduced other group members to the correct use of this infrastructure (git_practices__Yessmine.pdf): 
       - Defined Git workflow 
       - Supported group members using GitHub
       - Helped PMs with setting up project Kanban
-  4. Ensured that proper Git workflow is followed by regularly reorganizing repos/files and branches.
+- **Mid/ Late Phase**
+  4. Ensured that proper Git workflow is used by regularly reorganizing repos/files and branches.
   5. Set up CI infrastructure on GitHub
       - Testing Automation
       - Linting 
-      - TODO Automate build for HW code
+      - Automate build for HW code
+      - Verifying tests are passed
 
 ### Member 2: Vera Wagner
 - **Functions and Concepts Contributed:**
