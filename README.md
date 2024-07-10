@@ -62,6 +62,7 @@ To run the autonomous agent on the Raspberry Pi:
 ```bash
 python main.py
 ```
+An example output of the console is in exp_out.png.
 
 #### Changing Parameters for RL-Algorithm
 Learning rate: learning_rate (default: 0.5)
