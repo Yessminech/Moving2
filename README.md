@@ -15,8 +15,8 @@ This project is focused on the development of a robot that can move autonomously
 
 ### Finding the IP address:
 To find the IP address of your Raspberry Pi:
-    - Open a terminal on the Raspberry Pi.
-    - Use one of the following commands
+- Open a terminal on the Raspberry Pi.
+- Use one of the following commands
       ```bash
       hostname -I
       #or
