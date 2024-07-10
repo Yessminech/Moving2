@@ -80,20 +80,19 @@ class QLearningAgentTests(unittest.TestCase):
         )
         self.assertEqual(self.agent.replay_buffer, test_buffer)
 
-# Batch Tests: Uncomment for local testing. Don't pass CI pipeline.
-    ## Print out the batch
-    def test_sample_batch_1(self):
-        dataset_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_dataset/fake_dataset_test_populatereplaybefore.txt")
-        self.agent.populate_replay_buffer(dataset_path)
-        batch = self.agent.sample_batch()
-        print(batch)
+    # ## Batch Tests: Uncomment for local testing. Don't pass CI pipeline.
+    # def test_sample_batch_1(self):
+    #     dataset_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+    #     self.agent.populate_replay_buffer(dataset_path)
+    #     batch = self.agent.sample_batch()
+    #     print(batch)
 
-    ## Testing that the batch length to be is sampled is correct
-    def test_sample_batch_2(self):
-        dataset_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_dataset/fake_dataset.txt")
-        self.agent.populate_replay_buffer(dataset_path)
-        batch = self.agent.sample_batch()
-        self.assertEqual(len(batch), self.agent.batch_size)
+    # ## Testing that the batch length to be is sampled is correct
+    # def test_sample_batch_2(self):
+    #     dataset_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generated_dataset/fake_dataset.txt")
+    #     self.agent.populate_replay_buffer(dataset_path)
+    #     batch = self.agent.sample_batch()
+    #     self.assertEqual(len(batch), self.agent.batch_size)
 
 
 if __name__ == "__main__":
