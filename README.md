@@ -10,33 +10,49 @@ This project is focused on the development of a robot that can move autonomously
   - Run:
     ```bash
     ssh moving2@172.16.35.163
-  - enter password: moving2024
+  - Enter password: moving2024.
 
-  - How to get the IP address :
-    - Open temrinal on Raspebrry pi and run on of this two options :
-      - hostname -I
-      - ifconfig
+### Finding the IP address:
+To find the IP address of your Raspberry Pi:
+    - Open a terminal on the Raspberry Pi.
+    - Use one of the following commands
+      ```bash
+      hostname -I
+      #or
+      ifconfig
   
 ### Compile the code:
-  - go into project folder and compile the code 
-     - cd  hardware/code/libraries/buildhat++
-     - cmake .
-     - make
-     - go into the executables with:
-       - cd bin/
+  1 - Navigate to the project folder:
+      ```bash
+      cd hardware/code/libraries/buildhat++
+  2 - Compile the code   
+      ```bash
+      cmake .
+      make
+  3 -Navigate to the executables:    
+     ```bash
+     cd bin/
     
 ### Collect Data
-  - ./drive_all_test
-    - controll the robot by using:
+To collect data for training the robot:
+  - Run the data collection script:
+  ```bash
+  ./drive_all_test
+      Control the robot using the following keys:
       - 8 : forward
       - 2 : backward
       - 4 : left
       - 6 : right
     
-  - update the filepath to collect data in "buildhat++/examples/moving2_src/drive_all_test.cpp" at line 397 an collect more data(10)
+  - Update the file path to collect more data (10) in
+    buildhat++/examples/moving2_src/drive_all_test.cpp, line 397.
+  
     
 ### Run Agent
-  - ./agent_rpi
+To run the autonomous agent on the Raspberry Pi:
+  - Execute the agent
+  ```bash
+  ./agent_rpi
     
   
 
