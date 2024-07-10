@@ -47,7 +47,8 @@ To collect data for training the robot:
   
 - Update the file path to collect more data (10) in
   ***buildhat++/examples/moving2_src/drive_all_test.cpp***, line 397.
-  
+
+An example output of the console is in documentation/milestones/Milestone 3/example output terminal.
     
 ### Run Agent
 To run the autonomous agent on the Raspberry Pi:
