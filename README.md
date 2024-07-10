@@ -27,6 +27,7 @@ To find the IP address of your Raspberry Pi:
   1 - Navigate to the project folder:
       ```bash
       cd hardware/code/libraries/buildhat++
+      ```
   2 - Compile the code   
       ```bash
       cmake .
