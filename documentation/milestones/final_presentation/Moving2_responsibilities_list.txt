@@ -82,31 +82,29 @@
 - **Functions and Concepts Contributed:**
   1. Part of Robot development (building, idea)
   2. Sensor evaluation (accuracy, range)
-  3. Distance Sensor Class
-  4. Basic test Programm with Kevin
+  3. Distance Sensor Class implementation
+  4. Basic test Programm(s) with Kevin
   5. Extension of Testprogramm from Yin with continuous commands and Signal catcher
   6. csv to txt parser
   7. Multi training data training extension
-  8. SCP Bash script (not used now)
+  8. SCP Bash script for file transfer (not used now)
   9. Q-Table Visualization
 
   - **Role:** Integration Manager
   - **Actions Taken:**
     - **Early Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. Define components
+        - Created UML-Diagram (Milestone 2 presentation)
+    2. Choose technologies
+        - Did research to several protocols and proposed them
       - **Mid Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. Data Exchange
+        - Ensure exchange by writing interchange converter function
+    2. Transmission
+        - Write basic bash script for file transmission, can be run manually or by program call
       - **Late Phase**
     1. [Action 1]
         - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
 
 
 
