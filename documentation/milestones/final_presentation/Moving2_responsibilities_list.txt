@@ -175,3 +175,34 @@
     2. Update and distribute Tickets
     3. wrote first part of the presentation video (+participated in shooting and voice recording)
 
+
+### Member 6: Wangdong Yin
+- **Functions and Concepts Contributed:**
+  1. Build a robot working environment
+  2. Getting the built robot in motion
+  3. Research RL algorithms to find the right RL algorithm for the project
+  4. Researching the buildhat++ library
+  5. Debugging robot code so that C++ code starts the robot directly
+  6. Researching and finding ways to remotely control robots
+  7. Realization of the control of a training robot with a keyboard
+  8. Save training data on SD card
+  9. Research backend with Raspberry Pi for remote data saving
+
+
+  - **Role:** Project Manager
+  - **Actions Taken:**
+       - **Early Phase**
+    1. Creating Python Code Style
+    2. Creating test plans
+    3. Testing the stability of the robot
+       - **Mid Phase**
+    1. Creating a development branch
+    2. Adjustment of robot structure
+    3. Build the environment and test the stability of the environment
+       - **Late Phase**
+    1. Checking Python code style in projects
+    2. Adjustments to improve the test plan
+
+
+
+
