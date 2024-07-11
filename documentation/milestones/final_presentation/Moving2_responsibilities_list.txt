@@ -119,7 +119,6 @@
         - Data collection
         - Adapt reward function in c++ for data collection 
   4. Collect data (50%)
-  5. 
 
   - **Role:** [Quality role]
   - **Actions Taken:**
@@ -129,7 +128,6 @@
       - **Mid Phase**
     1. Review all C++ code for remote controlling
     2. Optimize test plan for additives functions
-    3. Create test for remote control
       - **Late Phase**
     1. Adjustment of functions with the new environement 
     2. Adjustments to improve the test plan
