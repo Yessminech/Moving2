@@ -19,7 +19,7 @@
         - Offline RL policy evluation and metrics (policy_evaluator.py) 100%
         - Code commenting (all files) 50%
     - Documentation on how to use the code
-  4. Poster Design: RL/ SW Architecture and evaluation 30%
+  4. Poster Design: RL, Prototype Evaluation and Key Contributions and future work and improvement 30%
 - **Role:** Technical Manager
 - **Actions Taken:**
 - **Early Phase**
