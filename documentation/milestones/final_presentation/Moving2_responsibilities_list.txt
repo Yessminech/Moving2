@@ -118,19 +118,21 @@
         - Remote control 
         - Data collection
         - Adapt reward function in c++ for data collection 
-  4. Collect data with Vera
+  4. Collect data (50%)
   5. 
 
-  - **Role:** [manager role]
+  - **Role:** [Quality role]
   - **Actions Taken:**
     - **Early Phase**
-    1. Creating C++ Code Style
-    2. Create test plan
+    1. Create C++ Code Style
+    2. Create test plan (75%)
       - **Mid Phase**
     1. Review all C++ code for remote controlling
-    2. Create test for remote control
+    2. Optimize test plan for additives functions
+    3. Create test for remote control
       - **Late Phase**
-    1. Adjustments to improve the test plan
+    1. Adjustment of functions with the new environement 
+    2. Adjustments to improve the test plan
     
 
 
