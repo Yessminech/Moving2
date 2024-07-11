@@ -42,6 +42,7 @@ add_executable(drive_and_color examples/drive_and_color_example.cpp)
 add_executable(drive_and_distance examples/drive_and_distance_example.cpp)
 add_executable(color_test_2 examples/color_test_2.cpp)
 add_executable(drive_all_test examples/moving2_src/drive_all_test.cpp)
+add_executable(agent_rpi examples/moving2_src/agent_rpi.cpp)
 
 # Link libraries
 target_link_libraries(calibrate_colors ${PROJECT_NAME})
@@ -50,6 +51,7 @@ target_link_libraries(drive_and_color ${PROJECT_NAME})
 target_link_libraries(drive_and_distance ${PROJECT_NAME})
 target_link_libraries(color_test_2 ${PROJECT_NAME})
 target_link_libraries(drive_all_test ${PROJECT_NAME})
+target_link_libraries(agent_rpi ${PROJECT_NAME})
 
 # Add custom "build all" target
 add_custom_target(BUILD_ALL ALL DEPENDS
@@ -59,4 +61,5 @@ add_custom_target(BUILD_ALL ALL DEPENDS
     drive_and_distance
     color_test_2
     drive_all_test
+    agent_rpi
 )
