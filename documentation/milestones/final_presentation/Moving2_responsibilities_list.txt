@@ -15,7 +15,7 @@
         - Implemented RL observation space, action space, and reward function (env.py) 100%
         - Fakedataset generation (syth_all.py) 100%
         - Learning algorithm refactoring and reviewing and exportation of Q_table. (main.py) 50%
-        - Learning algorithm testing (main_test.py) 50%
+        - Learning algorithm testing test_initialize_Q_table, test_update_Q_table,  test_export_Q_table (main_test.py) 50%
         - Offline RL policy evluation and metrics (policy_evaluator.py) 100%
         - Code commenting (all files) 50%
     - Documentation on how to use the code
