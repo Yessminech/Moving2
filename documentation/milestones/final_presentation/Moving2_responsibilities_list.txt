@@ -15,11 +15,11 @@
         - Implemented RL observation space, action space, and reward function (env.py) 100%
         - Fakedataset generation (syth_all.py) 100%
         - Learning algorithm refactoring and reviewing and exportation of Q_table. (main.py) 50%
-        - Learning algorithm testing (main_test.py) 50%
+        - Learning algorithm testing test_initialize_Q_table, test_update_Q_table,  test_export_Q_table (main_test.py) 50%
         - Offline RL policy evluation and metrics (policy_evaluator.py) 100%
         - Code commenting (all files) 50%
     - Documentation on how to use the code
-  4. Poster Design: RL/ SW Architecture and evaluation 30%
+  4. Poster Design: RL, Prototype Evaluation and Key Contributions and future work and improvement 30%
 - **Role:** Technical Manager
 - **Actions Taken:**
 - **Early Phase**
@@ -83,7 +83,7 @@
   1. Part of Robot development (building, idea)
   2. Sensor evaluation (accuracy, range)
   3. Distance Sensor Class implementation
-  4. Basic test Programm(s) with Kevin
+  4. First basic (test) programm(s) with Kevin
   5. Extension of Testprogramm from Yin with continuous commands and Signal catcher
   6. csv to txt parser
   7. Multi training data training extension
@@ -100,11 +100,9 @@
       - **Mid Phase**
     1. Data Exchange
         - Ensure exchange by writing interchange converter function
-    2. Transmission
-        - Write basic bash script for file transmission, can be run manually or by program call
       - **Late Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
+    1. Transmission
+        - Write basic bash script for file transmission, can be run manually or by program call
 
 
 
@@ -118,26 +116,20 @@
         - Remote control 
         - Data collection
         - Adapt reward function in c++ for data collection 
-  4. Collect data with Vera
-  5. 
+  4. Collect data (50%)
 
-  - **Role:** [manager role]
+  - **Role:** [Quality role]
   - **Actions Taken:**
     - **Early Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. Create C++ Code Style
+    2. Create test plan (75%)
       - **Mid Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. Review all C++ code for remote controlling
+    2. Optimize test plan for additives functions
       - **Late Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
-    2. [Action 2]
-    3. [Action 3]
+    1. Adjustment of functions with the new environement 
+    2. Adjustments to improve the test plan
+    
 
 
 
