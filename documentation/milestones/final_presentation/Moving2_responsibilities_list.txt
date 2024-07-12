@@ -100,11 +100,9 @@
       - **Mid Phase**
     1. Data Exchange
         - Ensure exchange by writing interchange converter function
-    2. Transmission
-        - Write basic bash script for file transmission, can be run manually or by program call
       - **Late Phase**
-    1. [Action 1]
-        - Subpoint 1 for Action 1
+    1. Transmission
+        - Write basic bash script for file transmission, can be run manually or by program call
 
 
 
