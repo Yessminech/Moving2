@@ -1,6 +1,7 @@
 import unittest
 import os
 from collections import deque
+from pathlib import Path
 
 from main import QLearningAgent
 
@@ -67,11 +68,11 @@ class QLearningAgentTests(unittest.TestCase):
 
     # # Testing buffer population in a deque
     def test_populate_replay_buffer(self):
-         self.agent.populate_replay_buffer(
-            os.getcwd()+"generated_dataset/fake_dataset_test_populatereplaybefore.txt"
-         )
-         print(self.agent.replay_buffer)
-         test_buffer = deque(
+        current_path = Path().resolve()
+        file_path = current_path / "generated_dataset" / "fake_dataset_test_populatereplaybefore.txt"
+        self.agent.populate_replay_buffer(str(file_path))
+        print(self.agent.replay_buffer)
+        test_buffer = deque(
              [
                  (("white", "dis_0"), "forward", ("white", "dis_0"), -1.0, False),
                 (("white", "dis_0"), "forward", ("white", "dis_1"), -2.0, False),
@@ -79,19 +80,24 @@ class QLearningAgentTests(unittest.TestCase):
             ],
              maxlen=10000,
          )
-         self.assertEqual(self.agent.replay_buffer, test_buffer)
+        self.assertEqual(self.agent.replay_buffer, test_buffer)
 
  
-     def test_sample_batch_1(self):
-         self.agent.populate_replay_buffer(os.getcwd()+"/generated_dataset/fake_dataset_test_populatereplaybefore.txt")
+    def test_sample_batch_1(self):
+         current_path = Path().resolve()
+         file_path = current_path / "generated_dataset" / "fake_dataset_test_populatereplaybefore.txt"
+         self.agent.populate_replay_buffer(str(file_path))
          batch = self.agent.sample_batch()
          print(batch)
 
-     ## Testing that the batch length to be is sampled is correct
-     def test_sample_batch_2(self):
-         self.agent.populate_replay_buffer(os.getcwd()+"/generated_dataset/fake_dataset.txt")
-         batch = self.agent.sample_batch()
-         self.assertEqual(len(batch), self.agent.batch_size)
+     # Testing that the batch length to be is sampled is correct
+
+    def test_sample_batch_2(self):
+        current_path = Path().resolve()
+        file_path = current_path / "generated_dataset" / "fake_dataset.txt"
+        self.agent.populate_replay_buffer(str(file_path))
+        batch = self.agent.sample_batch()
+        self.assertEqual(len(batch), self.agent.batch_size)
 
 
 if __name__ == "__main__":
