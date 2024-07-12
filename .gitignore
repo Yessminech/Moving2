@@ -11,6 +11,7 @@ libBuildHAT++.a
 build
 CMakeFiles
 Makefile
+.idea
 
 training_dataset.txt
 
