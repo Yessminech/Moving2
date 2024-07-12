@@ -83,7 +83,7 @@
   1. Part of Robot development (building, idea)
   2. Sensor evaluation (accuracy, range)
   3. Distance Sensor Class implementation
-  4. Basic test Programm(s) with Kevin
+  4. First basic (test) programm(s) with Kevin
   5. Extension of Testprogramm from Yin with continuous commands and Signal catcher
   6. csv to txt parser
   7. Multi training data training extension
