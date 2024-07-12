@@ -56,6 +56,16 @@ To run the autonomous agent on the Raspberry Pi:
 ```bash
 ./agent_rpi
 ```
+#### Testing
+To run testing for the argmax function: 
+- Compile (for instance like this)
+  ```bash
+g++ -o argmaxtest argmaxtest.cpp
+```
+- Execute
+```bash
+./argmaxtest
+```
 
 ## How to use RL
 
