@@ -59,7 +59,7 @@ To run the autonomous agent on the Raspberry Pi:
 #### Testing
 To run testing for the argmax function: 
 - Compile (for instance like this)
-  ```bash
+```bash
 g++ -o argmaxtest argmaxtest.cpp
 ```
 - Execute
