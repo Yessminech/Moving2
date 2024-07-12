@@ -546,7 +546,7 @@ int argmax(int curr_col, int curr_dist, int prev_col, int prev_dist, int actions
         int best_index = 0;
         double max_value = Q_table[curr_col][curr_dist][0][prev_col][prev_dist];
 
-        for (int i = 1; i < actions; ++i) { //there was a reference here to actions_dimensions which was not defined!!!!
+        for (int i = 1; i < actions; ++i) { 
             if (Q_table[curr_col][curr_dist][i][prev_col][prev_dist] > max_value) {
                 max_value = Q_table[curr_col][curr_dist][i][prev_col][prev_dist];
                 best_index = i;
