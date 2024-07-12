@@ -137,34 +137,35 @@
 
 ### Member 5: Zied Marrakchi
 - **Functions and Concepts Contributed:**
-  1. Research RL Algorithms
+  1. Research RL Algorithms with Yessmine Chabchoub (80%)
   2. proposed concept of enviorenment
   3. proposed concept of Observation / Action space and reward function
-  4. Decided on RL Algorithm, observation and action spaces with Yessmine chabchoub
-  5. Coded and refined Backend with Yessmine 
-  6. Defined concept of agent_rpi
-  7. Contributed to the coding of agent_rpi : argmax() , importing Q_table 
-  8. Wrote Tests for backend
+  4. Decided on RL Algorithm, observation and action spaces with Yessmine chabchoub (50%)
+  5. Coded and refined Backend with Yessmine Chabchoub (50%)
+  6. Proposed way of data collection : Defined concept of agent_rpi 
+  7. Contributed to the coding of agent_rpi : argmax() , importing Q_table  
+  8. Wrote Tests for backend (test_main.py) (50%)
+  9. Build Environment (10%)
 
   - **Role:** Project Manager
   - **Actions Taken:**
     - **Early Phase**
     1. presented research results for RL ALgorithms 
         - + wrote documentation
-    2. Defined requierments with Vera
-    3. Create initial Gantt Chart
+    2. Defined requierments with Vera (50%)
+    3. Create initial Gantt Chart with Vera (50%)
       - **Mid Phase**
-    1. Update Gantt Chart
-    2. Assign general work groups
-    3. Update and distribute Tickets
+    1. Update Gantt Chart with Vera (50%)
+    2. Assign general work groups with Vera (50%) 
+    3. Update and distribute Tickets with Vera (50%)
         - Add issues, distribute tasks
         - Set up Milestones
         - Update Kanban Board and issues
       - **Late Phase**
-    1. Update Gantt Chart
+    1. Update Gantt Chart with Vera (50%)
         - Update Gantt Chart
         - Evaluate Requirements with Gantt Chart
-    2. Update and distribute Tickets
+    2. Update and distribute Tickets with Vera (50%)
     3. wrote first part of the presentation video (+participated in shooting and voice recording)
 
 
